@@ -577,7 +577,7 @@ export default function App() {
                   time: excursionForm.time.trim(),
                   note: excursionForm.note.trim(),
                   website: excursionForm.website.trim(),
-                  files: excursionForm.files || [],
+       files: [...(excursionForm.files || [])],
                 },
               ],
             }
