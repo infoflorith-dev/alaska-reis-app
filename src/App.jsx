@@ -758,7 +758,7 @@ export default function App() {
                   onChange={(e) =>
                     setExcursionForm((s) => ({
                       ...s,
-                      files: [...s.files, ...prepareFiles(e.target.files)],
+                     files: prepareFiles(e.target.files),
                     }))
                   }
                 />
