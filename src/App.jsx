@@ -573,7 +573,7 @@ export default function App() {
                 ...(day.excursions || []),
                 {
                   id: Date.now(),
-                  title: excursionForm.title.trim(),
+                 title: excursionForm.title.trim() || (excursionForm.files[0]?.name || "Excursie"),
                   time: excursionForm.time.trim(),
                   note: excursionForm.note.trim(),
                   website: excursionForm.website.trim(),
