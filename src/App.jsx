@@ -9,7 +9,14 @@ const initialTrip = [
     stay: "Travelodge by Wyndham",
     type: "flight",
     items: [
-      { id: 101, kind: "document", title: "Boarding pass heen", note: "Hier later pdf of foto toevoegen", files: [] },
+      {
+        id: 101,
+        kind: "document",
+        title: "Boarding pass heen",
+        note: "Hier later pdf of foto toevoegen",
+        website: "",
+        files: [],
+      },
     ],
     excursions: [],
   },
@@ -21,12 +28,37 @@ const initialTrip = [
     stay: "Travelodge by Wyndham",
     type: "hotel",
     items: [
-      { id: 201, kind: "ticket", title: "Baseball wedstrijd", note: "Tickets toevoegen zodra je ze hebt", files: [] },
+      {
+        id: 201,
+        kind: "ticket",
+        title: "Baseball wedstrijd",
+        note: "Tickets toevoegen zodra je ze hebt",
+        website: "",
+        files: [],
+      },
     ],
     excursions: [],
   },
-  { id: 3, date: "7-9-2026", title: "Start cruise", location: "Seattle", stay: "Queen Elizabeth", type: "cruise", items: [], excursions: [] },
-  { id: 4, date: "8-9-2026", title: "Op zee", location: "Aan boord", stay: "Queen Elizabeth", type: "cruise", items: [], excursions: [] },
+  {
+    id: 3,
+    date: "7-9-2026",
+    title: "Start cruise",
+    location: "Seattle",
+    stay: "Queen Elizabeth",
+    type: "cruise",
+    items: [],
+    excursions: [],
+  },
+  {
+    id: 4,
+    date: "8-9-2026",
+    title: "Op zee",
+    location: "Aan boord",
+    stay: "Queen Elizabeth",
+    type: "cruise",
+    items: [],
+    excursions: [],
+  },
   {
     id: 5,
     date: "9-9-2026",
@@ -36,7 +68,14 @@ const initialTrip = [
     type: "cruise",
     items: [],
     excursions: [
-      { id: 501, title: "Excursie Wrangell", time: "Nog invullen", note: "Voucher en opstapinformatie hier", files: [] },
+      {
+        id: 501,
+        title: "Excursie Wrangell",
+        time: "Nog invullen",
+        note: "Voucher en opstapinformatie hier",
+        website: "",
+        files: [],
+      },
     ],
   },
   {
@@ -48,7 +87,14 @@ const initialTrip = [
     type: "cruise",
     items: [],
     excursions: [
-      { id: 601, title: "Excursie Juneau", time: "Nog invullen", note: "Whale watching / glacier / tickets", files: [] },
+      {
+        id: 601,
+        title: "Excursie Juneau",
+        time: "Nog invullen",
+        note: "Whale watching / glacier / tickets",
+        website: "",
+        files: [],
+      },
     ],
   },
   {
@@ -60,10 +106,26 @@ const initialTrip = [
     type: "cruise",
     items: [],
     excursions: [
-      { id: 701, title: "Excursie Skagway", time: "Nog invullen", note: "White Pass of wildlife tour", files: [] },
+      {
+        id: 701,
+        title: "Excursie Skagway",
+        time: "Nog invullen",
+        note: "White Pass of wildlife tour",
+        website: "",
+        files: [],
+      },
     ],
   },
-  { id: 8, date: "12-9-2026", title: "Hubbard Glacier", location: "Hubbard Glacier", stay: "Queen Elizabeth", type: "cruise", items: [], excursions: [] },
+  {
+    id: 8,
+    date: "12-9-2026",
+    title: "Hubbard Glacier",
+    location: "Hubbard Glacier",
+    stay: "Queen Elizabeth",
+    type: "cruise",
+    items: [],
+    excursions: [],
+  },
   {
     id: 9,
     date: "13-9-2026",
@@ -73,7 +135,14 @@ const initialTrip = [
     type: "cruise",
     items: [],
     excursions: [
-      { id: 901, title: "Sea Otter & Wildlife Quest", time: "Nog invullen", note: "Via Cunard geboekt", files: [] },
+      {
+        id: 901,
+        title: "Sea Otter & Wildlife Quest",
+        time: "Nog invullen",
+        note: "Via Cunard geboekt",
+        website: "",
+        files: [],
+      },
     ],
   },
   {
@@ -85,11 +154,36 @@ const initialTrip = [
     type: "cruise",
     items: [],
     excursions: [
-      { id: 1001, title: "Excursie Ketchikan", time: "Nog invullen", note: "Beren of Misty Fjords", files: [] },
+      {
+        id: 1001,
+        title: "Excursie Ketchikan",
+        time: "Nog invullen",
+        note: "Beren of Misty Fjords",
+        website: "",
+        files: [],
+      },
     ],
   },
-  { id: 11, date: "15-9-2026", title: "Op zee", location: "Aan boord", stay: "Queen Elizabeth", type: "cruise", items: [], excursions: [] },
-  { id: 12, date: "16-9-2026", title: "Victoria", location: "Victoria", stay: "Queen Elizabeth", type: "cruise", items: [], excursions: [] },
+  {
+    id: 11,
+    date: "15-9-2026",
+    title: "Op zee",
+    location: "Aan boord",
+    stay: "Queen Elizabeth",
+    type: "cruise",
+    items: [],
+    excursions: [],
+  },
+  {
+    id: 12,
+    date: "16-9-2026",
+    title: "Victoria",
+    location: "Victoria",
+    stay: "Queen Elizabeth",
+    type: "cruise",
+    items: [],
+    excursions: [],
+  },
   {
     id: 13,
     date: "17-9-2026",
@@ -98,17 +192,87 @@ const initialTrip = [
     stay: "Kicking Horse Hideaway",
     type: "roadtrip",
     items: [
-      { id: 1301, kind: "document", title: "Huurauto reservering", note: "Bevestiging en papieren hier toevoegen", files: [] },
+      {
+        id: 1301,
+        kind: "document",
+        title: "Huurauto reservering",
+        note: "Bevestiging en papieren hier toevoegen",
+        website: "",
+        files: [],
+      },
     ],
     excursions: [],
   },
-  { id: 14, date: "18-9-2026", title: "Golden", location: "Golden", stay: "Kicking Horse Hideaway", type: "stay", items: [], excursions: [] },
-  { id: 15, date: "19-9-2026", title: "Golden", location: "Golden", stay: "Kicking Horse Hideaway", type: "stay", items: [], excursions: [] },
-  { id: 16, date: "20-9-2026", title: "Golden → nog in te vullen", location: "Nog kiezen", stay: "Nog kiezen", type: "roadtrip", items: [], excursions: [] },
-  { id: 17, date: "21-9-2026", title: "Naar Yellowstone", location: "Yellowstone", stay: "Old Faithful Lodge", type: "roadtrip", items: [], excursions: [] },
-  { id: 18, date: "22-9-2026", title: "Yellowstone", location: "Yellowstone", stay: "Old Faithful Lodge", type: "stay", items: [], excursions: [] },
-  { id: 19, date: "23-9-2026", title: "Yellowstone → nog in te vullen", location: "Nog kiezen", stay: "Nog kiezen", type: "roadtrip", items: [], excursions: [] },
-  { id: 20, date: "24-9-2026", title: "Naar Seattle + hotel", location: "Seattle", stay: "Hotel Seattle", type: "roadtrip", items: [], excursions: [] },
+  {
+    id: 14,
+    date: "18-9-2026",
+    title: "Golden",
+    location: "Golden",
+    stay: "Kicking Horse Hideaway",
+    type: "stay",
+    items: [],
+    excursions: [],
+  },
+  {
+    id: 15,
+    date: "19-9-2026",
+    title: "Golden",
+    location: "Golden",
+    stay: "Kicking Horse Hideaway",
+    type: "stay",
+    items: [],
+    excursions: [],
+  },
+  {
+    id: 16,
+    date: "20-9-2026",
+    title: "Golden → nog in te vullen",
+    location: "Nog kiezen",
+    stay: "Nog kiezen",
+    type: "roadtrip",
+    items: [],
+    excursions: [],
+  },
+  {
+    id: 17,
+    date: "21-9-2026",
+    title: "Naar Yellowstone",
+    location: "Yellowstone",
+    stay: "Old Faithful Lodge",
+    type: "roadtrip",
+    items: [],
+    excursions: [],
+  },
+  {
+    id: 18,
+    date: "22-9-2026",
+    title: "Yellowstone",
+    location: "Yellowstone",
+    stay: "Old Faithful Lodge",
+    type: "stay",
+    items: [],
+    excursions: [],
+  },
+  {
+    id: 19,
+    date: "23-9-2026",
+    title: "Yellowstone → nog in te vullen",
+    location: "Nog kiezen",
+    stay: "Nog kiezen",
+    type: "roadtrip",
+    items: [],
+    excursions: [],
+  },
+  {
+    id: 20,
+    date: "24-9-2026",
+    title: "Naar Seattle + hotel",
+    location: "Seattle",
+    stay: "Hotel Seattle",
+    type: "roadtrip",
+    items: [],
+    excursions: [],
+  },
   {
     id: 21,
     date: "25-9-2026",
@@ -117,11 +281,27 @@ const initialTrip = [
     stay: "Aan boord",
     type: "flight",
     items: [
-      { id: 2101, kind: "document", title: "Boarding pass terug", note: "Hier later pdf of foto toevoegen", files: [] },
+      {
+        id: 2101,
+        kind: "document",
+        title: "Boarding pass terug",
+        note: "Hier later pdf of foto toevoegen",
+        website: "",
+        files: [],
+      },
     ],
     excursions: [],
   },
-  { id: 22, date: "26-9-2026", title: "Thuis", location: "Nederland", stay: "Thuis", type: "stay", items: [], excursions: [] },
+  {
+    id: 22,
+    date: "26-9-2026",
+    title: "Thuis",
+    location: "Nederland",
+    stay: "Thuis",
+    type: "stay",
+    items: [],
+    excursions: [],
+  },
 ];
 
 const styles = {
@@ -157,7 +337,12 @@ const styles = {
     cursor: "pointer",
     transition: "0.15s ease",
   }),
-  dayTop: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 },
+  dayTop: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 10,
+  },
   pill: {
     display: "inline-block",
     padding: "4px 10px",
@@ -277,11 +462,18 @@ function FilePreview({ file, onRemove }) {
             <img
               src={file.previewUrl}
               alt={file.name}
-              style={{ marginTop: 10, maxHeight: 140, borderRadius: 12, border: "1px solid #e2e8f0" }}
+              style={{
+                marginTop: 10,
+                maxHeight: 140,
+                borderRadius: 12,
+                border: "1px solid #e2e8f0",
+              }}
             />
           ) : null}
         </div>
-        <button onClick={onRemove} style={styles.button}>Verwijder</button>
+        <button onClick={onRemove} style={styles.button}>
+          Verwijder
+        </button>
       </div>
     </div>
   );
@@ -291,14 +483,23 @@ export default function App() {
   const [days, setDays] = useState(initialTrip);
   const [selectedDayId, setSelectedDayId] = useState(initialTrip[0].id);
   const [editingDay, setEditingDay] = useState(false);
-  const [itemForm, setItemForm] = useState({ kind: "ticket", title: "", note: "", files: [] });
-const [excursionForm, setExcursionForm] = useState({
-  title: "",
-  time: "",
-  note: "",
-  website: "",
-  files: [],
-});
+
+  const [itemForm, setItemForm] = useState({
+    kind: "ticket",
+    title: "",
+    note: "",
+    website: "",
+    files: [],
+  });
+
+  const [excursionForm, setExcursionForm] = useState({
+    title: "",
+    time: "",
+    note: "",
+    website: "",
+    files: [],
+  });
+
   const itemFileRef = useRef(null);
   const excursionFileRef = useRef(null);
 
@@ -311,12 +512,18 @@ const [excursionForm, setExcursionForm] = useState({
 
   function updateSelectedDayField(field, value) {
     setDays((current) =>
-      current.map((day) => (day.id === selectedDayId ? { ...day, [field]: value } : day))
+      current.map((day) =>
+        day.id === selectedDayId ? { ...day, [field]: value } : day
+      )
     );
   }
 
   function addItem() {
-    if (!itemForm.title.trim()) return;
+    if (!itemForm.title.trim()) {
+      alert("Vul eerst een titel voor het item in.");
+      return;
+    }
+
     setDays((current) =>
       current.map((day) =>
         day.id !== selectedDayId
@@ -330,18 +537,33 @@ const [excursionForm, setExcursionForm] = useState({
                   kind: itemForm.kind,
                   title: itemForm.title.trim(),
                   note: itemForm.note.trim(),
-                  files: itemForm.files,
+                  website: itemForm.website.trim(),
+                  files: itemForm.files || [],
                 },
               ],
             }
       )
     );
-    setItemForm({ kind: "ticket", title: "", note: "", files: [] });
-    if (itemFileRef.current) itemFileRef.current.value = "";
+
+    setItemForm({
+      kind: "ticket",
+      title: "",
+      note: "",
+      website: "",
+      files: [],
+    });
+
+    if (itemFileRef.current) {
+      itemFileRef.current.value = "";
+    }
   }
 
   function addExcursion() {
-    if (!excursionForm.title.trim()) return;
+    if (!excursionForm.title.trim()) {
+      alert("Vul eerst een naam voor de excursie in.");
+      return;
+    }
+
     setDays((current) =>
       current.map((day) =>
         day.id !== selectedDayId
@@ -349,26 +571,39 @@ const [excursionForm, setExcursionForm] = useState({
           : {
               ...day,
               excursions: [
-                ...day.excursions,
+                ...(day.excursions || []),
                 {
                   id: Date.now(),
                   title: excursionForm.title.trim(),
                   time: excursionForm.time.trim(),
                   note: excursionForm.note.trim(),
-                  files: excursionForm.files,
+                  website: excursionForm.website.trim(),
+                  files: excursionForm.files || [],
                 },
               ],
             }
       )
     );
-    setExcursionForm({ title: "", time: "", note: "", files: [] });
-    if (excursionFileRef.current) excursionFileRef.current.value = "";
+
+    setExcursionForm({
+      title: "",
+      time: "",
+      note: "",
+      website: "",
+      files: [],
+    });
+
+    if (excursionFileRef.current) {
+      excursionFileRef.current.value = "";
+    }
   }
 
   function removeItem(itemId) {
     setDays((current) =>
       current.map((day) =>
-        day.id !== selectedDayId ? day : { ...day, items: day.items.filter((i) => i.id !== itemId) }
+        day.id !== selectedDayId
+          ? day
+          : { ...day, items: day.items.filter((i) => i.id !== itemId) }
       )
     );
   }
@@ -378,7 +613,10 @@ const [excursionForm, setExcursionForm] = useState({
       current.map((day) =>
         day.id !== selectedDayId
           ? day
-          : { ...day, excursions: day.excursions.filter((e) => e.id !== excursionId) }
+          : {
+              ...day,
+              excursions: day.excursions.filter((e) => e.id !== excursionId),
+            }
       )
     );
   }
@@ -398,6 +636,7 @@ const [excursionForm, setExcursionForm] = useState({
             {days.map((day, index) => {
               const active = day.id === selectedDayId;
               const count = day.items.length + day.excursions.length;
+
               return (
                 <div
                   key={day.id}
@@ -413,7 +652,9 @@ const [excursionForm, setExcursionForm] = useState({
                   </div>
                   <div style={{ fontWeight: 700, fontSize: 18 }}>{day.date}</div>
                   <div style={{ marginTop: 6, fontWeight: 600 }}>{day.title}</div>
-                  <div style={{ marginTop: 6, color: "#64748b", fontSize: 14 }}>{day.location}</div>
+                  <div style={{ marginTop: 6, color: "#64748b", fontSize: 14 }}>
+                    {day.location}
+                  </div>
                   <div style={{ marginTop: 8, color: "#475569", fontSize: 13 }}>
                     {typeLabel(day.type)} · {day.stay}
                   </div>
@@ -434,7 +675,10 @@ const [excursionForm, setExcursionForm] = useState({
               </div>
             </div>
 
-            <button style={styles.buttonDark} onClick={() => setEditingDay((v) => !v)}>
+            <button
+              style={styles.buttonDark}
+              onClick={() => setEditingDay((v) => !v)}
+            >
               {editingDay ? "Klaar met wijzigen" : "Wijzigen"}
             </button>
           </div>
@@ -442,18 +686,45 @@ const [excursionForm, setExcursionForm] = useState({
           <div style={styles.mainBody}>
             {editingDay ? (
               <div style={styles.section}>
-                <h2 style={{ ...styles.sectionTitle, marginBottom: 16 }}>Dag aanpassen</h2>
+                <h2 style={{ ...styles.sectionTitle, marginBottom: 16 }}>
+                  Dag aanpassen
+                </h2>
                 <div style={{ display: "grid", gap: 12 }}>
-                  <input style={styles.input} value={selectedDay.date} onChange={(e) => updateSelectedDayField("date", e.target.value)} />
-                  <input style={styles.input} value={selectedDay.title} onChange={(e) => updateSelectedDayField("title", e.target.value)} />
-                  <input style={styles.input} value={selectedDay.location} onChange={(e) => updateSelectedDayField("location", e.target.value)} />
-                  <input style={styles.input} value={selectedDay.stay} onChange={(e) => updateSelectedDayField("stay", e.target.value)} />
+                  <input
+                    style={styles.input}
+                    value={selectedDay.date}
+                    onChange={(e) => updateSelectedDayField("date", e.target.value)}
+                  />
+                  <input
+                    style={styles.input}
+                    value={selectedDay.title}
+                    onChange={(e) => updateSelectedDayField("title", e.target.value)}
+                  />
+                  <input
+                    style={styles.input}
+                    value={selectedDay.location}
+                    onChange={(e) =>
+                      updateSelectedDayField("location", e.target.value)
+                    }
+                  />
+                  <input
+                    style={styles.input}
+                    value={selectedDay.stay}
+                    onChange={(e) => updateSelectedDayField("stay", e.target.value)}
+                  />
                 </div>
               </div>
             ) : null}
 
             <div style={styles.section}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: 16,
+                }}
+              >
                 <h2 style={styles.sectionTitle}>Excursies van deze dag</h2>
               </div>
 
@@ -462,19 +733,33 @@ const [excursionForm, setExcursionForm] = useState({
                   style={styles.input}
                   placeholder="Naam excursie"
                   value={excursionForm.title}
-                  onChange={(e) => setExcursionForm((s) => ({ ...s, title: e.target.value }))}
+                  onChange={(e) =>
+                    setExcursionForm((s) => ({ ...s, title: e.target.value }))
+                  }
                 />
                 <input
                   style={styles.input}
                   placeholder="Tijd"
                   value={excursionForm.time}
-                  onChange={(e) => setExcursionForm((s) => ({ ...s, time: e.target.value }))}
+                  onChange={(e) =>
+                    setExcursionForm((s) => ({ ...s, time: e.target.value }))
+                  }
                 />
                 <textarea
                   style={styles.textarea}
                   placeholder="Notitie"
                   value={excursionForm.note}
-                  onChange={(e) => setExcursionForm((s) => ({ ...s, note: e.target.value }))}
+                  onChange={(e) =>
+                    setExcursionForm((s) => ({ ...s, note: e.target.value }))
+                  }
+                />
+                <input
+                  style={styles.input}
+                  placeholder="Website of boekingslink"
+                  value={excursionForm.website}
+                  onChange={(e) =>
+                    setExcursionForm((s) => ({ ...s, website: e.target.value }))
+                  }
                 />
                 <input
                   ref={excursionFileRef}
@@ -482,7 +767,10 @@ const [excursionForm, setExcursionForm] = useState({
                   multiple
                   accept="image/*,.pdf"
                   onChange={(e) =>
-                    setExcursionForm((s) => ({ ...s, files: [...s.files, ...prepareFiles(e.target.files)] }))
+                    setExcursionForm((s) => ({
+                      ...s,
+                      files: [...s.files, ...prepareFiles(e.target.files)],
+                    }))
                   }
                 />
                 {excursionForm.files.map((file) => (
@@ -490,23 +778,47 @@ const [excursionForm, setExcursionForm] = useState({
                     key={file.id}
                     file={file}
                     onRemove={() =>
-                      setExcursionForm((s) => ({ ...s, files: s.files.filter((f) => f.id !== file.id) }))
+                      setExcursionForm((s) => ({
+                        ...s,
+                        files: s.files.filter((f) => f.id !== file.id),
+                      }))
                     }
                   />
                 ))}
-                <button style={styles.buttonDark} onClick={addExcursion}>Excursie toevoegen</button>
+                <button style={styles.buttonDark} onClick={addExcursion}>
+                  Excursie toevoegen
+                </button>
               </div>
 
               <div style={{ display: "grid", gap: 12 }}>
                 {selectedDay.excursions.length === 0 ? (
-                  <div style={{ color: "#64748b" }}>Nog geen excursies toegevoegd.</div>
+                  <div style={{ color: "#64748b" }}>
+                    Nog geen excursies toegevoegd.
+                  </div>
                 ) : (
                   selectedDay.excursions.map((excursion) => (
                     <div key={excursion.id} style={styles.itemCard}>
                       <div style={{ flex: 1 }}>
-                        <div style={{ fontWeight: 700, fontSize: 17 }}>{excursion.title}</div>
-                        <div style={{ color: "#64748b", marginTop: 4 }}>{excursion.time}</div>
+                        <div style={{ fontWeight: 700, fontSize: 17 }}>
+                          {excursion.title}
+                        </div>
+                        <div style={{ color: "#64748b", marginTop: 4 }}>
+                          {excursion.time}
+                        </div>
                         <div style={{ marginTop: 8 }}>{excursion.note}</div>
+
+                        {excursion.website ? (
+                          <div style={{ marginTop: 8 }}>
+                            <a
+                              href={excursion.website}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              Open website / boekingslink
+                            </a>
+                          </div>
+                        ) : null}
+
                         {(excursion.files || []).map((file) => (
                           <FilePreview
                             key={file.id}
@@ -521,7 +833,12 @@ const [excursionForm, setExcursionForm] = useState({
                                         excursions: day.excursions.map((ex) =>
                                           ex.id !== excursion.id
                                             ? ex
-                                            : { ...ex, files: ex.files.filter((f) => f.id !== file.id) }
+                                            : {
+                                                ...ex,
+                                                files: ex.files.filter(
+                                                  (f) => f.id !== file.id
+                                                ),
+                                              }
                                         ),
                                       }
                                 )
@@ -530,7 +847,12 @@ const [excursionForm, setExcursionForm] = useState({
                           />
                         ))}
                       </div>
-                      <button style={styles.button} onClick={() => removeExcursion(excursion.id)}>Verwijder</button>
+                      <button
+                        style={styles.button}
+                        onClick={() => removeExcursion(excursion.id)}
+                      >
+                        Verwijder
+                      </button>
                     </div>
                   ))
                 )}
@@ -538,7 +860,14 @@ const [excursionForm, setExcursionForm] = useState({
             </div>
 
             <div style={styles.section}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: 16,
+                }}
+              >
                 <h2 style={styles.sectionTitle}>Items van deze dag</h2>
               </div>
 
@@ -546,7 +875,9 @@ const [excursionForm, setExcursionForm] = useState({
                 <select
                   style={styles.input}
                   value={itemForm.kind}
-                  onChange={(e) => setItemForm((s) => ({ ...s, kind: e.target.value }))}
+                  onChange={(e) =>
+                    setItemForm((s) => ({ ...s, kind: e.target.value }))
+                  }
                 >
                   <option value="ticket">Ticket</option>
                   <option value="document">Document</option>
@@ -558,13 +889,25 @@ const [excursionForm, setExcursionForm] = useState({
                   style={styles.input}
                   placeholder="Titel"
                   value={itemForm.title}
-                  onChange={(e) => setItemForm((s) => ({ ...s, title: e.target.value }))}
+                  onChange={(e) =>
+                    setItemForm((s) => ({ ...s, title: e.target.value }))
+                  }
                 />
                 <textarea
                   style={styles.textarea}
                   placeholder="Notitie"
                   value={itemForm.note}
-                  onChange={(e) => setItemForm((s) => ({ ...s, note: e.target.value }))}
+                  onChange={(e) =>
+                    setItemForm((s) => ({ ...s, note: e.target.value }))
+                  }
+                />
+                <input
+                  style={styles.input}
+                  placeholder="Website of boekingslink"
+                  value={itemForm.website}
+                  onChange={(e) =>
+                    setItemForm((s) => ({ ...s, website: e.target.value }))
+                  }
                 />
                 <input
                   ref={itemFileRef}
@@ -572,7 +915,10 @@ const [excursionForm, setExcursionForm] = useState({
                   multiple
                   accept="image/*,.pdf"
                   onChange={(e) =>
-                    setItemForm((s) => ({ ...s, files: [...s.files, ...prepareFiles(e.target.files)] }))
+                    setItemForm((s) => ({
+                      ...s,
+                      files: [...s.files, ...prepareFiles(e.target.files)],
+                    }))
                   }
                 />
                 {itemForm.files.map((file) => (
@@ -580,25 +926,60 @@ const [excursionForm, setExcursionForm] = useState({
                     key={file.id}
                     file={file}
                     onRemove={() =>
-                      setItemForm((s) => ({ ...s, files: s.files.filter((f) => f.id !== file.id) }))
+                      setItemForm((s) => ({
+                        ...s,
+                        files: s.files.filter((f) => f.id !== file.id),
+                      }))
                     }
                   />
                 ))}
-                <button style={styles.buttonDark} onClick={addItem}>Item toevoegen</button>
+                <button style={styles.buttonDark} onClick={addItem}>
+                  Item toevoegen
+                </button>
               </div>
 
               <div style={{ display: "grid", gap: 12 }}>
                 {selectedDay.items.length === 0 ? (
-                  <div style={{ color: "#64748b" }}>Nog geen items toegevoegd.</div>
+                  <div style={{ color: "#64748b" }}>
+                    Nog geen items toegevoegd.
+                  </div>
                 ) : (
                   selectedDay.items.map((item) => (
                     <div key={item.id} style={styles.itemCard}>
                       <div style={{ flex: 1 }}>
-                        <div style={{ color: "#64748b", fontSize: 13, fontWeight: 700, textTransform: "uppercase" }}>
+                        <div
+                          style={{
+                            color: "#64748b",
+                            fontSize: 13,
+                            fontWeight: 700,
+                            textTransform: "uppercase",
+                          }}
+                        >
                           {item.kind}
                         </div>
-                        <div style={{ fontWeight: 700, fontSize: 17, marginTop: 4 }}>{item.title}</div>
+                        <div
+                          style={{
+                            fontWeight: 700,
+                            fontSize: 17,
+                            marginTop: 4,
+                          }}
+                        >
+                          {item.title}
+                        </div>
                         <div style={{ marginTop: 8 }}>{item.note}</div>
+
+                        {item.website ? (
+                          <div style={{ marginTop: 8 }}>
+                            <a
+                              href={item.website}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              Open website / boekingslink
+                            </a>
+                          </div>
+                        ) : null}
+
                         {(item.files || []).map((file) => (
                           <FilePreview
                             key={file.id}
@@ -613,7 +994,12 @@ const [excursionForm, setExcursionForm] = useState({
                                         items: day.items.map((it) =>
                                           it.id !== item.id
                                             ? it
-                                            : { ...it, files: it.files.filter((f) => f.id !== file.id) }
+                                            : {
+                                                ...it,
+                                                files: it.files.filter(
+                                                  (f) => f.id !== file.id
+                                                ),
+                                              }
                                         ),
                                       }
                                 )
@@ -622,7 +1008,12 @@ const [excursionForm, setExcursionForm] = useState({
                           />
                         ))}
                       </div>
-                      <button style={styles.button} onClick={() => removeItem(item.id)}>Verwijder</button>
+                      <button
+                        style={styles.button}
+                        onClick={() => removeItem(item.id)}
+                      >
+                        Verwijder
+                      </button>
                     </div>
                   ))
                 )}
