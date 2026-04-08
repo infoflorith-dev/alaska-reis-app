@@ -558,7 +558,7 @@ export default function App() {
   }
 
   function addExcursion() {
-    if (!excursionForm.title.trim()) {
+  if (!excursionForm.title.trim() && excursionForm.files.length === 0) {
       window.alert("Vul eerst een naam voor de excursie in.");
       return;
     }
