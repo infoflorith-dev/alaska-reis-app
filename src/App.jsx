@@ -335,7 +335,6 @@ const styles = {
     border: active ? "1px solid #0f172a" : "1px solid #e2e8f0",
     background: active ? "#f8fafc" : "#fff",
     cursor: "pointer",
-    transition: "0.15s ease",
   }),
   dayTop: {
     display: "flex",
@@ -381,13 +380,14 @@ const styles = {
     fontWeight: 600,
   },
   buttonDark: {
-    padding: "10px 14px",
+    padding: "14px 18px",
     borderRadius: 14,
     border: "1px solid #0f172a",
     background: "#0f172a",
     color: "#fff",
     cursor: "pointer",
     fontWeight: 700,
+    width: "100%",
   },
   section: {
     border: "1px solid #e2e8f0",
@@ -467,11 +467,12 @@ function FilePreview({ file, onRemove }) {
                 maxHeight: 140,
                 borderRadius: 12,
                 border: "1px solid #e2e8f0",
+                maxWidth: "100%",
               }}
             />
           ) : null}
         </div>
-        <button onClick={onRemove} style={styles.button}>
+        <button type="button" onClick={onRemove} style={styles.button}>
           Verwijder
         </button>
       </div>
@@ -520,7 +521,7 @@ export default function App() {
 
   function addItem() {
     if (!itemForm.title.trim()) {
-      alert("Vul eerst een titel voor het item in.");
+      window.alert("Vul eerst een titel voor het item in.");
       return;
     }
 
@@ -553,14 +554,12 @@ export default function App() {
       files: [],
     });
 
-    if (itemFileRef.current) {
-      itemFileRef.current.value = "";
-    }
+    if (itemFileRef.current) itemFileRef.current.value = "";
   }
 
   function addExcursion() {
     if (!excursionForm.title.trim()) {
-      alert("Vul eerst een naam voor de excursie in.");
+      window.alert("Vul eerst een naam voor de excursie in.");
       return;
     }
 
@@ -593,9 +592,7 @@ export default function App() {
       files: [],
     });
 
-    if (excursionFileRef.current) {
-      excursionFileRef.current.value = "";
-    }
+    if (excursionFileRef.current) excursionFileRef.current.value = "";
   }
 
   function removeItem(itemId) {
@@ -676,6 +673,7 @@ export default function App() {
             </div>
 
             <button
+              type="button"
               style={styles.buttonDark}
               onClick={() => setEditingDay((v) => !v)}
             >
@@ -703,9 +701,7 @@ export default function App() {
                   <input
                     style={styles.input}
                     value={selectedDay.location}
-                    onChange={(e) =>
-                      updateSelectedDayField("location", e.target.value)
-                    }
+                    onChange={(e) => updateSelectedDayField("location", e.target.value)}
                   />
                   <input
                     style={styles.input}
@@ -717,16 +713,9 @@ export default function App() {
             ) : null}
 
             <div style={styles.section}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: 16,
-                }}
-              >
-                <h2 style={styles.sectionTitle}>Excursies van deze dag</h2>
-              </div>
+              <h2 style={{ ...styles.sectionTitle, marginBottom: 16 }}>
+                Excursies van deze dag
+              </h2>
 
               <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
                 <input
@@ -785,16 +774,14 @@ export default function App() {
                     }
                   />
                 ))}
-                <button style={styles.buttonDark} onClick={addExcursion}>
+                <button type="button" style={styles.buttonDark} onClick={addExcursion}>
                   Excursie toevoegen
                 </button>
               </div>
 
               <div style={{ display: "grid", gap: 12 }}>
                 {selectedDay.excursions.length === 0 ? (
-                  <div style={{ color: "#64748b" }}>
-                    Nog geen excursies toegevoegd.
-                  </div>
+                  <div style={{ color: "#64748b" }}>Nog geen excursies toegevoegd.</div>
                 ) : (
                   selectedDay.excursions.map((excursion) => (
                     <div key={excursion.id} style={styles.itemCard}>
@@ -809,11 +796,7 @@ export default function App() {
 
                         {excursion.website ? (
                           <div style={{ marginTop: 8 }}>
-                            <a
-                              href={excursion.website}
-                              target="_blank"
-                              rel="noreferrer"
-                            >
+                            <a href={excursion.website} target="_blank" rel="noreferrer">
                               Open website / boekingslink
                             </a>
                           </div>
@@ -835,9 +818,7 @@ export default function App() {
                                             ? ex
                                             : {
                                                 ...ex,
-                                                files: ex.files.filter(
-                                                  (f) => f.id !== file.id
-                                                ),
+                                                files: ex.files.filter((f) => f.id !== file.id),
                                               }
                                         ),
                                       }
@@ -848,6 +829,7 @@ export default function App() {
                         ))}
                       </div>
                       <button
+                        type="button"
                         style={styles.button}
                         onClick={() => removeExcursion(excursion.id)}
                       >
@@ -860,16 +842,9 @@ export default function App() {
             </div>
 
             <div style={styles.section}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: 16,
-                }}
-              >
-                <h2 style={styles.sectionTitle}>Items van deze dag</h2>
-              </div>
+              <h2 style={{ ...styles.sectionTitle, marginBottom: 16 }}>
+                Items van deze dag
+              </h2>
 
               <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
                 <select
@@ -933,16 +908,14 @@ export default function App() {
                     }
                   />
                 ))}
-                <button style={styles.buttonDark} onClick={addItem}>
+                <button type="button" style={styles.buttonDark} onClick={addItem}>
                   Item toevoegen
                 </button>
               </div>
 
               <div style={{ display: "grid", gap: 12 }}>
                 {selectedDay.items.length === 0 ? (
-                  <div style={{ color: "#64748b" }}>
-                    Nog geen items toegevoegd.
-                  </div>
+                  <div style={{ color: "#64748b" }}>Nog geen items toegevoegd.</div>
                 ) : (
                   selectedDay.items.map((item) => (
                     <div key={item.id} style={styles.itemCard}>
@@ -970,11 +943,7 @@ export default function App() {
 
                         {item.website ? (
                           <div style={{ marginTop: 8 }}>
-                            <a
-                              href={item.website}
-                              target="_blank"
-                              rel="noreferrer"
-                            >
+                            <a href={item.website} target="_blank" rel="noreferrer">
                               Open website / boekingslink
                             </a>
                           </div>
@@ -996,9 +965,7 @@ export default function App() {
                                             ? it
                                             : {
                                                 ...it,
-                                                files: it.files.filter(
-                                                  (f) => f.id !== file.id
-                                                ),
+                                                files: it.files.filter((f) => f.id !== file.id),
                                               }
                                         ),
                                       }
@@ -1009,6 +976,7 @@ export default function App() {
                         ))}
                       </div>
                       <button
+                        type="button"
                         style={styles.button}
                         onClick={() => removeItem(item.id)}
                       >
