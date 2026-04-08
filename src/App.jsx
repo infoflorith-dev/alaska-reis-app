@@ -292,7 +292,13 @@ export default function App() {
   const [selectedDayId, setSelectedDayId] = useState(initialTrip[0].id);
   const [editingDay, setEditingDay] = useState(false);
   const [itemForm, setItemForm] = useState({ kind: "ticket", title: "", note: "", files: [] });
-  const [excursionForm, setExcursionForm] = useState({ title: "", time: "", note: "", files: [] });
+const [excursionForm, setExcursionForm] = useState({
+  title: "",
+  time: "",
+  note: "",
+  website: "",
+  files: [],
+});
   const itemFileRef = useRef(null);
   const excursionFileRef = useRef(null);
 
