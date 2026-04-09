@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState, useEffect } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const initialTrip = [
   {
@@ -307,13 +307,13 @@ const initialTrip = [
 const styles = {
   page: {
     minHeight: "100vh",
-    background: "linear-gradient(180deg, #f6f8fb 0%, #eef2f7 100%)",
+    background: "linear-gradient(180deg, #f7f9fc 0%, #edf2f7 100%)",
     padding: 24,
     fontFamily: "Arial, sans-serif",
     color: "#0f172a",
   },
   shell: {
-    maxWidth: 1400,
+    maxWidth: 1450,
     margin: "0 auto",
     display: "grid",
     gridTemplateColumns: "360px 1fr",
@@ -323,17 +323,37 @@ const styles = {
     background: "#ffffff",
     border: "1px solid #e2e8f0",
     borderRadius: 24,
-    boxShadow: "0 10px 30px rgba(15, 23, 42, 0.06)",
+    boxShadow: "0 10px 30px rgba(15, 23, 42, 0.05)",
+    overflow: "hidden",
   },
-  sidebarHeader: { padding: 24, borderBottom: "1px solid #e2e8f0" },
-  title: { margin: 0, fontSize: 32, fontWeight: 700 },
-  sub: { marginTop: 8, color: "#64748b", fontSize: 14, lineHeight: 1.5 },
-  list: { padding: 16, display: "flex", flexDirection: "column", gap: 12 },
+  sidebarHeader: {
+    padding: 24,
+    borderBottom: "1px solid #e2e8f0",
+  },
+  title: {
+    margin: 0,
+    fontSize: 32,
+    fontWeight: 700,
+  },
+  sub: {
+    marginTop: 12,
+    color: "#64748b",
+    fontSize: 14,
+    lineHeight: 1.5,
+  },
+  list: {
+    padding: 16,
+    display: "flex",
+    flexDirection: "column",
+    gap: 14,
+    maxHeight: "calc(100vh - 180px)",
+    overflow: "auto",
+  },
   dayCard: (active) => ({
     padding: 16,
     borderRadius: 18,
-    border: active ? "1px solid #0f172a" : "1px solid #e2e8f0",
-    background: active ? "#f8fafc" : "#fff",
+    border: active ? "1px solid #0f172a" : "1px solid #dbe4ee",
+    background: active ? "#ffffff" : "#f9fbfd",
     cursor: "pointer",
   }),
   dayTop: {
@@ -364,20 +384,44 @@ const styles = {
   mainHeader: {
     padding: 24,
     borderBottom: "1px solid #e2e8f0",
-    display: "flex",
-    justifyContent: "space-between",
-    gap: 16,
-    alignItems: "flex-start",
   },
-  mainBody: { padding: 24, display: "flex", flexDirection: "column", gap: 24 },
-  sectionTitle: { margin: 0, fontSize: 22, fontWeight: 700 },
-  button: {
-    padding: "10px 14px",
+  mainBody: {
+    padding: 24,
+    display: "flex",
+    flexDirection: "column",
+    gap: 24,
+  },
+  section: {
+    border: "1px solid #e2e8f0",
+    borderRadius: 22,
+    padding: 18,
+    background: "#fcfdff",
+  },
+  sectionTitle: {
+    margin: 0,
+    marginBottom: 16,
+    fontSize: 20,
+    fontWeight: 700,
+  },
+  input: {
+    width: "100%",
+    padding: "12px 14px",
     borderRadius: 14,
     border: "1px solid #cbd5e1",
+    fontSize: 14,
+    boxSizing: "border-box",
     background: "#fff",
-    cursor: "pointer",
-    fontWeight: 600,
+  },
+  textarea: {
+    width: "100%",
+    minHeight: 90,
+    padding: "12px 14px",
+    borderRadius: 14,
+    border: "1px solid #cbd5e1",
+    fontSize: 14,
+    boxSizing: "border-box",
+    resize: "vertical",
+    background: "#fff",
   },
   buttonDark: {
     padding: "14px 18px",
@@ -389,29 +433,18 @@ const styles = {
     fontWeight: 700,
     width: "100%",
   },
-  section: {
-    border: "1px solid #e2e8f0",
-    borderRadius: 20,
-    padding: 18,
-    background: "#fcfdff",
-  },
-  input: {
-    width: "100%",
-    padding: "12px 14px",
+  button: {
+    padding: "10px 14px",
     borderRadius: 14,
     border: "1px solid #cbd5e1",
-    fontSize: 14,
-    boxSizing: "border-box",
+    background: "#fff",
+    cursor: "pointer",
+    fontWeight: 600,
   },
-  textarea: {
-    width: "100%",
-    minHeight: 90,
-    padding: "12px 14px",
-    borderRadius: 14,
-    border: "1px solid #cbd5e1",
-    fontSize: 14,
-    boxSizing: "border-box",
-    resize: "vertical",
+  headerButtons: {
+    display: "grid",
+    gap: 10,
+    marginTop: 14,
   },
   itemCard: {
     border: "1px solid #e2e8f0",
@@ -444,36 +477,72 @@ function prepareFiles(fileList) {
   return Array.from(fileList || []).map((file) => ({
     id: `${file.name}-${file.size}-${Date.now()}-${Math.random()}`,
     name: file.name,
-    type: file.type,
-    previewUrl: file.type.startsWith("image/") ? URL.createObjectURL(file) : "",
+    type: file.type || "",
+    size: file.size || 0,
+    previewUrl:
+      file.type && file.type.startsWith("image/")
+        ? URL.createObjectURL(file)
+        : "",
   }));
 }
 
-function FilePreview({ file, onRemove }) {
+function FilePreview({ file, onRemove, onOpen }) {
   return (
     <div style={styles.fileBox}>
-      <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: 12,
+        }}
+      >
         <div style={{ flex: 1 }}>
-          <div style={{ fontWeight: 700, fontSize: 14 }}>{file.name}</div>
-          <div style={{ color: "#64748b", fontSize: 12, marginTop: 4 }}>
-            {file.type || "Bestand"}
+          <div
+            style={{
+              fontWeight: 700,
+              fontSize: 14,
+              wordBreak: "break-word",
+            }}
+          >
+            {file.name}
           </div>
+
+          <div style={{ color: "#64748b", fontSize: 12, marginTop: 4 }}>
+            {file.type ? file.type : "Bestand"}
+          </div>
+
           {file.previewUrl ? (
             <img
-  src={file.previewUrl}
-onClick={() => setFullscreenImage(file.previewUrl)}
-  style={{ cursor: "pointer", marginTop: 10, maxHeight: 220, borderRadius: 12, border: "1px solid #e2e8f0" }}
+              src={file.previewUrl}
               alt={file.name}
+              onClick={() => onOpen(file.previewUrl)}
               style={{
+                cursor: "pointer",
                 marginTop: 10,
                 maxHeight: 220,
+                maxWidth: "100%",
                 borderRadius: 12,
                 border: "1px solid #e2e8f0",
-                maxWidth: "100%",
+                display: "block",
               }}
             />
-          ) : null}
+          ) : (
+            <div
+              style={{
+                marginTop: 10,
+                padding: 10,
+                borderRadius: 10,
+                background: "#f1f5f9",
+                border: "1px solid #e2e8f0",
+                fontSize: 13,
+                color: "#334155",
+              }}
+            >
+              Bestand toegevoegd: {file.name}
+            </div>
+          )}
         </div>
+
         <button type="button" onClick={onRemove} style={styles.button}>
           Verwijder
         </button>
@@ -484,18 +553,8 @@ onClick={() => setFullscreenImage(file.previewUrl)}
 
 export default function App() {
   const [days, setDays] = useState(initialTrip);
-const [fullscreenImage, setFullscreenImage] = useState(null);
-useEffect(() => {
-  const saved = localStorage.getItem("alaska-trip");
-  if (saved) setDays(JSON.parse(saved));
-}, []);
-
-useEffect(() => {
-  localStorage.setItem("alaska-trip", JSON.stringify(days));
-}, [days]);
-
+  const [fullscreenImage, setFullscreenImage] = useState(null);
   const [selectedDayId, setSelectedDayId] = useState(initialTrip[0].id);
-  const [editingDay, setEditingDay] = useState(false);
 
   const [itemForm, setItemForm] = useState({
     kind: "ticket",
@@ -516,12 +575,32 @@ useEffect(() => {
   const itemFileRef = useRef(null);
   const excursionFileRef = useRef(null);
 
+  useEffect(() => {
+    const saved = localStorage.getItem("alaska-trip");
+    if (saved) {
+      try {
+        setDays(JSON.parse(saved));
+      } catch (e) {
+        console.error("Kon opgeslagen reis niet laden", e);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("alaska-trip", JSON.stringify(days));
+  }, [days]);
+
   const selectedDay = useMemo(
     () => days.find((d) => d.id === selectedDayId),
     [days, selectedDayId]
   );
 
   const selectedDayNumber = days.findIndex((d) => d.id === selectedDayId) + 1;
+
+  function saveTrip() {
+    localStorage.setItem("alaska-trip", JSON.stringify(days));
+    alert("Opgeslagen 👍");
+  }
 
   function updateSelectedDayField(field, value) {
     setDays((current) =>
@@ -532,8 +611,8 @@ useEffect(() => {
   }
 
   function addItem() {
-    if (!itemForm.title.trim()) {
-      window.alert("Vul eerst een titel voor het item in.");
+    if (!itemForm.title.trim() && itemForm.files.length === 0) {
+      window.alert("Vul een titel in of voeg een bestand toe.");
       return;
     }
 
@@ -548,7 +627,7 @@ useEffect(() => {
                 {
                   id: Date.now(),
                   kind: itemForm.kind,
-                  title: itemForm.title.trim(),
+                  title: itemForm.title.trim() || "Item zonder titel",
                   note: itemForm.note.trim(),
                   website: itemForm.website.trim(),
                   files: itemForm.files || [],
@@ -570,8 +649,8 @@ useEffect(() => {
   }
 
   function addExcursion() {
-  if (!excursionForm.title.trim() && excursionForm.files.length === 0) {
-      window.alert("Vul eerst een naam voor de excursie in.");
+    if (!excursionForm.title.trim() && excursionForm.files.length === 0) {
+      window.alert("Vul een naam in of voeg een bestand toe.");
       return;
     }
 
@@ -585,11 +664,11 @@ useEffect(() => {
                 ...(day.excursions || []),
                 {
                   id: Date.now(),
-                 title: excursionForm.title.trim() || "Excursie zonder titel",
+                  title: excursionForm.title.trim() || "Excursie zonder titel",
                   time: excursionForm.time.trim(),
                   note: excursionForm.note.trim(),
                   website: excursionForm.website.trim(),
-       files: excursionForm.files || [],
+                  files: excursionForm.files || [],
                 },
               ],
             }
@@ -629,404 +708,456 @@ useEffect(() => {
       )
     );
   }
-function saveTrip() {
-  localStorage.setItem("alaska-trip", JSON.stringify(days));
-  alert("Opgeslagen 👍");
-}
+
   return (
-    <div style={styles.page}>
-      <div style={styles.shell}>
-        <div style={styles.card}>
-          <div style={styles.sidebarHeader}>
-            <h1 style={styles.title}>Alaska Reis App</h1>
-            <button onClick={saveTrip} style={styles.buttonDark}>
-  Opslaan
-</button>
-            <div style={styles.sub}>
-              Mooie reisplanner met alle dagen, excursies, wijzigen-knop en ruimte voor meerdere foto’s of pdf’s per dag.
+    <>
+      <div style={styles.page}>
+        <div style={styles.shell}>
+          <div style={styles.card}>
+            <div style={styles.sidebarHeader}>
+              <h1 style={styles.title}>Alaska Reis App</h1>
+
+              <div style={styles.headerButtons}>
+                <button type="button" onClick={saveTrip} style={styles.buttonDark}>
+                  Opslaan
+                </button>
+              </div>
+
+              <div style={styles.sub}>
+                Mooie reisplanner met alle dagen, excursies en ruimte voor meerdere foto’s of pdf’s per dag.
+              </div>
+            </div>
+
+            <div style={styles.list}>
+              {days.map((day, index) => {
+                const active = day.id === selectedDayId;
+                const count = day.items.length + day.excursions.length;
+
+                return (
+                  <div
+                    key={day.id}
+                    style={styles.dayCard(active)}
+                    onClick={() => setSelectedDayId(day.id)}
+                  >
+                    <div style={styles.dayTop}>
+                      <span style={styles.pill}>Dag {index + 1}</span>
+                      <span style={styles.count}>{count}</span>
+                    </div>
+
+                    <div style={{ fontWeight: 700, fontSize: 18 }}>
+                      {day.date}
+                    </div>
+                    <div style={{ marginTop: 6, fontWeight: 600 }}>
+                      {day.title}
+                    </div>
+                    <div
+                      style={{
+                        marginTop: 6,
+                        color: "#64748b",
+                        fontSize: 14,
+                      }}
+                    >
+                      {day.location}
+                    </div>
+                    <div
+                      style={{
+                        marginTop: 8,
+                        color: "#475569",
+                        fontSize: 13,
+                      }}
+                    >
+                      {typeLabel(day.type)} · {day.stay}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
-          <div style={styles.list}>
-            {days.map((day, index) => {
-              const active = day.id === selectedDayId;
-              const count = day.items.length + day.excursions.length;
-
-              return (
-                <div
-                  key={day.id}
-                  style={styles.dayCard(active)}
-                  onClick={() => {
-                    setSelectedDayId(day.id);
-                    setEditingDay(false);
-                  }}
-                >
-                  <div style={styles.dayTop}>
-                    <span style={styles.pill}>Dag {index + 1}</span>
-                    <span style={styles.count}>{count}</span>
-                  </div>
-                  <div style={{ fontWeight: 700, fontSize: 18 }}>{day.date}</div>
-                  <div style={{ marginTop: 6, fontWeight: 600 }}>{day.title}</div>
-                  <div style={{ marginTop: 6, color: "#64748b", fontSize: 14 }}>
-                    {day.location}
-                  </div>
-                  <div style={{ marginTop: 8, color: "#475569", fontSize: 13 }}>
-                    {typeLabel(day.type)} · {day.stay}
-                  </div>
+          <div style={styles.card}>
+            <div style={styles.mainHeader}>
+              <div>
+                <div style={{ fontSize: 30, fontWeight: 700 }}>
+                  Dag {selectedDayNumber} – {selectedDay.title}
                 </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div style={styles.card}>
-          <div style={styles.mainHeader}>
-            <div>
-              <div style={{ fontSize: 30, fontWeight: 700 }}>
-                Dag {selectedDayNumber} – {selectedDay.title}
-              </div>
-              <div style={{ marginTop: 8, color: "#64748b" }}>
-                {selectedDay.date} · {selectedDay.location} · Verblijf: {selectedDay.stay}
+                <div style={{ marginTop: 8, color: "#64748b" }}>
+                  {selectedDay.date} · {selectedDay.location} · Verblijf:{" "}
+                  {selectedDay.stay}
+                </div>
               </div>
             </div>
 
-          </div>
-
-          <div style={styles.mainBody}>
-         {true ? (
+            <div style={styles.mainBody}>
               <div style={styles.section}>
-                <h2 style={{ ...styles.sectionTitle, marginBottom: 16 }}>
-                  Dag aanpassen
-                </h2>
+                <h2 style={styles.sectionTitle}>Dag aanpassen</h2>
+
                 <div style={{ display: "grid", gap: 12 }}>
                   <input
                     style={styles.input}
                     value={selectedDay.date}
-                    onChange={(e) => updateSelectedDayField("date", e.target.value)}
+                    onChange={(e) =>
+                      updateSelectedDayField("date", e.target.value)
+                    }
                   />
                   <input
                     style={styles.input}
                     value={selectedDay.title}
-                    onChange={(e) => updateSelectedDayField("title", e.target.value)}
+                    onChange={(e) =>
+                      updateSelectedDayField("title", e.target.value)
+                    }
                   />
                   <input
                     style={styles.input}
                     value={selectedDay.location}
-                    onChange={(e) => updateSelectedDayField("location", e.target.value)}
+                    onChange={(e) =>
+                      updateSelectedDayField("location", e.target.value)
+                    }
                   />
                   <input
                     style={styles.input}
                     value={selectedDay.stay}
-                    onChange={(e) => updateSelectedDayField("stay", e.target.value)}
+                    onChange={(e) =>
+                      updateSelectedDayField("stay", e.target.value)
+                    }
                   />
                 </div>
               </div>
-            ) : null}
 
-            <div style={styles.section}>
-              <h2 style={{ ...styles.sectionTitle, marginBottom: 16 }}>
-                Excursies van deze dag
-              </h2>
+              <div style={styles.section}>
+                <h2 style={styles.sectionTitle}>Excursies van deze dag</h2>
 
-              <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
-                <input
-                  style={styles.input}
-                  placeholder="Naam excursie"
-                  value={excursionForm.title}
-                  onChange={(e) =>
-                    setExcursionForm((s) => ({ ...s, title: e.target.value }))
-                  }
-                />
-                <input
-                  style={styles.input}
-                  placeholder="Tijd"
-                  value={excursionForm.time}
-                  onChange={(e) =>
-                    setExcursionForm((s) => ({ ...s, time: e.target.value }))
-                  }
-                />
-                <textarea
-                  style={styles.textarea}
-                  placeholder="Notitie"
-                  value={excursionForm.note}
-                  onChange={(e) =>
-                    setExcursionForm((s) => ({ ...s, note: e.target.value }))
-                  }
-                />
-                <input
-                  style={styles.input}
-                  placeholder="Website of boekingslink"
-                  value={excursionForm.website}
-                  onChange={(e) =>
-                    setExcursionForm((s) => ({ ...s, website: e.target.value }))
-                  }
-                />
-                <input
-                  ref={excursionFileRef}
-                  type="file"
-                  multiple
-                  accept="image/*,.pdf"
-                  onChange={(e) =>
-                    setExcursionForm((s) => ({
-                      ...s,
-                     files: prepareFiles(e.target.files),
-                    }))
-                  }
-                />
-                {excursionForm.files.map((file) => (
-                  <FilePreview
-                    key={file.id}
-                    file={file}
-                    onRemove={() =>
+                <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
+                  <input
+                    style={styles.input}
+                    placeholder="Naam excursie"
+                    value={excursionForm.title}
+                    onChange={(e) =>
+                      setExcursionForm((s) => ({ ...s, title: e.target.value }))
+                    }
+                  />
+                  <input
+                    style={styles.input}
+                    placeholder="Tijd"
+                    value={excursionForm.time}
+                    onChange={(e) =>
+                      setExcursionForm((s) => ({ ...s, time: e.target.value }))
+                    }
+                  />
+                  <textarea
+                    style={styles.textarea}
+                    placeholder="Notitie"
+                    value={excursionForm.note}
+                    onChange={(e) =>
+                      setExcursionForm((s) => ({ ...s, note: e.target.value }))
+                    }
+                  />
+                  <input
+                    style={styles.input}
+                    placeholder="Website of boekingslink"
+                    value={excursionForm.website}
+                    onChange={(e) =>
                       setExcursionForm((s) => ({
                         ...s,
-                        files: s.files.filter((f) => f.id !== file.id),
+                        website: e.target.value,
                       }))
                     }
                   />
-                ))}
-                <button type="button" style={styles.buttonDark} onClick={addExcursion}>
-                  Excursie toevoegen
-                </button>
-              </div>
+                  <input
+                    ref={excursionFileRef}
+                    type="file"
+                    multiple
+                    accept="image/*,.pdf"
+                    onChange={(e) =>
+                      setExcursionForm((s) => ({
+                        ...s,
+                        files: prepareFiles(e.target.files),
+                      }))
+                    }
+                  />
+                  {excursionForm.files.map((file) => (
+                    <FilePreview
+                      key={file.id}
+                      file={file}
+                      onOpen={setFullscreenImage}
+                      onRemove={() =>
+                        setExcursionForm((s) => ({
+                          ...s,
+                          files: s.files.filter((f) => f.id !== file.id),
+                        }))
+                      }
+                    />
+                  ))}
+                  <button type="button" style={styles.buttonDark} onClick={addExcursion}>
+                    Excursie toevoegen
+                  </button>
+                </div>
 
-              <div style={{ display: "grid", gap: 12 }}>
-                {selectedDay.excursions.length === 0 ? (
-                  <div style={{ color: "#64748b" }}>Nog geen excursies toegevoegd.</div>
-                ) : (
-                  selectedDay.excursions.map((excursion) => (
-                    <div key={excursion.id} style={styles.itemCard}>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontWeight: 700, fontSize: 17 }}>
-                          {excursion.title}
-                        </div>
-                        <div style={{ color: "#64748b", marginTop: 4 }}>
-                          {excursion.time}
-                        </div>
-                        <div style={{ marginTop: 8 }}>{excursion.note}</div>
-
-                        {excursion.website ? (
-                          <div style={{ marginTop: 8 }}>
-                            <a href={excursion.website} target="_blank" rel="noreferrer">
-                              Open website / boekingslink
-                            </a>
-                          </div>
-                        ) : null}
-
-                        {(excursion.files || []).map((file) => (
-                          <FilePreview
-                            key={file.id}
-                            file={file}
-                            onRemove={() =>
-                              setDays((current) =>
-                                current.map((day) =>
-                                  day.id !== selectedDayId
-                                    ? day
-                                    : {
-                                        ...day,
-                                        excursions: day.excursions.map((ex) =>
-                                          ex.id !== excursion.id
-                                            ? ex
-                                            : {
-                                                ...ex,
-                                                files: ex.files.filter((f) => f.id !== file.id),
-                                              }
-                                        ),
-                                      }
-                                )
-                              )
-                            }
-                          />
-                        ))}
-                      </div>
-                      <button
-                        type="button"
-                        style={styles.button}
-                        onClick={() => removeExcursion(excursion.id)}
-                      >
-                        Verwijder
-                      </button>
+                <div style={{ display: "grid", gap: 12 }}>
+                  {selectedDay.excursions.length === 0 ? (
+                    <div style={{ color: "#64748b" }}>
+                      Nog geen excursies toegevoegd.
                     </div>
-                  ))
-                )}
+                  ) : (
+                    selectedDay.excursions.map((excursion) => (
+                      <div key={excursion.id} style={styles.itemCard}>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontWeight: 700, fontSize: 17 }}>
+                            {excursion.title}
+                          </div>
+                          {excursion.time ? (
+                            <div style={{ color: "#64748b", marginTop: 4 }}>
+                              {excursion.time}
+                            </div>
+                          ) : null}
+                          {excursion.note ? (
+                            <div style={{ marginTop: 8 }}>{excursion.note}</div>
+                          ) : null}
+
+                          {excursion.website ? (
+                            <div style={{ marginTop: 8 }}>
+                              <a
+                                href={excursion.website}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                Open website / boekingslink
+                              </a>
+                            </div>
+                          ) : null}
+
+                          {(excursion.files || []).map((file) => (
+                            <FilePreview
+                              key={file.id}
+                              file={file}
+                              onOpen={setFullscreenImage}
+                              onRemove={() =>
+                                setDays((current) =>
+                                  current.map((day) =>
+                                    day.id !== selectedDayId
+                                      ? day
+                                      : {
+                                          ...day,
+                                          excursions: day.excursions.map((ex) =>
+                                            ex.id !== excursion.id
+                                              ? ex
+                                              : {
+                                                  ...ex,
+                                                  files: ex.files.filter(
+                                                    (f) => f.id !== file.id
+                                                  ),
+                                                }
+                                          ),
+                                        }
+                                  )
+                                )
+                              }
+                            />
+                          ))}
+                        </div>
+
+                        <button
+                          type="button"
+                          style={styles.button}
+                          onClick={() => removeExcursion(excursion.id)}
+                        >
+                          Verwijder
+                        </button>
+                      </div>
+                    ))
+                  )}
+                </div>
               </div>
-            </div>
 
-            <div style={styles.section}>
-              <h2 style={{ ...styles.sectionTitle, marginBottom: 16 }}>
-                Items van deze dag
-              </h2>
+              <div style={styles.section}>
+                <h2 style={styles.sectionTitle}>Items van deze dag</h2>
 
-              <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
-                <select
-                  style={styles.input}
-                  value={itemForm.kind}
-                  onChange={(e) =>
-                    setItemForm((s) => ({ ...s, kind: e.target.value }))
-                  }
-                >
-                  <option value="ticket">Ticket</option>
-                  <option value="document">Document</option>
-                  <option value="photo">Foto</option>
-                  <option value="note">Notitie</option>
-                </select>
+                <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
+                  <select
+                    style={styles.input}
+                    value={itemForm.kind}
+                    onChange={(e) =>
+                      setItemForm((s) => ({ ...s, kind: e.target.value }))
+                    }
+                  >
+                    <option value="ticket">Ticket</option>
+                    <option value="document">Document</option>
+                    <option value="photo">Foto</option>
+                    <option value="note">Notitie</option>
+                  </select>
 
-                <input
-                  style={styles.input}
-                  placeholder="Titel"
-                  value={itemForm.title}
-                  onChange={(e) =>
-                    setItemForm((s) => ({ ...s, title: e.target.value }))
-                  }
-                />
-                <textarea
-                  style={styles.textarea}
-                  placeholder="Notitie"
-                  value={itemForm.note}
-                  onChange={(e) =>
-                    setItemForm((s) => ({ ...s, note: e.target.value }))
-                  }
-                />
-                <input
-                  style={styles.input}
-                  placeholder="Website of boekingslink"
-                  value={itemForm.website}
-                  onChange={(e) =>
-                    setItemForm((s) => ({ ...s, website: e.target.value }))
-                  }
-                />
-                <input
-                  ref={itemFileRef}
-                  type="file"
-                  multiple
-                  accept="image/*,.pdf"
-                  onChange={(e) =>
-                    setItemForm((s) => ({
-                      ...s,
-                      files: [...s.files, ...prepareFiles(e.target.files)],
-                    }))
-                  }
-                />
-                {itemForm.files.map((file) => (
-                  <FilePreview
-                    key={file.id}
-                    file={file}
-                    onRemove={() =>
+                  <input
+                    style={styles.input}
+                    placeholder="Titel"
+                    value={itemForm.title}
+                    onChange={(e) =>
+                      setItemForm((s) => ({ ...s, title: e.target.value }))
+                    }
+                  />
+                  <textarea
+                    style={styles.textarea}
+                    placeholder="Notitie"
+                    value={itemForm.note}
+                    onChange={(e) =>
+                      setItemForm((s) => ({ ...s, note: e.target.value }))
+                    }
+                  />
+                  <input
+                    style={styles.input}
+                    placeholder="Website of boekingslink"
+                    value={itemForm.website}
+                    onChange={(e) =>
+                      setItemForm((s) => ({ ...s, website: e.target.value }))
+                    }
+                  />
+                  <input
+                    ref={itemFileRef}
+                    type="file"
+                    multiple
+                    accept="image/*,.pdf"
+                    onChange={(e) =>
                       setItemForm((s) => ({
                         ...s,
-                        files: s.files.filter((f) => f.id !== file.id),
+                        files: prepareFiles(e.target.files),
                       }))
                     }
                   />
-                ))}
-                <button type="button" style={styles.buttonDark} onClick={addItem}>
-                  Item toevoegen
-                </button>
-              </div>
+                  {itemForm.files.map((file) => (
+                    <FilePreview
+                      key={file.id}
+                      file={file}
+                      onOpen={setFullscreenImage}
+                      onRemove={() =>
+                        setItemForm((s) => ({
+                          ...s,
+                          files: s.files.filter((f) => f.id !== file.id),
+                        }))
+                      }
+                    />
+                  ))}
+                  <button type="button" style={styles.buttonDark} onClick={addItem}>
+                    Item toevoegen
+                  </button>
+                </div>
 
-              <div style={{ display: "grid", gap: 12 }}>
-                {selectedDay.items.length === 0 ? (
-                  <div style={{ color: "#64748b" }}>Nog geen items toegevoegd.</div>
-                ) : (
-                  selectedDay.items.map((item) => (
-                    <div key={item.id} style={styles.itemCard}>
-                      <div style={{ flex: 1 }}>
-                        <div
-                          style={{
-                            color: "#64748b",
-                            fontSize: 13,
-                            fontWeight: 700,
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          {item.kind}
-                        </div>
-                        <div
-                          style={{
-                            fontWeight: 700,
-                            fontSize: 17,
-                            marginTop: 4,
-                          }}
-                        >
-                          {item.title}
-                        </div>
-                        <div style={{ marginTop: 8 }}>{item.note}</div>
-
-                        {item.website ? (
-                          <div style={{ marginTop: 8 }}>
-                            <a href={item.website} target="_blank" rel="noreferrer">
-                              Open website / boekingslink
-                            </a>
-                          </div>
-                        ) : null}
-
-                        {(item.files || []).map((file) => (
-                          <FilePreview
-                            key={file.id}
-                            file={file}
-                            onRemove={() =>
-                              setDays((current) =>
-                                current.map((day) =>
-                                  day.id !== selectedDayId
-                                    ? day
-                                    : {
-                                        ...day,
-                                        items: day.items.map((it) =>
-                                          it.id !== item.id
-                                            ? it
-                                            : {
-                                                ...it,
-                                                files: it.files.filter((f) => f.id !== file.id),
-                                              }
-                                        ),
-                                      }
-                                )
-                              )
-                            }
-                          />
-                        ))}
-                      </div>
-                      <button
-                        type="button"
-                        style={styles.button}
-                        onClick={() => removeItem(item.id)}
-                      >
-                        Verwijder
-                      </button>
+                <div style={{ display: "grid", gap: 12 }}>
+                  {selectedDay.items.length === 0 ? (
+                    <div style={{ color: "#64748b" }}>
+                      Nog geen items toegevoegd.
                     </div>
-                  ))
-                )}
+                  ) : (
+                    selectedDay.items.map((item) => (
+                      <div key={item.id} style={styles.itemCard}>
+                        <div style={{ flex: 1 }}>
+                          <div
+                            style={{
+                              color: "#64748b",
+                              fontSize: 13,
+                              fontWeight: 700,
+                              textTransform: "uppercase",
+                            }}
+                          >
+                            {item.kind}
+                          </div>
+                          <div
+                            style={{
+                              fontWeight: 700,
+                              fontSize: 17,
+                              marginTop: 4,
+                            }}
+                          >
+                            {item.title}
+                          </div>
+
+                          {item.note ? (
+                            <div style={{ marginTop: 8 }}>{item.note}</div>
+                          ) : null}
+
+                          {item.website ? (
+                            <div style={{ marginTop: 8 }}>
+                              <a
+                                href={item.website}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                Open website / boekingslink
+                              </a>
+                            </div>
+                          ) : null}
+
+                          {(item.files || []).map((file) => (
+                            <FilePreview
+                              key={file.id}
+                              file={file}
+                              onOpen={setFullscreenImage}
+                              onRemove={() =>
+                                setDays((current) =>
+                                  current.map((day) =>
+                                    day.id !== selectedDayId
+                                      ? day
+                                      : {
+                                          ...day,
+                                          items: day.items.map((it) =>
+                                            it.id !== item.id
+                                              ? it
+                                              : {
+                                                  ...it,
+                                                  files: it.files.filter(
+                                                    (f) => f.id !== file.id
+                                                  ),
+                                                }
+                                          ),
+                                        }
+                                  )
+                                )
+                              }
+                            />
+                          ))}
+                        </div>
+
+                        <button
+                          type="button"
+                          style={styles.button}
+                          onClick={() => removeItem(item.id)}
+                        >
+                          Verwijder
+                        </button>
+                      </div>
+                    ))
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-1004 </div>
 
-{fullscreenImage && (
-  <div
-    onClick={() => setFullscreenImage(null)}
-    style={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100vw",
-      height: "100vh",
-      background: "black",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      zIndex: 9999,
-    }}
-  >
-    <img
-      src={fullscreenImage}
-      style={{
-        maxWidth: "95%",
-        maxHeight: "95%",
-      }}
-    />
-  </div>
-)}
-);
+      {fullscreenImage && (
+        <div
+          onClick={() => setFullscreenImage(null)}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "black",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+            cursor: "pointer",
+          }}
+        >
+          <img
+            src={fullscreenImage}
+            alt="Fullscreen preview"
+            style={{
+              maxWidth: "95%",
+              maxHeight: "95%",
+            }}
+          />
+        </div>
+      )}
+    </>
+  );
 }
