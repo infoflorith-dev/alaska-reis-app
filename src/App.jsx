@@ -461,7 +461,7 @@ function FilePreview({ file, onRemove }) {
           {file.previewUrl ? (
             <img
   src={file.previewUrl}
-  onClick={() => window.open(file.previewUrl, "_blank")}
+onClick={() => setFullscreenImage(file.previewUrl)}
   style={{ cursor: "pointer", marginTop: 10, maxHeight: 220, borderRadius: 12, border: "1px solid #e2e8f0" }}
               alt={file.name}
               style={{
