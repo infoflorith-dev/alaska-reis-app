@@ -1001,6 +1001,32 @@ function saveTrip() {
           </div>
         </div>
       </div>
-    </div>
-  );
+1004 </div>
+
+{fullscreenImage && (
+  <div
+    onClick={() => setFullscreenImage(null)}
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100vw",
+      height: "100vh",
+      background: "black",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 9999,
+    }}
+  >
+    <img
+      src={fullscreenImage}
+      style={{
+        maxWidth: "95%",
+        maxHeight: "95%",
+      }}
+    />
+  </div>
+)}
+);
 }
