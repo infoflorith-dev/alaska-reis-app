@@ -484,7 +484,7 @@ onClick={() => setFullscreenImage(file.previewUrl)}
 
 export default function App() {
   const [days, setDays] = useState(initialTrip);
-
+const [fullscreenImage, setFullscreenImage] = useState(null);
 useEffect(() => {
   const saved = localStorage.getItem("alaska-trip");
   if (saved) setDays(JSON.parse(saved));
