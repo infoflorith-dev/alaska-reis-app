@@ -684,13 +684,6 @@ function saveTrip() {
               </div>
             </div>
 
-            <button
-              type="button"
-              style={styles.buttonDark}
-              onClick={() => setEditingDay((v) => !v)}
-            >
-              {editingDay ? "Klaar met wijzigen" : "Wijzigen"}
-            </button>
           </div>
 
           <div style={styles.mainBody}>
