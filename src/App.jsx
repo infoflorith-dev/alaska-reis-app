@@ -694,7 +694,7 @@ function saveTrip() {
           </div>
 
           <div style={styles.mainBody}>
-            {editingDay ? (
+         {true ? (
               <div style={styles.section}>
                 <h2 style={{ ...styles.sectionTitle, marginBottom: 16 }}>
                   Dag aanpassen
