@@ -630,6 +630,9 @@ useEffect(() => {
         <div style={styles.card}>
           <div style={styles.sidebarHeader}>
             <h1 style={styles.title}>Alaska Reis App</h1>
+            <button onClick={saveTrip} style={styles.buttonDark}>
+  Opslaan
+</button>
             <div style={styles.sub}>
               Mooie reisplanner met alle dagen, excursies, wijzigen-knop en ruimte voor meerdere foto’s of pdf’s per dag.
             </div>
