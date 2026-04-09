@@ -623,7 +623,10 @@ useEffect(() => {
       )
     );
   }
-
+function saveTrip() {
+  localStorage.setItem("alaska-trip", JSON.stringify(days));
+  alert("Opgeslagen 👍");
+}
   return (
     <div style={styles.page}>
       <div style={styles.shell}>
