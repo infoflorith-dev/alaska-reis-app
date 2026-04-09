@@ -575,7 +575,19 @@ export default function App() {
   const itemFileRef = useRef(null);
   const excursionFileRef = useRef(null);
 
-  useEffect(() => {
+ useEffect(() => {
+  async function loadTrip() {
+    const { data, error } = await supabase
+      .from("travel_app_state")
+      .select("data")
+      .eq("id", "main")
+      .single();
+
+    if (data?.data) {
+      setDays(data.data);
+      return;
+    }
+
     const saved = localStorage.getItem("alaska-trip");
     if (saved) {
       try {
@@ -584,7 +596,14 @@ export default function App() {
         console.error("Kon opgeslagen reis niet laden", e);
       }
     }
-  }, []);
+
+    if (error && error.code !== "PGRST116") {
+      console.error(error);
+    }
+  }
+
+  loadTrip();
+}, []);
 
   useEffect(() => {
     localStorage.setItem("alaska-trip", JSON.stringify(days));
