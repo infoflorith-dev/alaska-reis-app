@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { supabase } from "./supabase";
+import { supabase } from "../supabase";
 const initialTrip = [
   {
     id: 1,
