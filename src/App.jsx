@@ -482,6 +482,12 @@ function FilePreview({ file, onRemove }) {
 
 export default function App() {
   const [days, setDays] = useState(initialTrip);
+
+useEffect(() => {
+  const saved = localStorage.getItem("alaska-trip");
+  if (saved) setDays(JSON.parse(saved));
+}, []);
+
   const [selectedDayId, setSelectedDayId] = useState(initialTrip[0].id);
   const [editingDay, setEditingDay] = useState(false);
 
