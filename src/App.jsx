@@ -596,11 +596,23 @@ export default function App() {
   );
 
   const selectedDayNumber = days.findIndex((d) => d.id === selectedDayId) + 1;
+async function saveTrip() {
+  const { error } = await supabase
+    .from("travel_app_state")
+    .upsert([
+      {
+        id: "main",
+        data: days,
+      },
+    ]);
 
-  function saveTrip() {
-    localStorage.setItem("alaska-trip", JSON.stringify(days));
-    alert("Opgeslagen 👍");
+  if (error) {
+    alert("Fout bij opslaan 😢");
+    console.error(error);
+  } else {
+    alert("Opgeslagen in cloud ☁️");
   }
+}
 
   function updateSelectedDayField(field, value) {
     setDays((current) =>
