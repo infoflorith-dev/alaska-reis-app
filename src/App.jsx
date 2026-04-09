@@ -488,6 +488,10 @@ useEffect(() => {
   if (saved) setDays(JSON.parse(saved));
 }, []);
 
+useEffect(() => {
+  localStorage.setItem("alaska-trip", JSON.stringify(days));
+}, [days]);
+
   const [selectedDayId, setSelectedDayId] = useState(initialTrip[0].id);
   const [editingDay, setEditingDay] = useState(false);
 
