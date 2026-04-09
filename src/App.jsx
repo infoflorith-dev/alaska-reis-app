@@ -460,7 +460,9 @@ function FilePreview({ file, onRemove }) {
           </div>
           {file.previewUrl ? (
             <img
-              src={file.previewUrl}
+  src={file.previewUrl}
+  onClick={() => window.open(file.previewUrl, "_blank")}
+  style={{ cursor: "pointer", marginTop: 10, maxHeight: 140, borderRadius: 12, border: "1px solid #e2e8f0" }}
               alt={file.name}
               style={{
                 marginTop: 10,
