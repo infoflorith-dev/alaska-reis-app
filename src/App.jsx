@@ -564,8 +564,14 @@ const hasLoadedRef = useRef(false);
     loadTrip();
   }, []);
 
- useEffect(() => {
+useEffect(() => {
   localStorage.setItem("alaska-trip", JSON.stringify(days));
+
+  if (!hasLoadedRef.current) {
+    hasLoadedRef.current = true;
+    return;
+  }
+
   saveTrip(days);
 }, [days]);
 
