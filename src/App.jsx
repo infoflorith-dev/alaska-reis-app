@@ -313,13 +313,13 @@ const styles = {
     color: "#0f172a",
   },
 shell: {
-  width: "max-content",
-  minWidth: "1180px",
+ width: "100%",
   margin: "0 auto",
   display: "grid",
   gridTemplateColumns: "360px 1fr",
   gap: 24,
   alignItems: "start",
+  overflowX: "auto", 
 },
   card: {
     background: "#ffffff",
