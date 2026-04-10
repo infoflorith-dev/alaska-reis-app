@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "../supabase";
+
 const initialTrip = [
   {
     id: 1,
@@ -67,16 +68,7 @@ const initialTrip = [
     stay: "Queen Elizabeth",
     type: "cruise",
     items: [],
-    excursions: [
-      {
-        id: 501,
-        title: "Excursie Wrangell",
-        time: "Nog invullen",
-        note: "Voucher en opstapinformatie hier",
-        website: "",
-        files: [],
-      },
-    ],
+    excursions: [],
   },
   {
     id: 6,
@@ -86,16 +78,7 @@ const initialTrip = [
     stay: "Queen Elizabeth",
     type: "cruise",
     items: [],
-    excursions: [
-      {
-        id: 601,
-        title: "Excursie Juneau",
-        time: "Nog invullen",
-        note: "Whale watching / glacier / tickets",
-        website: "",
-        files: [],
-      },
-    ],
+    excursions: [],
   },
   {
     id: 7,
@@ -105,16 +88,7 @@ const initialTrip = [
     stay: "Queen Elizabeth",
     type: "cruise",
     items: [],
-    excursions: [
-      {
-        id: 701,
-        title: "Excursie Skagway",
-        time: "Nog invullen",
-        note: "White Pass of wildlife tour",
-        website: "",
-        files: [],
-      },
-    ],
+    excursions: [],
   },
   {
     id: 8,
@@ -134,16 +108,7 @@ const initialTrip = [
     stay: "Queen Elizabeth",
     type: "cruise",
     items: [],
-    excursions: [
-      {
-        id: 901,
-        title: "Sea Otter & Wildlife Quest",
-        time: "Nog invullen",
-        note: "Via Cunard geboekt",
-        website: "",
-        files: [],
-      },
-    ],
+    excursions: [],
   },
   {
     id: 10,
@@ -153,16 +118,7 @@ const initialTrip = [
     stay: "Queen Elizabeth",
     type: "cruise",
     items: [],
-    excursions: [
-      {
-        id: 1001,
-        title: "Excursie Ketchikan",
-        time: "Nog invullen",
-        note: "Beren of Misty Fjords",
-        website: "",
-        files: [],
-      },
-    ],
+    excursions: [],
   },
   {
     id: 11,
@@ -191,16 +147,7 @@ const initialTrip = [
     location: "Seattle → Golden",
     stay: "Kicking Horse Hideaway",
     type: "roadtrip",
-    items: [
-      {
-        id: 1301,
-        kind: "document",
-        title: "Huurauto reservering",
-        note: "Bevestiging en papieren hier toevoegen",
-        website: "",
-        files: [],
-      },
-    ],
+    items: [],
     excursions: [],
   },
   {
@@ -280,16 +227,7 @@ const initialTrip = [
     location: "Seattle",
     stay: "Aan boord",
     type: "flight",
-    items: [
-      {
-        id: 2101,
-        kind: "document",
-        title: "Boarding pass terug",
-        note: "Hier later pdf of foto toevoegen",
-        website: "",
-        files: [],
-      },
-    ],
+    items: [],
     excursions: [],
   },
   {
@@ -308,19 +246,25 @@ const styles = {
   page: {
     minHeight: "100vh",
     background: "linear-gradient(180deg, #f7f9fc 0%, #edf2f7 100%)",
-    padding: 24,
+    padding: 16,
     fontFamily: "Arial, sans-serif",
     color: "#0f172a",
   },
-shell: {
- width: "100%",
-  margin: "0 auto",
-  display: "grid",
-  gridTemplateColumns: "360px 1fr",
-  gap: 24,
-  alignItems: "start",
-  overflowX: "auto", 
-},
+  shell: {
+    maxWidth: 1450,
+    margin: "0 auto",
+    display: "grid",
+    gridTemplateColumns: "minmax(0, 1fr)",
+    gap: 20,
+  },
+  desktopShell: {
+    maxWidth: 1450,
+    margin: "0 auto",
+    display: "grid",
+    gridTemplateColumns: "360px minmax(0, 1fr)",
+    gap: 24,
+    alignItems: "start",
+  },
   card: {
     background: "#ffffff",
     border: "1px solid #e2e8f0",
@@ -348,8 +292,6 @@ shell: {
     display: "flex",
     flexDirection: "column",
     gap: 14,
-    maxHeight: "calc(100vh - 180px)",
-    overflow: "auto",
   },
   dayCard: (active) => ({
     padding: 16,
@@ -464,6 +406,12 @@ shell: {
     background: "#f8fafc",
     marginTop: 10,
   },
+  mobileNav: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: 10,
+    marginBottom: 16,
+  },
 };
 
 function typeLabel(type) {
@@ -491,21 +439,9 @@ function prepareFiles(fileList) {
 function FilePreview({ file, onRemove, onOpen }) {
   return (
     <div style={styles.fileBox}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          gap: 12,
-        }}
-      >
+      <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
         <div style={{ flex: 1 }}>
-          <div
-            style={{
-              fontWeight: 700,
-              fontSize: 14,
-              wordBreak: "break-word",
-            }}
-          >
+          <div style={{ fontWeight: 700, fontSize: 14, wordBreak: "break-word" }}>
             {file.name}
           </div>
 
@@ -557,6 +493,10 @@ export default function App() {
   const [days, setDays] = useState(initialTrip);
   const [fullscreenImage, setFullscreenImage] = useState(null);
   const [selectedDayId, setSelectedDayId] = useState(initialTrip[0].id);
+  const [mobileTab, setMobileTab] = useState("days");
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < 900 : false
+  );
 
   const [itemForm, setItemForm] = useState({
     kind: "ticket",
@@ -577,35 +517,52 @@ export default function App() {
   const itemFileRef = useRef(null);
   const excursionFileRef = useRef(null);
 
- useEffect(() => {
-  async function loadTrip() {
-    const { data, error } = await supabase
-      .from("travel_app_state")
-      .select("data")
-      .eq("id", "main")
-      .single();
-
-    if (data?.data) {
-      setDays(data.data);
-      return;
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < 900);
     }
 
-    const saved = localStorage.getItem("alaska-trip");
-    if (saved) {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    async function loadTrip() {
       try {
-        setDays(JSON.parse(saved));
+        const { data, error } = await supabase
+          .from("travel_app_state")
+          .select("data")
+          .eq("id", "main")
+          .single();
+
+        if (data?.data) {
+          setDays(data.data);
+          return;
+        }
+
+        const saved = localStorage.getItem("alaska-trip");
+        if (saved) {
+          setDays(JSON.parse(saved));
+        }
+
+        if (error && error.code !== "PGRST116") {
+          console.error(error);
+        }
       } catch (e) {
-        console.error("Kon opgeslagen reis niet laden", e);
+        const saved = localStorage.getItem("alaska-trip");
+        if (saved) {
+          try {
+            setDays(JSON.parse(saved));
+          } catch (err) {
+            console.error(err);
+          }
+        }
       }
     }
 
-    if (error && error.code !== "PGRST116") {
-      console.error(error);
-    }
-  }
-
-  loadTrip();
-}, []);
+    loadTrip();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("alaska-trip", JSON.stringify(days));
@@ -617,23 +574,23 @@ export default function App() {
   );
 
   const selectedDayNumber = days.findIndex((d) => d.id === selectedDayId) + 1;
-async function saveTrip() {
-  const { error } = await supabase
-    .from("travel_app_state")
-    .upsert([
+
+  async function saveTrip() {
+    const { error } = await supabase.from("travel_app_state").upsert([
       {
         id: "main",
         data: days,
       },
     ]);
 
-  if (error) {
-    alert("Fout bij opslaan 😢");
-    console.error(error);
-  } else {
-    alert("Opgeslagen in cloud ☁️");
+    if (error) {
+      alert("Fout bij opslaan 😢");
+      console.error(error);
+    } else {
+      localStorage.setItem("alaska-trip", JSON.stringify(days));
+      alert("Opgeslagen in cloud ☁️");
+    }
   }
-}
 
   function updateSelectedDayField(field, value) {
     setDays((current) =>
@@ -742,426 +699,422 @@ async function saveTrip() {
     );
   }
 
+  const sidebar = (
+    <div style={styles.card}>
+      <div style={styles.sidebarHeader}>
+        <h1 style={styles.title}>Alaska Reis App</h1>
+
+        <div style={styles.headerButtons}>
+          <button type="button" onClick={saveTrip} style={styles.buttonDark}>
+            Opslaan
+          </button>
+        </div>
+
+        <div style={styles.sub}>
+          Mooie reisplanner met alle dagen, excursies en ruimte voor meerdere foto’s of pdf’s per dag.
+        </div>
+      </div>
+
+      <div style={styles.list}>
+        {days.map((day, index) => {
+          const active = day.id === selectedDayId;
+          const count = day.items.length + day.excursions.length;
+
+          return (
+            <div
+              key={day.id}
+              style={styles.dayCard(active)}
+              onClick={() => {
+                setSelectedDayId(day.id);
+                if (isMobile) setMobileTab("details");
+              }}
+            >
+              <div style={styles.dayTop}>
+                <span style={styles.pill}>Dag {index + 1}</span>
+                <span style={styles.count}>{count}</span>
+              </div>
+
+              <div style={{ fontWeight: 700, fontSize: 18 }}>{day.date}</div>
+              <div style={{ marginTop: 6, fontWeight: 600 }}>{day.title}</div>
+              <div style={{ marginTop: 6, color: "#64748b", fontSize: 14 }}>
+                {day.location}
+              </div>
+              <div style={{ marginTop: 8, color: "#475569", fontSize: 13 }}>
+                {typeLabel(day.type)} · {day.stay}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  const details = (
+    <div style={styles.card}>
+      <div style={styles.mainHeader}>
+        <div>
+          <div style={{ fontSize: 30, fontWeight: 700 }}>
+            Dag {selectedDayNumber} – {selectedDay.title}
+          </div>
+          <div style={{ marginTop: 8, color: "#64748b" }}>
+            {selectedDay.date} · {selectedDay.location} · Verblijf: {selectedDay.stay}
+          </div>
+        </div>
+      </div>
+
+      <div style={styles.mainBody}>
+        <div style={styles.section}>
+          <h2 style={styles.sectionTitle}>Dag aanpassen</h2>
+
+          <div style={{ display: "grid", gap: 12 }}>
+            <input
+              style={styles.input}
+              value={selectedDay.date}
+              onChange={(e) => updateSelectedDayField("date", e.target.value)}
+            />
+            <input
+              style={styles.input}
+              value={selectedDay.title}
+              onChange={(e) => updateSelectedDayField("title", e.target.value)}
+            />
+            <input
+              style={styles.input}
+              value={selectedDay.location}
+              onChange={(e) => updateSelectedDayField("location", e.target.value)}
+            />
+            <input
+              style={styles.input}
+              value={selectedDay.stay}
+              onChange={(e) => updateSelectedDayField("stay", e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div style={styles.section}>
+          <h2 style={styles.sectionTitle}>Excursies van deze dag</h2>
+
+          <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
+            <input
+              style={styles.input}
+              placeholder="Naam excursie"
+              value={excursionForm.title}
+              onChange={(e) =>
+                setExcursionForm((s) => ({ ...s, title: e.target.value }))
+              }
+            />
+            <input
+              style={styles.input}
+              placeholder="Tijd"
+              value={excursionForm.time}
+              onChange={(e) =>
+                setExcursionForm((s) => ({ ...s, time: e.target.value }))
+              }
+            />
+            <textarea
+              style={styles.textarea}
+              placeholder="Notitie"
+              value={excursionForm.note}
+              onChange={(e) =>
+                setExcursionForm((s) => ({ ...s, note: e.target.value }))
+              }
+            />
+            <input
+              style={styles.input}
+              placeholder="Website of boekingslink"
+              value={excursionForm.website}
+              onChange={(e) =>
+                setExcursionForm((s) => ({
+                  ...s,
+                  website: e.target.value,
+                }))
+              }
+            />
+            <input
+              ref={excursionFileRef}
+              type="file"
+              multiple
+              accept="image/*,.pdf"
+              onChange={(e) =>
+                setExcursionForm((s) => ({
+                  ...s,
+                  files: prepareFiles(e.target.files),
+                }))
+              }
+            />
+            {excursionForm.files.map((file) => (
+              <FilePreview
+                key={file.id}
+                file={file}
+                onOpen={setFullscreenImage}
+                onRemove={() =>
+                  setExcursionForm((s) => ({
+                    ...s,
+                    files: s.files.filter((f) => f.id !== file.id),
+                  }))
+                }
+              />
+            ))}
+            <button type="button" style={styles.buttonDark} onClick={addExcursion}>
+              Excursie toevoegen
+            </button>
+          </div>
+
+          <div style={{ display: "grid", gap: 12 }}>
+            {selectedDay.excursions.length === 0 ? (
+              <div style={{ color: "#64748b" }}>Nog geen excursies toegevoegd.</div>
+            ) : (
+              selectedDay.excursions.map((excursion) => (
+                <div key={excursion.id} style={styles.itemCard}>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: 700, fontSize: 17 }}>
+                      {excursion.title}
+                    </div>
+                    {excursion.time ? (
+                      <div style={{ color: "#64748b", marginTop: 4 }}>
+                        {excursion.time}
+                      </div>
+                    ) : null}
+                    {excursion.note ? (
+                      <div style={{ marginTop: 8 }}>{excursion.note}</div>
+                    ) : null}
+
+                    {excursion.website ? (
+                      <div style={{ marginTop: 8 }}>
+                        <a href={excursion.website} target="_blank" rel="noreferrer">
+                          Open website / boekingslink
+                        </a>
+                      </div>
+                    ) : null}
+
+                    {(excursion.files || []).map((file) => (
+                      <FilePreview
+                        key={file.id}
+                        file={file}
+                        onOpen={setFullscreenImage}
+                        onRemove={() =>
+                          setDays((current) =>
+                            current.map((day) =>
+                              day.id !== selectedDayId
+                                ? day
+                                : {
+                                    ...day,
+                                    excursions: day.excursions.map((ex) =>
+                                      ex.id !== excursion.id
+                                        ? ex
+                                        : {
+                                            ...ex,
+                                            files: ex.files.filter(
+                                              (f) => f.id !== file.id
+                                            ),
+                                          }
+                                    ),
+                                  }
+                            )
+                          )
+                        }
+                      />
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    style={styles.button}
+                    onClick={() => removeExcursion(excursion.id)}
+                  >
+                    Verwijder
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        <div style={styles.section}>
+          <h2 style={styles.sectionTitle}>Items van deze dag</h2>
+
+          <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
+            <select
+              style={styles.input}
+              value={itemForm.kind}
+              onChange={(e) =>
+                setItemForm((s) => ({ ...s, kind: e.target.value }))
+              }
+            >
+              <option value="ticket">Ticket</option>
+              <option value="document">Document</option>
+              <option value="photo">Foto</option>
+              <option value="note">Notitie</option>
+            </select>
+
+            <input
+              style={styles.input}
+              placeholder="Titel"
+              value={itemForm.title}
+              onChange={(e) =>
+                setItemForm((s) => ({ ...s, title: e.target.value }))
+              }
+            />
+            <textarea
+              style={styles.textarea}
+              placeholder="Notitie"
+              value={itemForm.note}
+              onChange={(e) =>
+                setItemForm((s) => ({ ...s, note: e.target.value }))
+              }
+            />
+            <input
+              style={styles.input}
+              placeholder="Website of boekingslink"
+              value={itemForm.website}
+              onChange={(e) =>
+                setItemForm((s) => ({ ...s, website: e.target.value }))
+              }
+            />
+            <input
+              ref={itemFileRef}
+              type="file"
+              multiple
+              accept="image/*,.pdf"
+              onChange={(e) =>
+                setItemForm((s) => ({
+                  ...s,
+                  files: prepareFiles(e.target.files),
+                }))
+              }
+            />
+            {itemForm.files.map((file) => (
+              <FilePreview
+                key={file.id}
+                file={file}
+                onOpen={setFullscreenImage}
+                onRemove={() =>
+                  setItemForm((s) => ({
+                    ...s,
+                    files: s.files.filter((f) => f.id !== file.id),
+                  }))
+                }
+              />
+            ))}
+            <button type="button" style={styles.buttonDark} onClick={addItem}>
+              Item toevoegen
+            </button>
+          </div>
+
+          <div style={{ display: "grid", gap: 12 }}>
+            {selectedDay.items.length === 0 ? (
+              <div style={{ color: "#64748b" }}>Nog geen items toegevoegd.</div>
+            ) : (
+              selectedDay.items.map((item) => (
+                <div key={item.id} style={styles.itemCard}>
+                  <div style={{ flex: 1 }}>
+                    <div
+                      style={{
+                        color: "#64748b",
+                        fontSize: 13,
+                        fontWeight: 700,
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {item.kind}
+                    </div>
+                    <div
+                      style={{
+                        fontWeight: 700,
+                        fontSize: 17,
+                        marginTop: 4,
+                      }}
+                    >
+                      {item.title}
+                    </div>
+
+                    {item.note ? (
+                      <div style={{ marginTop: 8 }}>{item.note}</div>
+                    ) : null}
+
+                    {item.website ? (
+                      <div style={{ marginTop: 8 }}>
+                        <a href={item.website} target="_blank" rel="noreferrer">
+                          Open website / boekingslink
+                        </a>
+                      </div>
+                    ) : null}
+
+                    {(item.files || []).map((file) => (
+                      <FilePreview
+                        key={file.id}
+                        file={file}
+                        onOpen={setFullscreenImage}
+                        onRemove={() =>
+                          setDays((current) =>
+                            current.map((day) =>
+                              day.id !== selectedDayId
+                                ? day
+                                : {
+                                    ...day,
+                                    items: day.items.map((it) =>
+                                      it.id !== item.id
+                                        ? it
+                                        : {
+                                            ...it,
+                                            files: it.files.filter(
+                                              (f) => f.id !== file.id
+                                            ),
+                                          }
+                                    ),
+                                  }
+                            )
+                          )
+                        }
+                      />
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    style={styles.button}
+                    onClick={() => removeItem(item.id)}
+                  >
+                    Verwijder
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <>
       <div style={styles.page}>
-        <div style={styles.shell}>
-          <div style={styles.card}>
-            <div style={styles.sidebarHeader}>
-              <h1 style={styles.title}>Alaska Reis App</h1>
-
-              <div style={styles.headerButtons}>
-                <button type="button" onClick={saveTrip} style={styles.buttonDark}>
-                  Opslaan
-                </button>
-              </div>
-
-              <div style={styles.sub}>
-                Mooie reisplanner met alle dagen, excursies en ruimte voor meerdere foto’s of pdf’s per dag.
-              </div>
+        {isMobile ? (
+          <div style={styles.shell}>
+            <div style={styles.mobileNav}>
+              <button
+                type="button"
+                style={mobileTab === "days" ? styles.buttonDark : styles.button}
+                onClick={() => setMobileTab("days")}
+              >
+                Dagen
+              </button>
+              <button
+                type="button"
+                style={mobileTab === "details" ? styles.buttonDark : styles.button}
+                onClick={() => setMobileTab("details")}
+              >
+                Details
+              </button>
             </div>
 
-            <div style={styles.list}>
-              {days.map((day, index) => {
-                const active = day.id === selectedDayId;
-                const count = day.items.length + day.excursions.length;
-
-                return (
-                  <div
-                    key={day.id}
-                    style={styles.dayCard(active)}
-                    onClick={() => setSelectedDayId(day.id)}
-                  >
-                    <div style={styles.dayTop}>
-                      <span style={styles.pill}>Dag {index + 1}</span>
-                      <span style={styles.count}>{count}</span>
-                    </div>
-
-                    <div style={{ fontWeight: 700, fontSize: 18 }}>
-                      {day.date}
-                    </div>
-                    <div style={{ marginTop: 6, fontWeight: 600 }}>
-                      {day.title}
-                    </div>
-                    <div
-                      style={{
-                        marginTop: 6,
-                        color: "#64748b",
-                        fontSize: 14,
-                      }}
-                    >
-                      {day.location}
-                    </div>
-                    <div
-                      style={{
-                        marginTop: 8,
-                        color: "#475569",
-                        fontSize: 13,
-                      }}
-                    >
-                      {typeLabel(day.type)} · {day.stay}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            {mobileTab === "days" ? sidebar : details}
           </div>
-
-          <div style={styles.card}>
-            <div style={styles.mainHeader}>
-              <div>
-                <div style={{ fontSize: 30, fontWeight: 700 }}>
-                  Dag {selectedDayNumber} – {selectedDay.title}
-                </div>
-                <div style={{ marginTop: 8, color: "#64748b" }}>
-                  {selectedDay.date} · {selectedDay.location} · Verblijf:{" "}
-                  {selectedDay.stay}
-                </div>
-              </div>
-            </div>
-
-            <div style={styles.mainBody}>
-              <div style={styles.section}>
-                <h2 style={styles.sectionTitle}>Dag aanpassen</h2>
-
-                <div style={{ display: "grid", gap: 12 }}>
-                  <input
-                    style={styles.input}
-                    value={selectedDay.date}
-                    onChange={(e) =>
-                      updateSelectedDayField("date", e.target.value)
-                    }
-                  />
-                  <input
-                    style={styles.input}
-                    value={selectedDay.title}
-                    onChange={(e) =>
-                      updateSelectedDayField("title", e.target.value)
-                    }
-                  />
-                  <input
-                    style={styles.input}
-                    value={selectedDay.location}
-                    onChange={(e) =>
-                      updateSelectedDayField("location", e.target.value)
-                    }
-                  />
-                  <input
-                    style={styles.input}
-                    value={selectedDay.stay}
-                    onChange={(e) =>
-                      updateSelectedDayField("stay", e.target.value)
-                    }
-                  />
-                </div>
-              </div>
-
-              <div style={styles.section}>
-                <h2 style={styles.sectionTitle}>Excursies van deze dag</h2>
-
-                <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
-                  <input
-                    style={styles.input}
-                    placeholder="Naam excursie"
-                    value={excursionForm.title}
-                    onChange={(e) =>
-                      setExcursionForm((s) => ({ ...s, title: e.target.value }))
-                    }
-                  />
-                  <input
-                    style={styles.input}
-                    placeholder="Tijd"
-                    value={excursionForm.time}
-                    onChange={(e) =>
-                      setExcursionForm((s) => ({ ...s, time: e.target.value }))
-                    }
-                  />
-                  <textarea
-                    style={styles.textarea}
-                    placeholder="Notitie"
-                    value={excursionForm.note}
-                    onChange={(e) =>
-                      setExcursionForm((s) => ({ ...s, note: e.target.value }))
-                    }
-                  />
-                  <input
-                    style={styles.input}
-                    placeholder="Website of boekingslink"
-                    value={excursionForm.website}
-                    onChange={(e) =>
-                      setExcursionForm((s) => ({
-                        ...s,
-                        website: e.target.value,
-                      }))
-                    }
-                  />
-                  <input
-                    ref={excursionFileRef}
-                    type="file"
-                    multiple
-                    accept="image/*,.pdf"
-                    onChange={(e) =>
-                      setExcursionForm((s) => ({
-                        ...s,
-                        files: prepareFiles(e.target.files),
-                      }))
-                    }
-                  />
-                  {excursionForm.files.map((file) => (
-                    <FilePreview
-                      key={file.id}
-                      file={file}
-                      onOpen={setFullscreenImage}
-                      onRemove={() =>
-                        setExcursionForm((s) => ({
-                          ...s,
-                          files: s.files.filter((f) => f.id !== file.id),
-                        }))
-                      }
-                    />
-                  ))}
-                  <button type="button" style={styles.buttonDark} onClick={addExcursion}>
-                    Excursie toevoegen
-                  </button>
-                </div>
-
-                <div style={{ display: "grid", gap: 12 }}>
-                  {selectedDay.excursions.length === 0 ? (
-                    <div style={{ color: "#64748b" }}>
-                      Nog geen excursies toegevoegd.
-                    </div>
-                  ) : (
-                    selectedDay.excursions.map((excursion) => (
-                      <div key={excursion.id} style={styles.itemCard}>
-                        <div style={{ flex: 1 }}>
-                          <div style={{ fontWeight: 700, fontSize: 17 }}>
-                            {excursion.title}
-                          </div>
-                          {excursion.time ? (
-                            <div style={{ color: "#64748b", marginTop: 4 }}>
-                              {excursion.time}
-                            </div>
-                          ) : null}
-                          {excursion.note ? (
-                            <div style={{ marginTop: 8 }}>{excursion.note}</div>
-                          ) : null}
-
-                          {excursion.website ? (
-                            <div style={{ marginTop: 8 }}>
-                              <a
-                                href={excursion.website}
-                                target="_blank"
-                                rel="noreferrer"
-                              >
-                                Open website / boekingslink
-                              </a>
-                            </div>
-                          ) : null}
-
-                          {(excursion.files || []).map((file) => (
-                            <FilePreview
-                              key={file.id}
-                              file={file}
-                              onOpen={setFullscreenImage}
-                              onRemove={() =>
-                                setDays((current) =>
-                                  current.map((day) =>
-                                    day.id !== selectedDayId
-                                      ? day
-                                      : {
-                                          ...day,
-                                          excursions: day.excursions.map((ex) =>
-                                            ex.id !== excursion.id
-                                              ? ex
-                                              : {
-                                                  ...ex,
-                                                  files: ex.files.filter(
-                                                    (f) => f.id !== file.id
-                                                  ),
-                                                }
-                                          ),
-                                        }
-                                  )
-                                )
-                              }
-                            />
-                          ))}
-                        </div>
-
-                        <button
-                          type="button"
-                          style={styles.button}
-                          onClick={() => removeExcursion(excursion.id)}
-                        >
-                          Verwijder
-                        </button>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-
-              <div style={styles.section}>
-                <h2 style={styles.sectionTitle}>Items van deze dag</h2>
-
-                <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
-                  <select
-                    style={styles.input}
-                    value={itemForm.kind}
-                    onChange={(e) =>
-                      setItemForm((s) => ({ ...s, kind: e.target.value }))
-                    }
-                  >
-                    <option value="ticket">Ticket</option>
-                    <option value="document">Document</option>
-                    <option value="photo">Foto</option>
-                    <option value="note">Notitie</option>
-                  </select>
-
-                  <input
-                    style={styles.input}
-                    placeholder="Titel"
-                    value={itemForm.title}
-                    onChange={(e) =>
-                      setItemForm((s) => ({ ...s, title: e.target.value }))
-                    }
-                  />
-                  <textarea
-                    style={styles.textarea}
-                    placeholder="Notitie"
-                    value={itemForm.note}
-                    onChange={(e) =>
-                      setItemForm((s) => ({ ...s, note: e.target.value }))
-                    }
-                  />
-                  <input
-                    style={styles.input}
-                    placeholder="Website of boekingslink"
-                    value={itemForm.website}
-                    onChange={(e) =>
-                      setItemForm((s) => ({ ...s, website: e.target.value }))
-                    }
-                  />
-                  <input
-                    ref={itemFileRef}
-                    type="file"
-                    multiple
-                    accept="image/*,.pdf"
-                    onChange={(e) =>
-                      setItemForm((s) => ({
-                        ...s,
-                        files: prepareFiles(e.target.files),
-                      }))
-                    }
-                  />
-                  {itemForm.files.map((file) => (
-                    <FilePreview
-                      key={file.id}
-                      file={file}
-                      onOpen={setFullscreenImage}
-                      onRemove={() =>
-                        setItemForm((s) => ({
-                          ...s,
-                          files: s.files.filter((f) => f.id !== file.id),
-                        }))
-                      }
-                    />
-                  ))}
-                  <button type="button" style={styles.buttonDark} onClick={addItem}>
-                    Item toevoegen
-                  </button>
-                </div>
-
-                <div style={{ display: "grid", gap: 12 }}>
-                  {selectedDay.items.length === 0 ? (
-                    <div style={{ color: "#64748b" }}>
-                      Nog geen items toegevoegd.
-                    </div>
-                  ) : (
-                    selectedDay.items.map((item) => (
-                      <div key={item.id} style={styles.itemCard}>
-                        <div style={{ flex: 1 }}>
-                          <div
-                            style={{
-                              color: "#64748b",
-                              fontSize: 13,
-                              fontWeight: 700,
-                              textTransform: "uppercase",
-                            }}
-                          >
-                            {item.kind}
-                          </div>
-                          <div
-                            style={{
-                              fontWeight: 700,
-                              fontSize: 17,
-                              marginTop: 4,
-                            }}
-                          >
-                            {item.title}
-                          </div>
-
-                          {item.note ? (
-                            <div style={{ marginTop: 8 }}>{item.note}</div>
-                          ) : null}
-
-                          {item.website ? (
-                            <div style={{ marginTop: 8 }}>
-                              <a
-                                href={item.website}
-                                target="_blank"
-                                rel="noreferrer"
-                              >
-                                Open website / boekingslink
-                              </a>
-                            </div>
-                          ) : null}
-
-                          {(item.files || []).map((file) => (
-                            <FilePreview
-                              key={file.id}
-                              file={file}
-                              onOpen={setFullscreenImage}
-                              onRemove={() =>
-                                setDays((current) =>
-                                  current.map((day) =>
-                                    day.id !== selectedDayId
-                                      ? day
-                                      : {
-                                          ...day,
-                                          items: day.items.map((it) =>
-                                            it.id !== item.id
-                                              ? it
-                                              : {
-                                                  ...it,
-                                                  files: it.files.filter(
-                                                    (f) => f.id !== file.id
-                                                  ),
-                                                }
-                                          ),
-                                        }
-                                  )
-                                )
-                              }
-                            />
-                          ))}
-                        </div>
-
-                        <button
-                          type="button"
-                          style={styles.button}
-                          onClick={() => removeItem(item.id)}
-                        >
-                          Verwijder
-                        </button>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-            </div>
+        ) : (
+          <div style={styles.desktopShell}>
+            {sidebar}
+            {details}
           </div>
-        </div>
+        )}
       </div>
 
       {fullscreenImage && (
