@@ -315,9 +315,10 @@ const styles = {
   shell: {
     maxWidth: 1450,
     margin: "0 auto",
-    display: "grid",
-gridTemplateColumns: window.innerWidth < 768 ? "1fr" : "360px 1fr",
-    gap: 24,
+     display: "grid",
+gridTemplateColumns: "360px 1fr",
+gap: 24,
+  overflowX: "auto",  
   },
   card: {
     background: "#ffffff",
