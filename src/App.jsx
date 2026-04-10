@@ -769,7 +769,9 @@ async function saveTrip(data) {
   position: "relative",
   height: 220,
   borderBottom: "1px solid #e2e8f0",
-  backgroundImage: `url(${selectedDay?.items?.[0]?.files?.[0]?.previewUrl || ""})`,
+backgroundImage: `url(${
+  selectedDay?.items?.flatMap(i => i.files || []).find(f => f.previewUrl)?.previewUrl || ""
+})`,
   backgroundSize: "cover",
   backgroundPosition: "center",
 }}>
