@@ -705,7 +705,7 @@ export default function App() {
         <h1 style={styles.title}>Alaska Reis App</h1>
 
         <div style={styles.headerButtons}>
-          <button type="button" onClick={saveTrip} style={styles.buttonDark}>
+         <button type="button" onClick={() => saveTrip(days)} style={styles.buttonDark}>
             Opslaan
           </button>
         </div>
