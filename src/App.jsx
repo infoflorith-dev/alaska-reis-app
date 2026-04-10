@@ -770,7 +770,8 @@ async function saveTrip(data) {
   height: 220,
   borderBottom: "1px solid #e2e8f0",
 backgroundImage: `url(${
-  selectedDay?.items?.flatMap(i => i.files || []).find(f => f.previewUrl)?.previewUrl || ""
+  selectedDay?.items?.flatMap(i => i.files || []).find(f => f.previewUrl)?.previewUrl 
+  || "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
 })`,
   backgroundSize: "cover",
   backgroundPosition: "center",
