@@ -564,9 +564,10 @@ export default function App() {
     loadTrip();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("alaska-trip", JSON.stringify(days));
-  }, [days]);
+ useEffect(() => {
+  localStorage.setItem("alaska-trip", JSON.stringify(days));
+  saveTrip(days);
+}, [days]);
 
   const selectedDay = useMemo(
     () => days.find((d) => d.id === selectedDayId),
