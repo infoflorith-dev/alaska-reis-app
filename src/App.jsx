@@ -312,14 +312,15 @@ const styles = {
     fontFamily: "Arial, sans-serif",
     color: "#0f172a",
   },
-  shell: {
-    maxWidth: 1450,
-    margin: "0 auto",
-     display: "grid",
-gridTemplateColumns: "360px 1fr",
-gap: 24,
-  overflowX: "auto",  
-  },
+shell: {
+  width: "max-content",
+  minWidth: "1180px",
+  margin: "0 auto",
+  display: "grid",
+  gridTemplateColumns: "360px 1fr",
+  gap: 24,
+  alignItems: "start",
+},
   card: {
     background: "#ffffff",
     border: "1px solid #e2e8f0",
