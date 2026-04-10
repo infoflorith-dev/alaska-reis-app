@@ -769,7 +769,7 @@ async function saveTrip(data) {
   position: "relative",
   height: 220,
   borderBottom: "1px solid #e2e8f0",
-backgroundImage: `url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80")`,
+backgroundImage: 'url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80")',
   backgroundSize: "cover",
   backgroundPosition: "center",
 }}>
