@@ -496,6 +496,7 @@ export default function App() {
   const [mobileTab, setMobileTab] = useState("days");
   const [isMobile, setIsMobile] = useState(
     typeof window !== "undefined" ? window.innerWidth < 900 : false
+   const [saveStatus, setSaveStatus] = useState("Opgeslagen"); 
   );
 
   const [itemForm, setItemForm] = useState({
