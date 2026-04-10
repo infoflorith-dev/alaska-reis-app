@@ -765,16 +765,34 @@ async function saveTrip(data) {
 
   const details = (
     <div style={styles.card}>
-      <div style={styles.mainHeader}>
-        <div>
-          <div style={{ fontSize: 30, fontWeight: 700 }}>
-            Dag {selectedDayNumber} – {selectedDay.title}
-          </div>
-          <div style={{ marginTop: 8, color: "#64748b" }}>
-            {selectedDay.date} · {selectedDay.location} · Verblijf: {selectedDay.stay}
-          </div>
-        </div>
-      </div>
+  <div style={{
+  position: "relative",
+  height: 220,
+  borderBottom: "1px solid #e2e8f0",
+  backgroundImage: `url(${selectedDay?.items?.[0]?.files?.[0]?.previewUrl || ""})`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+}}>
+  <div style={{
+    position: "absolute",
+    inset: 0,
+    background: "rgba(0,0,0,0.4)",
+  }} />
+
+  <div style={{
+    position: "relative",
+    padding: 24,
+    color: "#fff"
+  }}>
+    <div style={{ fontSize: 28, fontWeight: 700 }}>
+      Dag {selectedDayNumber} – {selectedDay.title}
+    </div>
+
+    <div style={{ marginTop: 8, opacity: 0.9 }}>
+      {selectedDay.date} · {selectedDay.location}
+    </div>
+  </div>
+</div>
 
       <div style={styles.mainBody}>
         <div style={styles.section}>
