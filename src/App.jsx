@@ -516,7 +516,7 @@ export default function App() {
 
   const itemFileRef = useRef(null);
   const excursionFileRef = useRef(null);
-
+const hasLoadedRef = useRef(false);
   useEffect(() => {
     function handleResize() {
       setIsMobile(window.innerWidth < 900);
