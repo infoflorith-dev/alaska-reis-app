@@ -716,10 +716,13 @@ async function saveTrip(data) {
         <h1 style={styles.title}>Alaska Reis App</h1>
 
         <div style={styles.headerButtons}>
-         <button type="button" onClick={() => saveTrip(days)} style={styles.buttonDark}>
-            Opslaan
-          </button>
-        </div>
+  <button type="button" onClick={() => saveTrip(days)} style={styles.buttonDark}>
+    Opslaan
+  </button>
+  <div style={{ fontSize: 13, color: "#64748b" }}>
+    {saveStatus}
+  </div>
+</div>
 
         <div style={styles.sub}>
           Mooie reisplanner met alle dagen, excursies en ruimte voor meerdere foto’s of pdf’s per dag.
