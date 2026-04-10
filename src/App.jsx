@@ -316,7 +316,7 @@ const styles = {
     maxWidth: 1450,
     margin: "0 auto",
     display: "grid",
- gridTemplateColumns: window.innerWidth < 768 ? "1fr" : "360px 1fr",
+ gridTemplateColumns: "1fr",
     gap: 24,
   },
   card: {
