@@ -592,7 +592,7 @@ async function saveTrip(data) {
     if (error) {
       console.error("Autosave fout:", error);
     } else {
-      console.log("Autosaved ✅");
+  alert("Autosaved");
     }
   }, 1000);
 }
