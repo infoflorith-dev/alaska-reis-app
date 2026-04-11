@@ -780,19 +780,19 @@ async function saveTrip(data) {
  height: 280,
   borderBottom: "1px solid #e2e8f0",
 backgroundImage: `url(${
-  selectedDay.location?.toLowerCase().includes("seattle")
-    ? "https://images.unsplash.com/photo-1502175353174-a7a70e73b362?auto=format&fit=crop&w=1600&q=80"
-    : selectedDay.location?.toLowerCase().includes("juneau")
-    ? "https://images.unsplash.com/photo-1601758064221-7e4c9b92c212?auto=format&fit=crop&w=1600&q=80"
-    : selectedDay.location?.toLowerCase().includes("skagway")
-    ? "https://images.unsplash.com/photo-1576765608866-5b51f3b9f6a5?auto=format&fit=crop&w=1600&q=80"
-    : selectedDay.location?.toLowerCase().includes("ketchikan")
-    ? "https://images.unsplash.com/photo-1610057099431-d73a1c9d2d7d?auto=format&fit=crop&w=1600&q=80"
-    : selectedDay.location?.toLowerCase().includes("wrangell")
-    ? "https://images.unsplash.com/photo-1526481280691-3c0c42d3b3a8?auto=format&fit=crop&w=1600&q=80"
-    : selectedDay.location?.toLowerCase().includes("sitka")
-    ? "https://images.unsplash.com/photo-1603484477859-abe6a73f9366?auto=format&fit=crop&w=1600&q=80"
-    : "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80"
+selectedDay.location?.toLowerCase().includes("seattle")
+  ? "/hero/seattle.jpg"
+  : selectedDay.location?.toLowerCase().includes("juneau")
+  ? "/hero/juneau.jpg"
+  : selectedDay.location?.toLowerCase().includes("skagway")
+  ? "/hero/skagway.jpg"
+  : selectedDay.location?.toLowerCase().includes("ketchikan")
+  ? "/hero/ketchikan.jpg"
+  : selectedDay.location?.toLowerCase().includes("wrangell")
+  ? "/hero/wrangell.jpg"
+  : selectedDay.location?.toLowerCase().includes("sitka")
+  ? "/hero/sitka.jpg"
+  : "/hero/alaska.jpg"
 })`,
   backgroundSize: "cover",
   backgroundPosition: "center",
