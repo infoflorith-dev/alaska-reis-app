@@ -287,6 +287,7 @@ sidebarHeader: {
     color: "#64748b",
     fontSize: 14,
     lineHeight: 1.5,
+    background: "#f8fafc",
   },
   list: {
     padding: 16,
