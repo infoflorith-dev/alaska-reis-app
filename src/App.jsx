@@ -790,6 +790,8 @@ backgroundImage: `url(${
     ? "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
     : selectedDay.location?.toLowerCase().includes("wrangell")
     ? "https://images.unsplash.com/photo-1469474968028-56623f02e42e"
+  : selectedDay.location?.toLowerCase().includes("yellowstone")
+  ? "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
     : selectedDay.location?.toLowerCase().includes("sitka")
     ? "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
     : selectedDay.location?.toLowerCase().includes("victoria")
