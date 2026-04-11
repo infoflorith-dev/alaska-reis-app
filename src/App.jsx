@@ -650,43 +650,47 @@ async function saveTrip(data) {
     if (itemFileRef.current) itemFileRef.current.value = "";
   }
 
-  function addExcursion() {
-    if (!excursionForm.title.trim() && excursionForm.files.length === 0) {
-      window.alert("Vul een naam in of voeg een bestand toe.");
-      return;
-    }
-
-    setDays((current) =>
-      current.map((day) =>
-        day.id !== selectedDayId
-          ? day
-          : {
-              ...day,
-              excursions: [
-                ...(day.excursions || []),
-                {
-                  id: Date.now(),
-                  title: excursionForm.title.trim() || "Excursie zonder titel",
-                  time: excursionForm.time.trim(),
-                  note: excursionForm.note.trim(),
-                  website: excursionForm.website.trim(),
-                  files: excursionForm.files || [],
-                },
-              ],
-            }
-      )
-    );
-
-    setExcursionForm({
-      title: "",
-      time: "",
-      note: "",
-      website: "",
-      files: [],
-    });
-
-    if (excursionFileRef.current) excursionFileRef.current.value = "";
+ function addExcursion() {
+  if (!excursionForm.title.trim() && excursionForm.files.length === 0) {
+    window.alert("Vul een naam in of voeg een bestand toe.");
+    return;
   }
+
+  setDays((current) =>
+    current.map((day) =>
+      day.id !== selectedDayId
+        ? day
+        : {
+            ...day,
+            excursions: editingExcursionId
+              ? day.excursions.map((ex) =>
+                  ex.id === editingExcursionId
+                    ? { ...ex, ...excursionForm }
+                    : ex
+                )
+              : [
+                  ...(day.excursions || []),
+                  {
+                    id: Date.now(),
+                    ...excursionForm,
+                  },
+                ],
+          }
+    )
+  );
+
+  setExcursionForm({
+    title: "",
+    time: "",
+    note: "",
+    website: "",
+    files: [],
+  });
+
+  setEditingExcursionId(null);
+
+  if (excursionFileRef.current) excursionFileRef.current.value = "";
+}
 
   function removeItem(itemId) {
     setDays((current) =>
