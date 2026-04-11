@@ -976,9 +976,7 @@ selectedDay.type === "flight"
   </button>
 )}
 </div>
-        <div style={styles.section}>
-          <h2 style={styles.sectionTitle}>Excursies van deze dag</h2>
-<div style={styles.section}>
+   <div style={styles.section}>
   <h2 style={styles.sectionTitle}>📂 Reisdocumenten</h2>
 
   <input
@@ -1075,7 +1073,10 @@ selectedDay.type === "flight"
                 </div>
                 <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>
                   Website openen ↗
-                </div>
+                </div>     
+        <div style={styles.section}>
+          <h2 style={styles.sectionTitle}>Excursies van deze dag</h2>
+
               </a>
             ) : null}
 
