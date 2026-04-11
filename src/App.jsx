@@ -784,7 +784,8 @@ selectedDay.location?.toLowerCase().includes("seattle")
   ? "https://images.unsplash.com/photo-1502175353174-a7a70e73b362"
   : selectedDay.location?.toLowerCase().includes("juneau")
   ? "https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
-  : selectedDay.location?.toLowerCase().includes("op zee")
+ : selectedDay.title?.toLowerCase().includes("op zee") ||
+  selectedDay.location?.toLowerCase().includes("aan boord")
   ? "https://images.unsplash.com/photo-1500375592092-40eb2168fd21"
   : selectedDay.location?.toLowerCase().includes("skagway")
   ? "https://images.unsplash.com/photo-1470770841072-f978cf4d019e"
