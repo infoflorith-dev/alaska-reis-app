@@ -780,7 +780,9 @@ async function saveTrip(data) {
  height: 280,
   borderBottom: "1px solid #e2e8f0",
 backgroundImage: `url(${
-selectedDay.location?.toLowerCase().includes("seattle")
+selectedDay.type === "flight"
+  ? "https://cdn.assets.prezly.com/ebf46491-b4db-46dc-b168-1e216f74f8e1/SN_Airbus-A330_Visual_01_5K.jpg"
+  : selectedDay.location?.toLowerCase().includes("seattle")
   ? "https://images.unsplash.com/photo-1502175353174-a7a70e73b362"
   : selectedDay.location?.toLowerCase().includes("juneau")
   ? "https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
