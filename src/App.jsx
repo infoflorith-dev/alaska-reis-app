@@ -845,7 +845,7 @@ selectedDay.type === "flight"
   : selectedDay.location?.toLowerCase().includes("victoria")
   ? "https://images.unsplash.com/photo-1506744038136-46273834b3fb"
   : selectedDay.location?.toLowerCase().includes("hubbard")
-  ? "https://images.unsplash.com/photo-1441974231531-c6227db76b6e"
+  ? "https://www.hollandamerica.com/content/dam/hal/inventory-assets/destinations/ports/hub/port-hub-hubbard-glacier-canada-c037.jpg"
   : selectedDay.location?.toLowerCase().includes("yellowstone")
   ? "https://images.unsplash.com/photo-1476610182048-b716b8518aae"
   : selectedDay.location?.toLowerCase().includes("golden") ||
