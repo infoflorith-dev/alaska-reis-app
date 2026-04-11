@@ -1094,7 +1094,7 @@ selectedDay.type === "flight"
                     fontWeight: 500,
                   }}
                 >
-                  📄 {file.name}
+                  📄 {file.name} → openen
                 </div>
               ))}
             </div>
