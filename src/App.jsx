@@ -850,7 +850,7 @@ backgroundImage: 'url("https://images.unsplash.com/photo-1500530855697-b586d89ba
     Dag bewerken
   </button>
 )}
-
+</div>
         <div style={styles.section}>
           <h2 style={styles.sectionTitle}>Excursies van deze dag</h2>
 
