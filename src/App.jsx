@@ -1036,23 +1036,28 @@ selectedDay.type === "flight"
   <button
     type="button"
     style={styles.buttonDark}
-    onClick={() => {
-      setDocuments([
-        ...documents,
-        {
-          ...docForm,
-          id: Date.now(),
-        },
-      ]);
+onClick={() => {
+  if (!docForm.title.trim() && docForm.files.length === 0) {
+    window.alert("Vul een titel in of voeg een bestand toe.");
+    return;
+  }
 
-      setDocForm({
-        type: "document",
-        title: "",
-        note: "",
-        website: "",
-        files: [],
-      });
-    }}
+  setDocuments((current) => [
+    ...current,
+    {
+      ...docForm,
+      id: Date.now(),
+    },
+  ]);
+
+  setDocForm({
+    type: "document",
+    title: "",
+    note: "",
+    website: "",
+    files: [],
+  });
+}}
   >
     Document toevoegen
   </button>
