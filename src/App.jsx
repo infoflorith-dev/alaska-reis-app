@@ -513,7 +513,8 @@ const [saveStatus, setSaveStatus] = useState("Opgeslagen");
     website: "",
     files: [],
   });
-
+const [editingItemId, setEditingItemId] = useState(null);
+ const [editingExcursionId, setEditingExcursionId] = useState(null); 
   const itemFileRef = useRef(null);
   const excursionFileRef = useRef(null);
 const hasLoadedRef = useRef(false);
