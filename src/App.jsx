@@ -515,6 +515,7 @@ const [saveStatus, setSaveStatus] = useState("Opgeslagen");
   });
 const [editingItemId, setEditingItemId] = useState(null);
  const [editingExcursionId, setEditingExcursionId] = useState(null); 
+  const [isEditingDay, setIsEditingDay] = useState(false);
   const itemFileRef = useRef(null);
   const excursionFileRef = useRef(null);
 const hasLoadedRef = useRef(false);
