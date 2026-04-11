@@ -1025,10 +1025,12 @@ selectedDay.type === "flight"
   <input
     type="file"
     multiple
-    onChange={(e) => {
-      const files = Array.from(e.target.files || []);
-      setDocForm({ ...docForm, files });
-    }}
+    onChange={(e) =>
+  setDocForm({
+    ...docForm,
+    files: prepareFiles(e.target.files),
+  })
+}
   />
 
   <button
