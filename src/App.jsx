@@ -780,28 +780,28 @@ async function saveTrip(data) {
  height: 280,
   borderBottom: "1px solid #e2e8f0",
 backgroundImage: `url(${
-  selectedDay.location?.toLowerCase().includes("seattle")
-    ? "https://images.unsplash.com/photo-1502175353174-a7a70e73b362"
-    : selectedDay.location?.toLowerCase().includes("juneau")
-    ? "https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
-    : selectedDay.location?.toLowerCase().includes("skagway")
-    ? "https://images.unsplash.com/photo-1470770841072-f978cf4d019e"
-    : selectedDay.location?.toLowerCase().includes("ketchikan")
-    ? "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
-    : selectedDay.location?.toLowerCase().includes("wrangell")
-    ? "https://images.unsplash.com/photo-1469474968028-56623f02e42e"
+selectedDay.location?.toLowerCase().includes("seattle")
+  ? "https://images.unsplash.com/photo-1502175353174-a7a70e73b362"
+  : selectedDay.location?.toLowerCase().includes("juneau")
+  ? "https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
+  : selectedDay.location?.toLowerCase().includes("skagway")
+  ? "https://images.unsplash.com/photo-1470770841072-f978cf4d019e"
+  : selectedDay.location?.toLowerCase().includes("ketchikan")
+  ? "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
+  : selectedDay.location?.toLowerCase().includes("wrangell")
+  ? "https://images.unsplash.com/photo-1469474968028-56623f02e42e"
+  : selectedDay.location?.toLowerCase().includes("sitka")
+  ? "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+  : selectedDay.location?.toLowerCase().includes("victoria")
+  ? "https://images.unsplash.com/photo-1506744038136-46273834b3fb"
   : selectedDay.location?.toLowerCase().includes("yellowstone")
   ? "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
-    : selectedDay.location?.toLowerCase().includes("sitka")
-    ? "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
-    : selectedDay.location?.toLowerCase().includes("victoria")
-    ? "https://images.unsplash.com/photo-1506744038136-46273834b3fb"
-    : selectedDay.location?.toLowerCase().includes("hubbard")
-    ? "https://images.unsplash.com/photo-1441974231531-c6227db76b6e"
-    : selectedDay.location?.toLowerCase().includes("golden") ||
-      selectedDay.location?.toLowerCase().includes("banff")
-    ? "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
-    : "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+  : selectedDay.location?.toLowerCase().includes("hubbard")
+  ? "https://images.unsplash.com/photo-1441974231531-c6227db76b6e"
+  : selectedDay.location?.toLowerCase().includes("golden") ||
+    selectedDay.location?.toLowerCase().includes("banff")
+  ? "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
+  : "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
 })`,
   backgroundSize: "cover",
   backgroundPosition: "center",
