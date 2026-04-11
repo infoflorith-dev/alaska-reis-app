@@ -779,7 +779,17 @@ async function saveTrip(data) {
   position: "relative",
  height: 280,
   borderBottom: "1px solid #e2e8f0",
-backgroundImage: 'url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80")',
+backgroundImage: `url(${
+  selectedDay.location?.includes("Seattle")
+    ? "https://images.unsplash.com/photo-1502175353174-a7a70e73b362?auto=format&fit=crop&w=1600&q=80"
+    : selectedDay.location?.includes("Juneau")
+    ? "https://images.unsplash.com/photo-1601758064221-7e4c9b92c212?auto=format&fit=crop&w=1600&q=80"
+    : selectedDay.location?.includes("Skagway")
+    ? "https://images.unsplash.com/photo-1576765608866-5b51f3b9f6a5?auto=format&fit=crop&w=1600&q=80"
+    : selectedDay.location?.includes("Ketchikan")
+    ? "https://images.unsplash.com/photo-1610057099431-d73a1c9d2d7d?auto=format&fit=crop&w=1600&q=80"
+    : "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80"
+})`,
   backgroundSize: "cover",
   backgroundPosition: "center",
 }}>
