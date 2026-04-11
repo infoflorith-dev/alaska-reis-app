@@ -1007,7 +1007,13 @@ selectedDay.type === "flight"
       setDocForm({ ...docForm, website: e.target.value })
     }
   />
-
+<input
+  type="file"
+  onChange={(e) => {
+    const files = Array.from(e.target.files);
+    setDocForm({ ...docForm, files });
+  }}
+/>
   <button
     style={styles.buttonDark}
     onClick={() => {
