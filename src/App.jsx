@@ -787,17 +787,17 @@ selectedDay.location?.toLowerCase().includes("seattle")
   : selectedDay.location?.toLowerCase().includes("skagway")
   ? "https://images.unsplash.com/photo-1470770841072-f978cf4d019e"
   : selectedDay.location?.toLowerCase().includes("ketchikan")
-  ? "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
+  ? "https://images.unsplash.com/photo-1470770903676-69b98201ea1c"
   : selectedDay.location?.toLowerCase().includes("wrangell")
   ? "https://images.unsplash.com/photo-1469474968028-56623f02e42e"
   : selectedDay.location?.toLowerCase().includes("sitka")
-  ? "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+  ? "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66"
   : selectedDay.location?.toLowerCase().includes("victoria")
   ? "https://images.unsplash.com/photo-1506744038136-46273834b3fb"
   : selectedDay.location?.toLowerCase().includes("hubbard")
   ? "https://images.unsplash.com/photo-1441974231531-c6227db76b6e"
   : selectedDay.location?.toLowerCase().includes("yellowstone")
-  ? "https://images.unsplash.com/photo-1501594907352-04cda38ebc29"
+  ? "https://images.unsplash.com/photo-1476610182048-b716b8518aae"
   : selectedDay.location?.toLowerCase().includes("golden") ||
     selectedDay.location?.toLowerCase().includes("banff")
   ? "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
