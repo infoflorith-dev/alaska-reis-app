@@ -1123,9 +1123,7 @@ selectedDay.type === "flight"
   </div>
 ) : null}
             </div>
-          </div>
-
-        <button
+            <button
           type="button"
           style={styles.button}
           onClick={() =>
