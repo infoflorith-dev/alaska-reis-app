@@ -752,7 +752,7 @@ const cardImage =
     : day.location?.toLowerCase().includes("seattle")
     ? "https://images.unsplash.com/photo-1508057198894-247b23fe5ade"
     : day.location?.toLowerCase().includes("juneau")
-    ? "https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
+    ? "https://images.unsplash.com/photo-1514565131-fce0801e5785"
     : day.location?.toLowerCase().includes("skagway")
     ? "https://images.unsplash.com/photo-1470770841072-f978cf4d019e"
     : day.location?.toLowerCase().includes("ketchikan")
