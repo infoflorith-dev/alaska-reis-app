@@ -612,43 +612,47 @@ async function saveTrip(data) {
     );
   }
 
-  function addItem() {
-    if (!itemForm.title.trim() && itemForm.files.length === 0) {
-      window.alert("Vul een titel in of voeg een bestand toe.");
-      return;
-    }
-
-    setDays((current) =>
-      current.map((day) =>
-        day.id !== selectedDayId
-          ? day
-          : {
-              ...day,
-              items: [
-                ...day.items,
-                {
-                  id: Date.now(),
-                  kind: itemForm.kind,
-                  title: itemForm.title.trim() || "Item zonder titel",
-                  note: itemForm.note.trim(),
-                  website: itemForm.website.trim(),
-                  files: itemForm.files || [],
-                },
-              ],
-            }
-      )
-    );
-
-    setItemForm({
-      kind: "ticket",
-      title: "",
-      note: "",
-      website: "",
-      files: [],
-    });
-
-    if (itemFileRef.current) itemFileRef.current.value = "";
+ function addItem() {
+  if (!itemForm.title.trim() && itemForm.files.length === 0) {
+    window.alert("Vul een titel in of voeg een bestand toe.");
+    return;
   }
+
+  setDays((current) =>
+    current.map((day) =>
+      day.id !== selectedDayId
+        ? day
+        : {
+            ...day,
+            items: editingItemId
+              ? day.items.map((it) =>
+                  it.id === editingItemId
+                    ? { ...it, ...itemForm }
+                    : it
+                )
+              : [
+                  ...day.items,
+                  {
+                    id: Date.now(),
+                    ...itemForm,
+                  },
+                ],
+          }
+    )
+  );
+
+  setItemForm({
+    kind: "ticket",
+    title: "",
+    note: "",
+    website: "",
+    files: [],
+  });
+
+  setEditingItemId(null);
+
+  if (itemFileRef.current) itemFileRef.current.value = "";
+}
 
  function addExcursion() {
   if (!excursionForm.title.trim() && excursionForm.files.length === 0) {
