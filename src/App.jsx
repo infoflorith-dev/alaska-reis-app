@@ -1200,9 +1200,9 @@ selectedDay.type === "flight"
     <div style={{ fontWeight: 600 }}>
       {item.website.replace("https://", "").slice(0, 40)}
     </div>
-    <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>
-      Klik om te openen
-    </div>
+<div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>
+  Website openen ↗
+</div>
   </a>
 ) : null}
                     {(item.files || []).map((file) => (
