@@ -890,8 +890,8 @@ selectedDay.type === "flight"
       display: "inline-block",
       padding: "10px 14px",
       borderRadius: 12,
-      background: "rgba(255,255,255,0.9)",
-      color: "#0f172a",
+     background: "#0f172a",
+     color: "#fff",
       textDecoration: "none",
       fontWeight: 700,
     }}
