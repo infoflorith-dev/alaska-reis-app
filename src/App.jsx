@@ -337,12 +337,12 @@ color: "#0f172a",
     background: "#f1f5f9",
 borderRadius: 20,
   },
-  section: {
-    border: "1px solid #e2e8f0",
-    borderRadius: 22,
-    padding: 18,
-    background: "#fcfdff",
-  },
+section: {
+  border: "1px solid #e2e8f0",
+  borderRadius: 22,
+  padding: 18,
+  background: "#f8fafc",
+},
   sectionTitle: {
     margin: 0,
     marginBottom: 16,
