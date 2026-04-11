@@ -1119,13 +1119,26 @@ backgroundImage: 'url("https://images.unsplash.com/photo-1500530855697-b586d89ba
                     ))}
                   </div>
 
-                  <button
-                    type="button"
-                    style={styles.button}
-                    onClick={() => removeItem(item.id)}
-                  >
-                    Verwijder
-                  </button>
+                <div style={{ display: "flex", gap: 8 }}>
+  <button
+    type="button"
+    style={styles.button}
+    onClick={() => {
+      setItemForm(item);
+      setEditingItemId(item.id);
+    }}
+  >
+    Bewerken
+  </button>
+
+  <button
+    type="button"
+    style={styles.button}
+    onClick={() => removeItem(item.id)}
+  >
+    Verwijder
+  </button>
+</div>
                 </div>
               ))
             )}
