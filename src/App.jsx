@@ -509,7 +509,14 @@ const [saveStatus, setSaveStatus] = useState("Opgeslagen");
     website: "",
     files: [],
   });
-
+const [documents, setDocuments] = useState([]);
+const [docForm, setDocForm] = useState({
+  type: "document",
+  title: "",
+  note: "",
+  website: "",
+  files: [],
+});
   const [excursionForm, setExcursionForm] = useState({
     title: "",
     time: "",
@@ -971,7 +978,64 @@ selectedDay.type === "flight"
 </div>
         <div style={styles.section}>
           <h2 style={styles.sectionTitle}>Excursies van deze dag</h2>
+<div style={styles.section}>
+  <h2 style={styles.sectionTitle}>📂 Reisdocumenten</h2>
 
+  <input
+    style={styles.input}
+    placeholder="Titel (bijv. ESTA VS)"
+    value={docForm.title}
+    onChange={(e) =>
+      setDocForm({ ...docForm, title: e.target.value })
+    }
+  />
+
+  <textarea
+    style={styles.textarea}
+    placeholder="Notitie"
+    value={docForm.note}
+    onChange={(e) =>
+      setDocForm({ ...docForm, note: e.target.value })
+    }
+  />
+
+  <input
+    style={styles.input}
+    placeholder="Website of link"
+    value={docForm.website}
+    onChange={(e) =>
+      setDocForm({ ...docForm, website: e.target.value })
+    }
+  />
+
+  <button
+    style={styles.buttonDark}
+    onClick={() => {
+      setDocuments([...documents, { ...docForm, id: Date.now() }]);
+      setDocForm({
+        type: "document",
+        title: "",
+        note: "",
+        website: "",
+        files: [],
+      });
+    }}
+  >
+    Document toevoegen
+  </button>
+
+  {documents.map((doc) => (
+    <div key={doc.id} style={{ marginTop: 12 }}>
+      <strong>{doc.title}</strong>
+      <div>{doc.note}</div>
+      {doc.website && (
+        <a href={doc.website} target="_blank" rel="noreferrer">
+          Open document
+        </a>
+      )}
+    </div>
+  ))}
+</div>
           <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
             <input
               style={styles.input}
