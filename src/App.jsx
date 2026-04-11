@@ -1082,19 +1082,21 @@ selectedDay.type === "flight"
             {doc.files && doc.files.length > 0 ? (
               <div style={{ marginTop: 10 }}>
                 {doc.files.map((file, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      padding: 10,
-                      borderRadius: 10,
-                      background: "#f8fafc",
-                      border: "1px solid #e2e8f0",
-                      marginTop: 8,
-                    }}
-                  >
-                    {file.name}
-                  </div>
-                ))}
+  <div
+    key={index}
+    onClick={() => window.open(URL.createObjectURL(file), "_blank")}
+    style={{
+      padding: 10,
+      borderRadius: 10,
+      background: "#f8fafc",
+      border: "1px solid #e2e8f0",
+      marginTop: 8,
+      cursor: "pointer",
+    }}
+  >
+    {file.name}
+  </div>
+))}
               </div>
             ) : null}
           </div>
