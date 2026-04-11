@@ -806,31 +806,50 @@ backgroundImage: 'url("https://images.unsplash.com/photo-1500530855697-b586d89ba
 
       <div style={styles.mainBody}>
         <div style={styles.section}>
-          <h2 style={styles.sectionTitle}>Dag aanpassen</h2>
+          <h2 style={styles.sectionTitle}>
+  Dag {isEditingDay ? "bewerken" : "overzicht"}
+</h2>
 
-          <div style={{ display: "grid", gap: 12 }}>
-            <input
-              style={styles.input}
-              value={selectedDay.date}
-              onChange={(e) => updateSelectedDayField("date", e.target.value)}
-            />
-            <input
-              style={styles.input}
-              value={selectedDay.title}
-              onChange={(e) => updateSelectedDayField("title", e.target.value)}
-            />
-            <input
-              style={styles.input}
-              value={selectedDay.location}
-              onChange={(e) => updateSelectedDayField("location", e.target.value)}
-            />
-            <input
-              style={styles.input}
-              value={selectedDay.stay}
-              onChange={(e) => updateSelectedDayField("stay", e.target.value)}
-            />
-          </div>
-        </div>
+{isEditingDay ? (
+  <div style={{ display: "grid", gap: 12 }}>
+    <input
+      style={styles.input}
+      value={selectedDay.date}
+      onChange={(e) => updateSelectedDayField("date", e.target.value)}
+    />
+    <input
+      style={styles.input}
+      value={selectedDay.title}
+      onChange={(e) => updateSelectedDayField("title", e.target.value)}
+    />
+    <input
+      style={styles.input}
+      value={selectedDay.location}
+      onChange={(e) => updateSelectedDayField("location", e.target.value)}
+    />
+    <input
+      style={styles.input}
+      value={selectedDay.stay}
+      onChange={(e) => updateSelectedDayField("stay", e.target.value)}
+    />
+
+    <button
+      type="button"
+      style={styles.buttonDark}
+      onClick={() => setIsEditingDay(false)}
+    >
+      Klaar
+    </button>
+  </div>
+) : (
+  <button
+    type="button"
+    style={styles.button}
+    onClick={() => setIsEditingDay(true)}
+  >
+    Dag bewerken
+  </button>
+)}
 
         <div style={styles.section}>
           <h2 style={styles.sectionTitle}>Excursies van deze dag</h2>
