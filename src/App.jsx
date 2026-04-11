@@ -1123,8 +1123,7 @@ selectedDay.type === "flight"
   </div>
 ) : null}
             </div>
-          ) : null}
-        </div>
+          </div>
 
         <button
           type="button"
