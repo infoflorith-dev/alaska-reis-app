@@ -446,13 +446,9 @@ function FilePreview({ file, onRemove, onOpen }) {
     <div style={styles.fileBox}>
       <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
         <div style={{ flex: 1 }}>
-          <div style={{ fontWeight: 700, fontSize: 14, wordBreak: "break-word" }}>
-            {file.name}
-          </div>
-
-          <div style={{ color: "#64748b", fontSize: 12, marginTop: 4 }}>
-            {file.type ? file.type : "Bestand"}
-          </div>
+  <div style={{ fontWeight: 600, fontSize: 14 }}>
+    📄 {file.name}
+  </div>
 
           {file.previewUrl ? (
             <img
