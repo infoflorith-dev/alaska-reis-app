@@ -778,6 +778,7 @@ const cardImage =
       ...styles.dayCard(active),
       position: "relative",
       overflow: "hidden",
+      background: "transparent",
       backgroundImage: `url(${cardImage})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
