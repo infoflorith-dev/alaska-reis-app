@@ -881,6 +881,24 @@ selectedDay.type === "flight"
     <div style={{ marginTop: 8, opacity: 0.9 }}>
       {selectedDay.date} · {selectedDay.location}
     </div>
+    <div style={{ marginTop: 12 }}>
+  <a
+    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(selectedDay.location)}`}
+    target="_blank"
+    rel="noreferrer"
+    style={{
+      display: "inline-block",
+      padding: "10px 14px",
+      borderRadius: 12,
+      background: "rgba(255,255,255,0.9)",
+      color: "#0f172a",
+      textDecoration: "none",
+      fontWeight: 700,
+    }}
+  >
+    📍 Bekijk op kaart
+  </a>
+</div>
   </div>
 </div>
 
