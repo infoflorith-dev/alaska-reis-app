@@ -428,16 +428,17 @@ function typeLabel(type) {
 }
 
 function prepareFiles(fileList) {
-  return Array.from(fileList || []).map((file) => ({
-    id: `${file.name}-${file.size}-${Date.now()}-${Math.random()}`,
-    name: file.name,
-    type: file.type || "",
-    size: file.size || 0,
-    previewUrl:
-      file.type && file.type.startsWith("image/")
-        ? URL.createObjectURL(file)
-        : "",
-  }));
+return Array.from(fileList || []).map((file) => ({
+  id: `${file.name}-${file.size}-${Date.now()}-${Math.random()}`,
+  name: file.name,
+  type: file.type || "",
+  size: file.size || 0,
+  objectUrl: URL.createObjectURL(file),
+  previewUrl:
+    file.type && file.type.startsWith("image/")
+      ? URL.createObjectURL(file)
+      : "",
+}));
 }
 
 function FilePreview({ file, onRemove, onOpen }) {
