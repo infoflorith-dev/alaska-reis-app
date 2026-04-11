@@ -272,9 +272,10 @@ color: "#0f172a",
     boxShadow: "0 10px 30px rgba(15, 23, 42, 0.05)",
     overflow: "hidden",
   },
-  sidebarHeader: {
+sidebarHeader: {
     padding: 24,
     borderBottom: "1px solid #e2e8f0",
+  background: "#f8fafc",
   },
   title: {
     margin: 0,
