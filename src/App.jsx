@@ -1007,17 +1007,28 @@ selectedDay.type === "flight"
       setDocForm({ ...docForm, website: e.target.value })
     }
   />
-<input
-  type="file"
-  onChange={(e) => {
-    const files = Array.from(e.target.files);
-    setDocForm({ ...docForm, files });
-  }}
-/>
+
+  <input
+    type="file"
+    multiple
+    onChange={(e) => {
+      const files = Array.from(e.target.files || []);
+      setDocForm({ ...docForm, files });
+    }}
+  />
+
   <button
+    type="button"
     style={styles.buttonDark}
     onClick={() => {
-      setDocuments([...documents, { ...docForm, id: Date.now() }]);
+      setDocuments([
+        ...documents,
+        {
+          ...docForm,
+          id: Date.now(),
+        },
+      ]);
+
       setDocForm({
         type: "document",
         title: "",
@@ -1030,17 +1041,77 @@ selectedDay.type === "flight"
     Document toevoegen
   </button>
 
-  {documents.map((doc) => (
-    <div key={doc.id} style={{ marginTop: 12 }}>
-      <strong>{doc.title}</strong>
-      <div>{doc.note}</div>
-      {doc.website && (
-        <a href={doc.website} target="_blank" rel="noreferrer">
-          Open document
-        </a>
-      )}
-    </div>
-  ))}
+  <div style={{ display: "grid", gap: 12, marginTop: 16 }}>
+    {documents.length === 0 ? (
+      <div style={{ color: "#64748b" }}>Nog geen reisdocumenten toegevoegd.</div>
+    ) : (
+      documents.map((doc) => (
+        <div key={doc.id} style={styles.itemCard}>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontWeight: 700, fontSize: 17 }}>{doc.title}</div>
+
+            {doc.note ? (
+              <div style={{ marginTop: 8 }}>{doc.note}</div>
+            ) : null}
+
+            {doc.website ? (
+              <a
+                href={doc.website}
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  display: "block",
+                  marginTop: 10,
+                  padding: 12,
+                  borderRadius: 10,
+                  background: "#f4f6f8",
+                  textDecoration: "none",
+                  color: "#111",
+                  border: "1px solid #e2e8f0",
+                }}
+              >
+                <div style={{ fontWeight: 600 }}>
+                  {doc.website.replace("https://", "").slice(0, 40)}
+                </div>
+                <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>
+                  Website openen ↗
+                </div>
+              </a>
+            ) : null}
+
+            {doc.files && doc.files.length > 0 ? (
+              <div style={{ marginTop: 10 }}>
+                {doc.files.map((file, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      padding: 10,
+                      borderRadius: 10,
+                      background: "#f8fafc",
+                      border: "1px solid #e2e8f0",
+                      marginTop: 8,
+                    }}
+                  >
+                    {file.name}
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </div>
+
+          <button
+            type="button"
+            style={styles.button}
+            onClick={() =>
+              setDocuments(documents.filter((d) => d.id !== doc.id))
+            }
+          >
+            Verwijder
+          </button>
+        </div>
+      ))
+    )}
+  </div>
 </div>
           <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
             <input
