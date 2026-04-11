@@ -1446,8 +1446,7 @@ selectedDay.type === "flight"
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
 
   return (
     <>
