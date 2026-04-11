@@ -617,14 +617,17 @@ async function saveTrip(data) {
     const { error } = await supabase.from("travel_app_state").upsert([
       {
         id: "main",
-        data: data,
+        data: {
+          days: data,
+          documents,
+        },
       },
     ]);
 
     if (error) {
       console.error("Autosave fout:", error);
     } else {
- console.log("Autosaved ✅");
+      console.log("Autosaved ✅");
     }
   }, 1000);
 }
