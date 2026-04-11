@@ -1099,26 +1099,29 @@ selectedDay.type === "flight"
             </a>
           ) : null}
 
-          {doc.files && doc.files.length > 0 ? (
-            <div style={{ marginTop: 10 }}>
-              {doc.files.map((file, index) => (
-                <div
-                  key={index}
-                  onClick={() => window.open(URL.createObjectURL(file), "_blank")}
-                  style={{
-                    padding: "10px 14px",
-                    borderRadius: 12,
-                    background: "#f1f5f9",
-                    border: "1px solid #e2e8f0",
-                    marginTop: 8,
-                    cursor: "pointer",
-                    display: "inline-block",
-                    fontWeight: 500,
-                  }}
-                >
-                  📄 {file.name} → openen
-                </div>
-              ))}
+         {doc.files && doc.files.length > 0 ? (
+  <div style={{ marginTop: 10 }}>
+    {doc.files.map((file) => (
+      <FilePreview
+        key={file.id}
+        file={file}
+        onOpen={setFullscreenImage}
+        onRemove={() =>
+          setDocuments((current) =>
+            current.map((d) =>
+              d.id !== doc.id
+                ? d
+                : {
+                    ...d,
+                    files: d.files.filter((f) => f.id !== file.id),
+                  }
+            )
+          )
+        }
+      />
+    ))}
+  </div>
+) : null}
             </div>
           ) : null}
         </div>
