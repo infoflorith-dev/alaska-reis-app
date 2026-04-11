@@ -433,7 +433,7 @@ return Array.from(fileList || []).map((file) => ({
   name: file.name,
   type: file.type || "",
   size: file.size || 0,
-  objectUrl: URL.createObjectURL(file),
+ file,
   previewUrl:
     file.type && file.type.startsWith("image/")
       ? URL.createObjectURL(file)
@@ -467,7 +467,10 @@ function FilePreview({ file, onRemove, onOpen }) {
             />
         ) : (
   <div
-    onClick={() => window.open(file.objectUrl, "_blank")}
+   onClick={() => {
+  const url = URL.createObjectURL(file.file);
+  window.open(url, "_blank");
+}}
     style={{
       marginTop: 10,
       padding: 10,
