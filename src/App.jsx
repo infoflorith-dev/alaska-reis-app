@@ -266,7 +266,7 @@ color: "#0f172a",
     alignItems: "start",
   },
   card: {
-    background: "#ffffff",
+   background: "#f8fafc",
     border: "1px solid #e2e8f0",
     borderRadius: 24,
     boxShadow: "0 10px 30px rgba(15, 23, 42, 0.05)",
