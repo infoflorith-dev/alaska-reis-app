@@ -540,45 +540,58 @@ const hasLoadedRef = useRef(false);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    async function loadTrip() {
-      try {
-        const { data, error } = await supabase
-          .from("travel_app_state")
-          .select("data")
-          .eq("id", "main")
-          .single();
+useEffect(() => {
+  async function loadTrip() {
+    try {
+      const saved = localStorage.getItem("alaska-trip");
 
-        if (data?.data) {
-          setDays(data.data);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+
+        if (parsed.days) {
+          setDays(parsed.days);
+          setDocuments(parsed.documents || []);
           return;
         }
 
-        const saved = localStorage.getItem("alaska-trip");
-        if (saved) {
-          setDays(JSON.parse(saved));
-        }
-
-        if (error && error.code !== "PGRST116") {
-          console.error(error);
-        }
-      } catch (e) {
-        const saved = localStorage.getItem("alaska-trip");
-        if (saved) {
-          try {
-            setDays(JSON.parse(saved));
-          } catch (err) {
-            console.error(err);
-          }
-        }
+        setDays(parsed);
+        return;
       }
+
+      const { data, error } = await supabase
+        .from("travel_app_state")
+        .select("data")
+        .eq("id", "main")
+        .single();
+
+      if (data?.data) {
+        if (data.data.days) {
+          setDays(data.data.days);
+          setDocuments(data.data.documents || []);
+        } else {
+          setDays(data.data);
+        }
+        return;
+      }
+
+      if (error && error.code !== "PGRST116") {
+        console.error(error);
+      }
+    } catch (e) {
+      console.error(e);
     }
+  }
 
-    loadTrip();
-  }, []);
-
+  loadTrip();
+}, []);
 useEffect(() => {
-  localStorage.setItem("alaska-trip", JSON.stringify(days));
+  localStorage.setItem(
+    "alaska-trip",
+    JSON.stringify({
+      days,
+      documents,
+    })
+  );
 
   if (!hasLoadedRef.current) {
     hasLoadedRef.current = true;
@@ -586,7 +599,7 @@ useEffect(() => {
   }
 
   saveTrip(days);
-}, [days]);
+}, [days, documents]);
 
   const selectedDay = useMemo(
     () => days.find((d) => d.id === selectedDayId),
