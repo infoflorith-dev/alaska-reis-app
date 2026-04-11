@@ -440,6 +440,24 @@ return Array.from(fileList || []).map((file) => ({
       : "",
 }));
 }
+async function uploadFile(file) {
+  const fileName = `${Date.now()}-${file.name}`;
+
+  const { error } = await supabase.storage
+    .from("evidence")
+    .upload(fileName, file);
+
+  if (error) {
+    console.error("Upload fout:", error);
+    return null;
+  }
+
+  const { data } = supabase.storage
+    .from("evidence")
+    .getPublicUrl(fileName);
+
+  return data.publicUrl;
+}
 
 function FilePreview({ file, onRemove, onOpen }) {
   return (
