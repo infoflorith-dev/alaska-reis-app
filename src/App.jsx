@@ -781,7 +781,7 @@ async function saveTrip(data) {
   borderBottom: "1px solid #e2e8f0",
 backgroundImage: `url(${
 selectedDay.location?.toLowerCase().includes("seattle")
-  ? "https://images.unsplash.com/photo-1508057198894-247b23fe5ade"
+  ? "https://images.unsplash.com/photo-1502175353174-a7a70e73b362"
   : selectedDay.location?.toLowerCase().includes("juneau")
   ? "https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
   : selectedDay.location?.toLowerCase().includes("skagway")
