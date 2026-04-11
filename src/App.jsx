@@ -484,7 +484,18 @@ function FilePreview({ file, onRemove, onOpen }) {
             />
         ) : (
   <div
- onClick={() => window.open(file.url, "_blank")}
+onClick={async () => {
+  const { data, error } = await supabase.storage
+    .from("evidence")
+    .createSignedUrl(file.path, 3600);
+
+  if (error) {
+    console.error("Open fout:", error);
+    return;
+  }
+
+  window.open(data.signedUrl, "_blank");
+}}
     style={{
       marginTop: 10,
       padding: 10,
@@ -1060,15 +1071,12 @@ onClick={async () => {
 
   let uploadedFiles = [];
 
-  for (const file of docForm.files) {
-    const url = await uploadFile(file.file || file);
-    if (url) {
-      uploadedFiles.push({
-        name: file.name,
-        url,
-      });
-    }
+ for (const file of docForm.files) {
+  const uploaded = await uploadFile(file.file || file);
+  if (uploaded) {
+    uploadedFiles.push(uploaded);
   }
+}
 
   setDocuments((current) => [
     ...current,
