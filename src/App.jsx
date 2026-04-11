@@ -793,8 +793,8 @@ selectedDay.location?.toLowerCase().includes("seattle")
   : selectedDay.location?.toLowerCase().includes("sitka")
   ? "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
   : selectedDay.location?.toLowerCase().includes("victoria")
-  ? "https://images.unsplash.com/photo-1506744038136-46273834b3fb"
-  : selectedDay.location?.toLowerCase().includes("yellowstone")
+ : selectedDay.location?.toLowerCase().includes("yellowstone")
+  ? "https://images.unsplash.com/photo-1501594907352-04cda38ebc29"
   ? "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
   : selectedDay.location?.toLowerCase().includes("hubbard")
   ? "https://images.unsplash.com/photo-1441974231531-c6227db76b6e"
