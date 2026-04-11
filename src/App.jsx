@@ -1038,17 +1038,32 @@ selectedDay.type === "flight"
   <button
     type="button"
     style={styles.buttonDark}
-onClick={() => {
+onClick={async () => {
   if (!docForm.title.trim() && docForm.files.length === 0) {
     window.alert("Vul een titel in of voeg een bestand toe.");
     return;
   }
 
+  let uploadedFiles = [];
+
+  for (const file of docForm.files) {
+    const url = await uploadFile(file.file || file);
+    if (url) {
+      uploadedFiles.push({
+        name: file.name,
+        url,
+      });
+    }
+  }
+
   setDocuments((current) => [
     ...current,
     {
-      ...docForm,
       id: Date.now(),
+      title: docForm.title,
+      note: docForm.note,
+      website: docForm.website,
+      files: uploadedFiles,
     },
   ]);
 
