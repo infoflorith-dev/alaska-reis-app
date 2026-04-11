@@ -443,7 +443,7 @@ return Array.from(fileList || []).map((file) => ({
 async function uploadFile(file) {
   const safeName = `${Date.now()}-${file.name}`.replace(/\s+/g, "-");
 
-  const { data: uploadData, error } = await supabase.storage
+  const { data, error } = await supabase.storage
     .from("evidence")
     .upload(safeName, file);
 
@@ -452,11 +452,10 @@ async function uploadFile(file) {
     return null;
   }
 
-  const { data: publicData } = supabase.storage
-    .from("evidence")
-    .getPublicUrl(uploadData.path);
-
-  return publicData.publicUrl;
+  return {
+    name: file.name,
+    path: data.path,
+  };
 }
 
 function FilePreview({ file, onRemove, onOpen }) {
