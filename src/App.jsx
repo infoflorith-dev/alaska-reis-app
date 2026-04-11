@@ -781,18 +781,18 @@ async function saveTrip(data) {
   borderBottom: "1px solid #e2e8f0",
 backgroundImage: `url(${
 selectedDay.location?.toLowerCase().includes("seattle")
-  ? "https://source.unsplash.com/1600x900/?seattle,skyline"
+  ? "https://images.unsplash.com/photo-1502175353174-a7a70e73b362"
   : selectedDay.location?.toLowerCase().includes("juneau")
-  ? "https://source.unsplash.com/1600x900/?juneau,alaska"
+  ? "https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
   : selectedDay.location?.toLowerCase().includes("skagway")
-  ? "https://source.unsplash.com/1600x900/?skagway,alaska"
+  ? "https://images.unsplash.com/photo-1470770841072-f978cf4d019e"
   : selectedDay.location?.toLowerCase().includes("ketchikan")
-  ? "https://source.unsplash.com/1600x900/?ketchikan,alaska"
+  ? "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
   : selectedDay.location?.toLowerCase().includes("wrangell")
-  ? "https://source.unsplash.com/1600x900/?wrangell,alaska"
+  ? "https://images.unsplash.com/photo-1469474968028-56623f02e42e"
   : selectedDay.location?.toLowerCase().includes("sitka")
-  ? "https://source.unsplash.com/1600x900/?sitka,alaska"
-  : "https://source.unsplash.com/1600x900/?alaska,mountains"
+  ? "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+  : "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
 })`,
   backgroundSize: "cover",
   backgroundPosition: "center",
