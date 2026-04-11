@@ -299,7 +299,7 @@ sidebarHeader: {
     padding: 16,
     borderRadius: 18,
     border: active ? "1px solid #0f172a" : "1px solid #dbe4ee",
-    background: active ? "#ffffff" : "#f9fbfd",
+   background: active ? "#f8fafc" : "#f1f5f9",
     cursor: "pointer",
   }),
   dayTop: {
