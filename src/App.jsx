@@ -441,22 +441,22 @@ return Array.from(fileList || []).map((file) => ({
 }));
 }
 async function uploadFile(file) {
-  const fileName = `${Date.now()}-${file.name}`;
+  const safeName = `${Date.now()}-${file.name}`.replace(/\s+/g, "-");
 
-  const { error } = await supabase.storage
+  const { data: uploadData, error } = await supabase.storage
     .from("evidence")
-    .upload(fileName, file);
+    .upload(safeName, file);
 
   if (error) {
     console.error("Upload fout:", error);
     return null;
   }
 
-  const { data } = supabase.storage
+  const { data: publicData } = supabase.storage
     .from("evidence")
-    .getPublicUrl(fileName);
+    .getPublicUrl(uploadData.path);
 
-  return data.publicUrl;
+  return publicData.publicUrl;
 }
 
 function FilePreview({ file, onRemove, onOpen }) {
