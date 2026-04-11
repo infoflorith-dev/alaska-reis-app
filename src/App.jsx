@@ -782,6 +782,8 @@ const cardImage =
       backgroundImage: `url(${cardImage})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
+      transform: active ? "scale(1.02)" : "scale(1)",
+transition: "transform 0.25s ease",
       color: "#fff",
     }}
     onClick={() => {
