@@ -1070,7 +1070,11 @@ selectedDay.type === "flight"
 
           {doc.website ? (
             <a
-              href={doc.website}
+              href={
+  doc.website.startsWith("http")
+    ? doc.website
+    : "https://" + doc.website
+}
               target="_blank"
               rel="noreferrer"
               style={{
