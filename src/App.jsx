@@ -750,7 +750,7 @@ const cardImage =
       day.location?.toLowerCase().includes("aan boord")
     ? "https://www.cunard.com/content/dam/cunard/brand-assets/ships/queen-elizabeth/in-port/18399-qe-glacier-bay-alaska-2880x1047-desktop.jpg"
     : day.location?.toLowerCase().includes("seattle")
-    ? ""https://images.unsplash.com/photo-1514565131-fce0801e5785""
+    ? "https://images.unsplash.com/photo-1514565131-fce0801e5785"
     : day.location?.toLowerCase().includes("juneau")
     ? "https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
     : day.location?.toLowerCase().includes("skagway")
