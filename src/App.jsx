@@ -467,10 +467,7 @@ function FilePreview({ file, onRemove, onOpen }) {
             />
         ) : (
   <div
-   onClick={() => {
-  const url = URL.createObjectURL(file.file);
-  window.open(url, "_blank");
-}}
+ onClick={() => window.open(file.url, "_blank")}
     style={{
       marginTop: 10,
       padding: 10,
