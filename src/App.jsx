@@ -949,13 +949,26 @@ backgroundImage: 'url("https://images.unsplash.com/photo-1500530855697-b586d89ba
                     ))}
                   </div>
 
-                  <button
-                    type="button"
-                    style={styles.button}
-                    onClick={() => removeExcursion(excursion.id)}
-                  >
-                    Verwijder
-                  </button>
+             <div style={{ display: "flex", gap: 8 }}>
+  <button
+    type="button"
+    style={styles.button}
+    onClick={() => {
+      setExcursionForm(excursion);
+      setEditingExcursionId(excursion.id);
+    }}
+  >
+    Bewerken
+  </button>
+
+  <button
+    type="button"
+    style={styles.button}
+    onClick={() => removeExcursion(excursion.id)}
+  >
+    Verwijder
+  </button>
+</div>
                 </div>
               ))
             )}
