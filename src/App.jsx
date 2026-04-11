@@ -1182,13 +1182,25 @@ selectedDay.type === "flight"
                     ) : null}
 
                     {item.website ? (
-                      <div style={{ marginTop: 8 }}>
-                        <a href={item.website} target="_blank" rel="noreferrer">
-                          Open website / boekingslink
-                        </a>
-                      </div>
-                    ) : null}
+  <div style={{ marginTop: 8 }}>
+    <a href={item.website} target="_blank" rel="noreferrer">
+      Open website / boekingslink
+    </a>
 
+    <div style={{ marginTop: 10 }}>
+      <iframe
+        src={item.website}
+        style={{
+          width: "100%",
+          height: 200,
+          border: "none",
+          borderRadius: 10,
+        }}
+        title={`preview-${item.id}`}
+      />
+    </div>
+  </div>
+) : null}
                     {(item.files || []).map((file) => (
                       <FilePreview
                         key={file.id}
