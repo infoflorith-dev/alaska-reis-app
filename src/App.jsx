@@ -244,11 +244,11 @@ const initialTrip = [
 
 const styles = {
   page: {
-    minHeight: "100vh",
-    background: "linear-gradient(180deg, #f7f9fc 0%, #edf2f7 100%)",
-    padding: 16,
-    fontFamily: "Arial, sans-serif",
-    color: "#0f172a",
+ minHeight: "100vh",
+background: "#f1f5f9",
+padding: 16,
+fontFamily: "Arial, sans-serif",
+color: "#0f172a",
   },
   shell: {
     maxWidth: 1450,
