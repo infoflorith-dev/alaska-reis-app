@@ -743,31 +743,76 @@ async function saveTrip(data) {
         {days.map((day, index) => {
           const active = day.id === selectedDayId;
           const count = day.items.length + day.excursions.length;
+const cardImage =
+  day.type === "flight"
+    ? "https://cdn.assets.prezly.com/ebf46491-b4db-46dc-b168-1e216f74f8e1/SN_Airbus-A330_Visual_01_5K.jpg"
+    : day.title?.toLowerCase().includes("op zee") ||
+      day.location?.toLowerCase().includes("aan boord")
+    ? "https://www.cunard.com/content/dam/cunard/brand-assets/ships/queen-elizabeth/in-port/18399-qe-glacier-bay-alaska-2880x1047-desktop.jpg"
+    : day.location?.toLowerCase().includes("seattle")
+    ? "https://images.unsplash.com/photo-1508057198894-247b23fe5ade"
+    : day.location?.toLowerCase().includes("juneau")
+    ? "https://images.unsplash.com/photo-1506905925346-21bda4d32df4"
+    : day.location?.toLowerCase().includes("skagway")
+    ? "https://images.unsplash.com/photo-1470770841072-f978cf4d019e"
+    : day.location?.toLowerCase().includes("ketchikan")
+    ? "https://images.unsplash.com/photo-1470770903676-69b98201ea1c"
+    : day.location?.toLowerCase().includes("wrangell")
+    ? "https://images.unsplash.com/photo-1469474968028-56623f02e42e"
+    : day.location?.toLowerCase().includes("sitka")
+    ? "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66"
+    : day.location?.toLowerCase().includes("victoria")
+    ? "https://images.unsplash.com/photo-1506744038136-46273834b3fb"
+    : day.location?.toLowerCase().includes("hubbard")
+    ? "https://images.unsplash.com/photo-1441974231531-c6227db76b6e"
+    : day.location?.toLowerCase().includes("yellowstone")
+    ? "https://images.unsplash.com/photo-1476610182048-b716b8518aae"
+    : day.location?.toLowerCase().includes("golden") ||
+      day.location?.toLowerCase().includes("banff")
+    ? "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
+    : "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+    return (
+  <div
+    key={day.id}
+    style={{
+      ...styles.dayCard(active),
+      position: "relative",
+      overflow: "hidden",
+      backgroundImage: `url(${cardImage})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      color: "#fff",
+    }}
+    onClick={() => {
+      setSelectedDayId(day.id);
+      if (isMobile) setMobileTab("details");
+    }}
+  >
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        background: "linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.75))",
+      }}
+    />
 
-          return (
-            <div
-              key={day.id}
-              style={styles.dayCard(active)}
-              onClick={() => {
-                setSelectedDayId(day.id);
-                if (isMobile) setMobileTab("details");
-              }}
-            >
-              <div style={styles.dayTop}>
-                <span style={styles.pill}>Dag {index + 1}</span>
-                <span style={styles.count}>{count}</span>
-              </div>
+    <div style={{ position: "relative" }}>
+      <div style={styles.dayTop}>
+        <span style={styles.pill}>Dag {index + 1}</span>
+        <span style={styles.count}>{count}</span>
+      </div>
 
-              <div style={{ fontWeight: 700, fontSize: 18 }}>{day.date}</div>
-              <div style={{ marginTop: 6, fontWeight: 600 }}>{day.title}</div>
-              <div style={{ marginTop: 6, color: "#64748b", fontSize: 14 }}>
-                {day.location}
-              </div>
-              <div style={{ marginTop: 8, color: "#475569", fontSize: 13 }}>
-                {typeLabel(day.type)} · {day.stay}
-              </div>
-            </div>
-          );
+      <div style={{ fontWeight: 700, fontSize: 18 }}>{day.date}</div>
+      <div style={{ marginTop: 6, fontWeight: 600 }}>{day.title}</div>
+      <div style={{ marginTop: 6, color: "rgba(255,255,255,0.9)", fontSize: 14 }}>
+        {day.location}
+      </div>
+      <div style={{ marginTop: 8, color: "rgba(255,255,255,0.85)", fontSize: 13 }}>
+        {typeLabel(day.type)} · {day.stay}
+      </div>
+    </div>
+  </div>
+);
         })}
       </div>
     </div>
