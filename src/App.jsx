@@ -336,7 +336,7 @@ sidebarHeader: {
     display: "flex",
     flexDirection: "column",
     gap: 24,
-  background: "#f8fafc",
+  background: "#fcfdff",
 borderRadius: 20,
   },
 section: {
