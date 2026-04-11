@@ -1130,6 +1130,15 @@ onClick={() => {
   </div>
 ) : null}
             </div>
+        <button
+  type="button"
+  style={styles.button}
+  onClick={() =>
+    setDocuments((current) => current.filter((d) => d.id !== doc.id))
+  }
+>
+  Verwijder
+</button>
                 </div>
     ))
   )}
