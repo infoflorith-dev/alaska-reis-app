@@ -479,7 +479,7 @@ function FilePreview({ file, onRemove, onOpen }) {
       cursor: "pointer",
     }}
   >
-              Bestand toegevoegd: {file.name}
+            Klik om te openen
             </div>
           )}
         </div>
