@@ -764,7 +764,7 @@ const cardImage =
     : day.location?.toLowerCase().includes("victoria")
     ? "https://images.unsplash.com/photo-1506744038136-46273834b3fb"
     : day.location?.toLowerCase().includes("hubbard")
-    ? "https://images.unsplash.com/photo-1441974231531-c6227db76b6e"
+    ? "https://www.hollandamerica.com/content/dam/hal/inventory-assets/destinations/ports/hub/port-hub-hubbard-glacier-canada-c037.jpg"
     : day.location?.toLowerCase().includes("yellowstone")
     ? "https://images.unsplash.com/photo-1476610182048-b716b8518aae"
     : day.location?.toLowerCase().includes("golden") ||
