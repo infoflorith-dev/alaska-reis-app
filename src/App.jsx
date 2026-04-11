@@ -781,7 +781,7 @@ async function saveTrip(data) {
   borderBottom: "1px solid #e2e8f0",
 backgroundImage: `url(${
 selectedDay.type === "flight"
-  ? "https://cdn.assets.prezly.com/ebf46491-b4db-46dc-b168-1e216f74f8e1/SN_Airbus-A330_Visual_01_5K.jpg"
+  ? "https://www.luchtvaartnieuws.nl/sites/default/files/website_633x300/slider-airlines/sas_a330_c_sas_1280.jpg"
   : selectedDay.location?.toLowerCase().includes("seattle")
   ? "https://images.unsplash.com/photo-1502175353174-a7a70e73b362"
   : selectedDay.location?.toLowerCase().includes("juneau")
