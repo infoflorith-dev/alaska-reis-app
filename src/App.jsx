@@ -469,18 +469,20 @@ function FilePreview({ file, onRemove, onOpen }) {
                 display: "block",
               }}
             />
-          ) : (
-            <div
-              style={{
-                marginTop: 10,
-                padding: 10,
-                borderRadius: 10,
-                background: "#f1f5f9",
-                border: "1px solid #e2e8f0",
-                fontSize: 13,
-                color: "#334155",
-              }}
-            >
+        ) : (
+  <div
+    onClick={() => window.open(file.objectUrl, "_blank")}
+    style={{
+      marginTop: 10,
+      padding: 10,
+      borderRadius: 10,
+      background: "#f1f5f9",
+      border: "1px solid #e2e8f0",
+      fontSize: 13,
+      color: "#334155",
+      cursor: "pointer",
+    }}
+  >
               Bestand toegevoegd: {file.name}
             </div>
           )}
