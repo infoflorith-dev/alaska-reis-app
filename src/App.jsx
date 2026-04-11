@@ -1040,81 +1040,80 @@ selectedDay.type === "flight"
   </button>
 
   <div style={{ display: "grid", gap: 12, marginTop: 16 }}>
-    {documents.length === 0 ? (
-      <div style={{ color: "#64748b" }}>Nog geen reisdocumenten toegevoegd.</div>
-    ) : (
-      documents.map((doc) => (
-        <div key={doc.id} style={styles.itemCard}>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontWeight: 700, fontSize: 17 }}>{doc.title}</div>
+  {documents.length === 0 ? (
+    <div style={{ color: "#64748b" }}>Nog geen reisdocumenten toegevoegd.</div>
+  ) : (
+    documents.map((doc) => (
+      <div key={doc.id} style={styles.itemCard}>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontWeight: 700, fontSize: 17 }}>{doc.title}</div>
 
-            {doc.note ? (
-              <div style={{ marginTop: 8 }}>{doc.note}</div>
-            ) : null}
+          {doc.note ? (
+            <div style={{ marginTop: 8 }}>{doc.note}</div>
+          ) : null}
 
-            {doc.website ? (
-              <a
-                href={doc.website}
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  display: "block",
-                  marginTop: 10,
-                  padding: 12,
-                  borderRadius: 10,
-                  background: "#f4f6f8",
-                  textDecoration: "none",
-                  color: "#111",
-                  border: "1px solid #e2e8f0",
-                }}
-              >
-                <div style={{ fontWeight: 600 }}>
-                  {doc.website.replace("https://", "").slice(0, 40)}
-                </div>
-                <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>
-                  Website openen ↗
-                </div>     
-        <div style={styles.section}>
-          <h2 style={styles.sectionTitle}>Excursies van deze dag</h2>
-
-              </a>
-            ) : null}
-
-            {doc.files && doc.files.length > 0 ? (
-              <div style={{ marginTop: 10 }}>
-                {doc.files.map((file, index) => (
-  <div
-    key={index}
-    onClick={() => window.open(URL.createObjectURL(file), "_blank")}
-    style={{
-      padding: 10,
-      borderRadius: 10,
-      background: "#f8fafc",
-      border: "1px solid #e2e8f0",
-      marginTop: 8,
-      cursor: "pointer",
-    }}
-  >
-    {file.name}
-  </div>
-))}
+          {doc.website ? (
+            <a
+              href={doc.website}
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                display: "block",
+                marginTop: 10,
+                padding: 12,
+                borderRadius: 10,
+                background: "#f4f6f8",
+                textDecoration: "none",
+                color: "#111",
+                border: "1px solid #e2e8f0",
+              }}
+            >
+              <div style={{ fontWeight: 600 }}>
+                {doc.website.replace("https://", "").slice(0, 40)}
               </div>
-            ) : null}
-          </div>
+              <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>
+                Website openen ↗
+              </div>
+            </a>
+          ) : null}
 
-          <button
-            type="button"
-            style={styles.button}
-            onClick={() =>
-              setDocuments(documents.filter((d) => d.id !== doc.id))
-            }
-          >
-            Verwijder
-          </button>
+          {doc.files && doc.files.length > 0 ? (
+            <div style={{ marginTop: 10 }}>
+              {doc.files.map((file, index) => (
+                <div
+                  key={index}
+                  onClick={() => window.open(URL.createObjectURL(file), "_blank")}
+                  style={{
+                    padding: "10px 14px",
+                    borderRadius: 12,
+                    background: "#f1f5f9",
+                    border: "1px solid #e2e8f0",
+                    marginTop: 8,
+                    cursor: "pointer",
+                    display: "inline-block",
+                    fontWeight: 500,
+                  }}
+                >
+                  📄 {file.name}
+                </div>
+              ))}
+            </div>
+          ) : null}
         </div>
-      ))
-    )}
-  </div>
+
+        <button
+          type="button"
+          style={styles.button}
+          onClick={() =>
+            setDocuments(documents.filter((d) => d.id !== doc.id))
+          }
+        >
+          Verwijder
+        </button>
+      </div>
+    ))
+  )}
+</div>
 </div>
           <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
             <input
