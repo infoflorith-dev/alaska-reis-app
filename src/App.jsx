@@ -572,19 +572,26 @@ useEffect(() => {
     try {
       const saved = localStorage.getItem("alaska-trip");
 
-      if (saved) {
-        const parsed = JSON.parse(saved);
+if (saved) {
+  try {
+    const parsed = JSON.parse(saved);
 
-        if (parsed.days) {
-          setDays(parsed.days);
-          setDocuments(parsed.documents || []);
-          return;
-        }
+    if (parsed.days) {
+      setDays(parsed.days);
 
-        setDays(parsed);
+      if (!parsed.documents || parsed.documents.length === 0) {
+        // laat Supabase hieronder ook nog checken
+      } else {
+        setDocuments(parsed.documents);
         return;
       }
-
+    } else {
+      setDays(parsed);
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
       const { data, error } = await supabase
         .from("travel_app_state")
         .select("data")
