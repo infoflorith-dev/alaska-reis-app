@@ -301,6 +301,9 @@ const styles = {
   border: active ? "2px solid #0f172a" : "1px solid #dbe4ee",
   background: active ? "#ffffff" : "#f1f5f9",
     cursor: "pointer",
+    boxShadow: active
+  ? "0 12px 30px rgba(15,23,42,0.25)"
+  : "0 2px 6px rgba(0,0,0,0.05)",
   }),
   dayTop: {
     display: "flex",
