@@ -997,21 +997,7 @@ onMouseLeave={(e) => {
                   ? "Yellowstone National Park, USA"
                   : selectedDay.location
               )}`}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                display: "inline-block",
-                padding: "10px 14px",
-                borderRadius: 12,
-                background: "#0f172a",
-                color: "#fff",
-                textDecoration: "none",
-                fontWeight: 700,
-              }}
-            >
-              📍 Bekijk op kaart
-            </a>
-          </div>
+                   </div>
         
         </div>
       </div>
