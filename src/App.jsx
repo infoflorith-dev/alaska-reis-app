@@ -1156,7 +1156,28 @@ export default function App() {
       boxShadow: "0 4px 12px rgba(0,0,0,0.04)",
     }}
   >
-    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 6, position: "relative" }}>
+     <button
+  onClick={() =>
+    setDocuments((current) =>
+      current.filter((d) => d.id !== doc.id)
+    )
+  }
+  style={{
+    position: "absolute",
+    top: 0,
+    right: 0,
+    background: "#ef4444",
+    color: "#fff",
+    border: "none",
+    borderRadius: 8,
+    padding: "4px 8px",
+    cursor: "pointer",
+    fontSize: 12,
+  }}
+>
+  ✕
+</button> 
       <div style={{ fontWeight: 700, fontSize: 18 }}>
         📄 {doc.title}
       </div>
