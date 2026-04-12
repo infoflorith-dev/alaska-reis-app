@@ -1688,7 +1688,12 @@ export default function App() {
 
       {fullscreenIndex !== null && fullscreenList.length > 0 && (
         <div
-          onClick={() => setFullscreenIndex(null)}
+          onClick={(e) => {
+  if (e.target === e.currentTarget) {
+    setFullscreenIndex(null);
+    setFullscreenList([]);
+  }
+}}
           style={{
             position: "fixed",
             top: 0,
