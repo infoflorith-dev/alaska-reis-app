@@ -1177,30 +1177,70 @@ onMouseLeave={(e) => {
     marginTop: 12,
   }}
 >
-    {(selectedDay.photos || []).map((file) => (
-      <FilePreview
-        key={file.id}
-        file={file}
-        onOpen={(url) => {
-          setFullscreenList(selectedDay.photos);
-          setFullscreenIndex(
-            selectedDay.photos.findIndex((f) => f.id === file.id)
-          );
-        }}
-        onRemove={() =>
-          setDays((current) =>
-            current.map((day) =>
-              day.id !== selectedDayId
-                ? day
-                : {
-                    ...day,
-                    photos: day.photos.filter((f) => f.id !== file.id),
-                  }
-            )
+    {(selectedDay.photos || []).map((file, i) => (
+  <div
+    key={file.id}
+    onClick={() => {
+      setFullscreenList(selectedDay.photos);
+      setFullscreenIndex(i);
+    }}
+    style={{
+      aspectRatio: "1 / 1",
+      borderRadius: 16,
+      overflow: "hidden",
+      cursor: "pointer",
+      position: "relative",
+      background: "#e2e8f0",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+    }}
+  >
+    <img
+      src={file.previewUrl}
+      alt=""
+      style={{
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        display: "block",
+      }}
+    />
+
+    <button
+      type="button"
+      onClick={(e) => {
+        e.stopPropagation();
+        setDays((current) =>
+          current.map((day) =>
+            day.id !== selectedDayId
+              ? day
+              : {
+                  ...day,
+                  photos: day.photos.filter((f) => f.id !== file.id),
+                }
           )
-        }
-      />
-    ))}
+        );
+      }}
+      style={{
+        position: "absolute",
+        top: 8,
+        right: 8,
+        background: "rgba(15,23,42,0.75)",
+        color: "#fff",
+        border: "none",
+        borderRadius: "50%",
+        width: 28,
+        height: 28,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+        fontSize: 14,
+      }}
+    >
+      ✕
+    </button>
+  </div>
+))}
   </div>
 </div>
         <div style={styles.section}>
