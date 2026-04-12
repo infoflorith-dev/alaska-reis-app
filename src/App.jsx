@@ -1139,12 +1139,20 @@ onMouseLeave={(e) => {
     <FilePreview
       key={file.id}
       file={file}
-      onOpen={(url) => {
-        setFullscreenList(photoForm.files);
-        setFullscreenIndex(
-          photoForm.files.findIndex((f) => f.id === file.id)
-    );
-})}
+    onOpen={(url) => {
+  setFullscreenList(photoForm.files);
+  setFullscreenIndex(
+    photoForm.files.findIndex((f) => f.id === file.id)
+  );
+}}
+onRemove={() =>
+  setPhotoForm((s) => ({
+    ...s,
+    files: s.files.filter((f) => f.id !== file.id),
+  }))
+}
+/>
+))}
   <button
   type="button"
   style={styles.buttonDark}
