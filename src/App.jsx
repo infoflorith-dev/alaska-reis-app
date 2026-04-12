@@ -1165,8 +1165,8 @@ export default function App() {
   }
 style={{
   position: "absolute",
-  top: 12,
-  right: 12,
+ top: 6,
+right: 6,
   background: "#ffffff",
   color: "#0f172a",
   border: "2px solid #cbd5e1",
