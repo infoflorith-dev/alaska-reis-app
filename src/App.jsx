@@ -1145,7 +1145,7 @@ onMouseLeave={(e) => {
           photoForm.files.findIndex((f) => f.id === file.id)
         );
       }}
-    <button
+  <button
   type="button"
   style={styles.buttonDark}
   onClick={async () => {
@@ -1172,7 +1172,9 @@ onMouseLeave={(e) => {
     );
 
     setPhotoForm({ title: "", files: [] });
-    if (photoFileRef.current) photoFileRef.current.value = "";
+    if (photoFileRef.current) {
+      photoFileRef.current.value = "";
+    }
   }}
 >
   Foto’s toevoegen
