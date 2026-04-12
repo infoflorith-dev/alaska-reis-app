@@ -996,8 +996,8 @@ onMouseLeave={(e) => {
     <iframe
       title="map"
       width="100%"
-      height="260"
-      style={{ border: 0, display: "block" }}
+      height="300"
+      style={{ border: 0, display: "block", marginTop: "-34px" }}
       loading="lazy"
       allowFullScreen
       src={`https://www.google.com/maps?q=${encodeURIComponent(
