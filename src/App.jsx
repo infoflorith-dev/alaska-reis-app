@@ -985,7 +985,7 @@ onMouseLeave={(e) => {
 
 <div
   style={{
-    marginTop: 10,
+    marginTop: 0,
     borderRadius: 18,
     overflow: "hidden",
     border: "1px solid #e2e8f0",
