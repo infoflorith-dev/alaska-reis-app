@@ -975,30 +975,7 @@ onMouseLeave={(e) => {
           </div>
 
           <div style={{ marginTop: 12 }}>
-            <a
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                selectedDay.location === "Golden"
-                  ? "Golden, British Columbia, Canada"
-                  : selectedDay.location === "Seattle"
-                  ? "Seattle, Washington, USA"
-                  : selectedDay.location === "Juneau"
-                  ? "Juneau, Alaska, USA"
-                  : selectedDay.location === "Skagway"
-                  ? "Skagway, Alaska, USA"
-                  : selectedDay.location === "Ketchikan"
-                  ? "Ketchikan, Alaska, USA"
-                  : selectedDay.location === "Wrangell"
-                  ? "Wrangell, Alaska, USA"
-                  : selectedDay.location === "Sitka"
-                  ? "Sitka, Alaska, USA"
-                  : selectedDay.location === "Victoria"
-                  ? "Victoria, British Columbia, Canada"
-                  : selectedDay.location === "Yellowstone"
-                  ? "Yellowstone National Park, USA"
-                  : selectedDay.location
-              )}`}
-                   </div>
-        
+                             </div>        
         </div>
       </div>
 
