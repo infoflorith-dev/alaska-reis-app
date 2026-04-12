@@ -858,6 +858,12 @@ export default function App() {
                 setSelectedDayId(day.id);
                 if (isMobile) setMobileTab("details");
               }}
+              onMouseEnter={(e) => {
+  if (!active) e.currentTarget.style.transform = "scale(1.02)";
+}}
+onMouseLeave={(e) => {
+  if (!active) e.currentTarget.style.transform = "scale(1)";
+}}
             >
               <div
                 style={{
