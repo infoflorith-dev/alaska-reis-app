@@ -1055,7 +1055,18 @@ onMouseLeave={(e) => {
           : selectedDay.location === "Yellowstone"
           ? "Yellowstone National Park, USA"
           : selectedDay.location
-      )}&output=embed`}
+     )}&z=${
+  selectedDay.location === "Seattle" ? 11 :
+  selectedDay.location === "Victoria" ? 11 :
+  selectedDay.location === "Juneau" ? 12 :
+  selectedDay.location === "Skagway" ? 13 :
+  selectedDay.location === "Ketchikan" ? 12 :
+  selectedDay.location === "Wrangell" ? 13 :
+  selectedDay.location === "Sitka" ? 12 :
+  selectedDay.location === "Yellowstone" ? 9 :
+  selectedDay.location === "Golden" ? 11 :
+  11
+}&output=embed`}
     />
   </div>
 </div>
