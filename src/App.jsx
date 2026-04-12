@@ -1108,24 +1108,26 @@ onClick={async () => {
     Document toevoegen
   </button>
 
-  <div style={{ display: "grid", gap: 12, marginTop: 16 }}>
+<div style={{ display: "grid", gap: 12, marginTop: 16 }}>
   {documents.length === 0 ? (
-    <div style={{ color: "#64748b" }}>Nog geen reisdocumenten toegevoegd.</div>
+    <div style={{ color: "#64748b" }}>
+      Nog geen reisdocumenten toegevoegd.
+    </div>
   ) : (
     documents.map((doc) => (
-     <div
-  key={doc.id}
-  style={{
-    ...styles.itemCard,
-    flexDirection: "column",
-    gap: 12,
-    padding: 18,
-  }}
->
+      <div
+        key={doc.id}
+        style={{
+          ...styles.itemCard,
+          flexDirection: "column",
+          gap: 12,
+          padding: 18,
+        }}
+      >
         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
           <div style={{ fontWeight: 700, fontSize: 18 }}>
-  📄 {doc.title}
-</div>
+            📄 {doc.title}
+          </div>
 
           {doc.note ? (
             <div style={{ marginTop: 8 }}>{doc.note}</div>
@@ -1134,10 +1136,10 @@ onClick={async () => {
           {doc.website ? (
             <a
               href={
-  doc.website.startsWith("http")
-    ? doc.website
-    : "https://" + doc.website
-}
+                doc.website.startsWith("http")
+                  ? doc.website
+                  : "https://" + doc.website
+              }
               target="_blank"
               rel="noreferrer"
               style={{
@@ -1160,30 +1162,35 @@ onClick={async () => {
             </a>
           ) : null}
 
-         {doc.files && doc.files.length > 0 ? (
-  <div style={{ marginTop: 10 }}>
-    {doc.files.map((file) => (
-      <FilePreview
-        key={file.id}
-        file={file}
-        onOpen={setFullscreenImage}
-        onRemove={() =>
-          setDocuments((current) =>
-            current.map((d) =>
-              d.id !== doc.id
-                ? d
-                : {
-                    ...d,
-                    files: d.files.filter((f) => f.id !== file.id),
+          {doc.files && doc.files.length > 0 ? (
+            <div style={{ marginTop: 10 }}>
+              {doc.files.map((file) => (
+                <FilePreview
+                  key={file.id || file.path || file.name}
+                  file={file}
+                  onOpen={setFullscreenImage}
+                  onRemove={() =>
+                    setDocuments((current) =>
+                      current.map((d) =>
+                        d.id !== doc.id
+                          ? d
+                          : {
+                              ...d,
+                              files: d.files.filter(
+                                (f) =>
+                                  (f.id || f.path || f.name) !==
+                                  (file.id || file.path || file.name)
+                              ),
+                            }
+                      )
+                    )
                   }
-            )
-          )
-        }
-      />
-    ))}
-  </div>
-) : null}
+                />
+              ))}
+            </div>
+          ) : null}
         </div>
+
         <button
           type="button"
           style={{
@@ -1200,6 +1207,8 @@ onClick={async () => {
     ))
   )}
 </div>
+
+<div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
 
 <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
             <input
