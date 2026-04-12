@@ -1113,9 +1113,19 @@ onClick={async () => {
     <div style={{ color: "#64748b" }}>Nog geen reisdocumenten toegevoegd.</div>
   ) : (
     documents.map((doc) => (
-      <div key={doc.id} style={styles.itemCard}>
-        <div style={{ flex: 1 }}>
-          <div style={{ fontWeight: 700, fontSize: 17 }}>{doc.title}</div>
+     <div
+  key={doc.id}
+  style={{
+    ...styles.itemCard,
+    flexDirection: "column",
+    gap: 12,
+    padding: 18,
+  }}
+>
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          <div style={{ fontWeight: 700, fontSize: 18 }}>
+  📄 {doc.title}
+</div>
 
           {doc.note ? (
             <div style={{ marginTop: 8 }}>{doc.note}</div>
