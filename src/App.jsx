@@ -1163,21 +1163,23 @@ export default function App() {
       current.filter((d) => d.id !== doc.id)
     )
   }
- style={{
+style={{
   position: "absolute",
-  top: 10,
-  right: 10,
-  background: "rgba(239,68,68,0.9)",
-  color: "#fff",
-  border: "none",
+  top: 12,
+  right: 12,
+  background: "#ffffff",
+  color: "#0f172a",
+  border: "2px solid #cbd5e1",
   borderRadius: "50%",
-  width: 28,
-  height: 28,
+  width: 34,
+  height: 34,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   cursor: "pointer",
-  fontSize: 14,
+  fontSize: 16,
+  fontWeight: 700,
+  boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
 }}
 >
   ✕
