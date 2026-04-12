@@ -1197,50 +1197,59 @@ export default function App() {
         </a>
       ) : null}
 
-                    {doc.files && doc.files.length > 0 ? (
-                      <div style={{ marginTop: 10 }}>
-                        {doc.files.map((file) => (
-                          <FilePreview
-                            key={file.id || file.path || file.name}
-                            file={file}
-                            onOpen={setFullscreenImage}
-                            onRemove={() =>
-                              setDocuments((current) =>
-                                current.map((d) =>
-                                  d.id !== doc.id
-                                    ? d
-                                    : {
-                                        ...d,
-                                        files: d.files.filter(
-                                          (f) =>
-                                            (f.id || f.path || f.name) !==
-                                            (file.id || file.path || file.name)
-                                        ),
-                                      }
-                                )
-                              )
-                            }
-                          />
-                        ))}
-                      </div>
-                    ) : null}
-                  </div>
-
-                  <button
-                    type="button"
-                    style={{
-                      ...styles.button,
-                      alignSelf: "flex-end",
-                    }}
-                    onClick={() =>
-                      setDocuments((current) =>
-                        current.filter((d) => d.id !== doc.id)
-                      )
+                 {doc.files && doc.files.length > 0 ? (
+  <div
+    style={{
+      marginTop: 12,
+      padding: 12,
+      borderRadius: 14,
+      background: "#f8fafc",
+      border: "1px solid #e2e8f0",
+    }}
+  >
+    <div style={{ display: "grid", gap: 10 }}>
+      {doc.files.map((file) => (
+        <FilePreview
+          key={file.id || file.path || file.name}
+          file={file}
+          onOpen={setFullscreenImage}
+          onRemove={() =>
+            setDocuments((current) =>
+              current.map((d) =>
+                d.id !== doc.id
+                  ? d
+                  : {
+                      ...d,
+                      files: d.files.filter(
+                        (f) =>
+                          (f.id || f.path || f.name) !==
+                          (file.id || file.path || file.name)
+                      ),
                     }
-                  >
-                    Verwijder
-                  </button>
-                </div>
+              )
+            )
+          }
+        />
+      ))}
+    </div>
+  </div>
+) : null}
+
+</div>
+
+<button
+  type="button"
+  style={{
+    ...styles.button,
+    alignSelf: "flex-end",
+    minWidth: 120,
+  }}
+  onClick={() =>
+    setDocuments((current) => current.filter((d) => d.id !== doc.id))
+  }
+>
+  Verwijder
+</button>
               ))
             )}
           </div>
