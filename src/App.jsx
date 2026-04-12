@@ -1184,17 +1184,18 @@ onClick={async () => {
   </div>
 ) : null}
             </div>
-        <button
+<button
   type="button"
-  style={styles.button}
+  style={{
+    ...styles.button,
+    alignSelf: "flex-end",
+  }}
   onClick={() =>
     setDocuments((current) => current.filter((d) => d.id !== doc.id))
   }
 >
   Verwijder
 </button>
-                </div>
-    ))
   )}
 </div>
 </div>
