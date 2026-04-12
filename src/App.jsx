@@ -1157,23 +1157,31 @@ onMouseLeave={(e) => {
   <button
     type="button"
     style={styles.buttonDark}
-    onClick={() => {
-      if (photoForm.files.length === 0) return;
+    onClick={async () => {
+     if (photoForm.files.length === 0) return;
 
-      setDays((current) =>
-        current.map((day) =>
-          day.id !== selectedDayId
-            ? day
-            : {
-                ...day,
-                photos: [...(day.photos || []), ...photoForm.files],
-              }
-        )
-      );
+const uploadedPhotos = [];
 
-      setPhotoForm({ title: "", files: [] });
-      if (photoFileRef.current) photoFileRef.current.value = "";
-    }}
+for (const file of photoForm.files) {
+  const uploaded = await uploadFile(file.file || file);
+  if (uploaded) {
+    uploadedPhotos.push(uploaded);
+  }
+}
+
+setDays((current) =>
+  current.map((day) =>
+    day.id !== selectedDayId
+      ? day
+      : {
+          ...day,
+          photos: [...(day.photos || []), ...uploadedPhotos],
+        }
+  )
+);
+
+setPhotoForm({ title: "", files: [] });
+if (photoFileRef.current) photoFileRef.current.value = "";
   >
     Foto’s toevoegen
   </button>
