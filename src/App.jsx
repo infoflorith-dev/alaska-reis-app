@@ -459,7 +459,7 @@ async function uploadFile(file) {
   };
 }
 
-function FilePreview({ file, onRemove, onOpen }) {
+function FilePreview({ file, index, list, onRemove, onOpen }) {
   return (
     <div style={styles.fileBox}>
       <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
