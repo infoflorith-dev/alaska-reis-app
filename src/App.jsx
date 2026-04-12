@@ -1012,6 +1012,44 @@ onMouseLeave={(e) => {
               📍 Bekijk op kaart
             </a>
           </div>
+          <div
+  style={{
+    marginTop: 16,
+    borderRadius: 16,
+    overflow: "hidden",
+    border: "1px solid #e2e8f0",
+  }}
+>
+  <iframe
+    title="map"
+    width="100%"
+    height="300"
+    style={{ border: 0 }}
+    loading="lazy"
+    allowFullScreen
+   src={`https://www.google.com/maps?q=${encodeURIComponent(
+      selectedDay.location === "Golden"
+        ? "Golden, British Columbia, Canada"
+        : selectedDay.location === "Seattle"
+        ? "Seattle, Washington, USA"
+        : selectedDay.location === "Juneau"
+        ? "Juneau, Alaska, USA"
+        : selectedDay.location === "Skagway"
+        ? "Skagway, Alaska, USA"
+        : selectedDay.location === "Ketchikan"
+        ? "Ketchikan, Alaska, USA"
+        : selectedDay.location === "Wrangell"
+        ? "Wrangell, Alaska, USA"
+        : selectedDay.location === "Sitka"
+        ? "Sitka, Alaska, USA"
+        : selectedDay.location === "Victoria"
+        ? "Victoria, British Columbia, Canada"
+        : selectedDay.location === "Yellowstone"
+        ? "Yellowstone National Park, USA"
+        : selectedDay.location
+    )}&output=embed`}
+  />
+</div>
         </div>
       </div>
 
