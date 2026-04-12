@@ -1235,22 +1235,6 @@ export default function App() {
                       </div>
                     ) : null}
                   </div>
-
-                  <button
-                    type="button"
-                    style={{
-                      ...styles.button,
-                      alignSelf: "flex-end",
-                      minWidth: 120,
-                    }}
-                    onClick={() =>
-                      setDocuments((current) =>
-                        current.filter((d) => d.id !== doc.id)
-                      )
-                    }
-                  >
-                    Verwijder
-                  </button>
                 </div>
               ))
             )}
