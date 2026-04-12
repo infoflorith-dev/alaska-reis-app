@@ -327,10 +327,6 @@ const styles = {
     color: "#334155",
     border: "1px solid #e2e8f0",
   },
-  mainHeader: {
-    padding: 24,
-    borderBottom: "1px solid #e2e8f0",
-  },
   mainBody: {
     padding: 24,
     display: "flex",
@@ -470,7 +466,7 @@ function FilePreview({ file, index, list, onRemove, onOpen }) {
             <img
               src={file.previewUrl}
               alt={file.name}
-              onClick={() => onOpen(file.previewUrl)}
+              onClick={() => onOpen(index, list)}
               style={{
                 cursor: "pointer",
                 marginTop: 10,
@@ -521,8 +517,8 @@ function FilePreview({ file, index, list, onRemove, onOpen }) {
 
 export default function App() {
   const [days, setDays] = useState(initialTrip);
- const [fullscreenIndex, setFullscreenIndex] = useState(null);
-const [fullscreenList, setFullscreenList] = useState([]);
+  const [fullscreenIndex, setFullscreenIndex] = useState(null);
+  const [fullscreenList, setFullscreenList] = useState([]);
   const [selectedDayId, setSelectedDayId] = useState(initialTrip[0].id);
   const [mobileTab, setMobileTab] = useState("days");
   const [isMobile, setIsMobile] = useState(
@@ -1144,88 +1140,96 @@ const [fullscreenList, setFullscreenList] = useState([]);
                 Nog geen reisdocumenten toegevoegd.
               </div>
             ) : (
-            documents.map((doc) => (
-  <div
-    key={doc.id}
-    style={{
-      ...styles.itemCard,
-      flexDirection: "column",
-      gap: 14,
-      padding: 20,
-      borderRadius: 20,
-      background: "#ffffff",
-      boxShadow: "0 4px 12px rgba(0,0,0,0.04)",
-    }}
-  >
-    <div style={{ display: "flex", flexDirection: "column", gap: 6, position: "relative" }}>
-     <button
-  onClick={() =>
-    setDocuments((current) =>
-      current.filter((d) => d.id !== doc.id)
-    )
-  }
-style={{
-  position: "absolute",
- top: 2,
-right: 2,
-  background: "#ffffff",
-  color: "#0f172a",
-  border: "2px solid #cbd5e1",
-  borderRadius: "50%",
-  width: 34,
-  height: 34,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  cursor: "pointer",
-  fontSize: 16,
-  fontWeight: 700,
-  boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-}}
->
-  ✕
-</button> 
-      <div style={{ fontWeight: 700, fontSize: 18 }}>
-        📄 {doc.title}
-      </div>
+              documents.map((doc) => (
+                <div
+                  key={doc.id}
+                  style={{
+                    ...styles.itemCard,
+                    flexDirection: "column",
+                    gap: 14,
+                    padding: 20,
+                    borderRadius: 20,
+                    background: "#ffffff",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.04)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 6,
+                      position: "relative",
+                    }}
+                  >
+                    <button
+                      onClick={() =>
+                        setDocuments((current) =>
+                          current.filter((d) => d.id !== doc.id)
+                        )
+                      }
+                      style={{
+                        position: "absolute",
+                        top: 2,
+                        right: 2,
+                        background: "#ffffff",
+                        color: "#0f172a",
+                        border: "2px solid #cbd5e1",
+                        borderRadius: "50%",
+                        width: 34,
+                        height: 34,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "pointer",
+                        fontSize: 16,
+                        fontWeight: 700,
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                      }}
+                    >
+                      ✕
+                    </button>
 
-      {doc.note ? (
-        <div style={{ marginTop: 6, color: "#334155" }}>
-          {doc.note}
-        </div>
-      ) : null}
+                    <div style={{ fontWeight: 700, fontSize: 18 }}>
+                      📄 {doc.title}
+                    </div>
 
-      {doc.website ? (
-        <a
-          href={
-            doc.website.startsWith("http")
-              ? doc.website
-              : "https://" + doc.website
-          }
-          target="_blank"
-          rel="noreferrer"
-          style={{
-            display: "block",
-            marginTop: 10,
-            padding: 14,
-            borderRadius: 12,
-            background: "#f8fafc",
-            textDecoration: "none",
-            color: "#0f172a",
-            border: "1px solid #e2e8f0",
-            transition: "all 0.2s ease",
-          }}
-        >
-          <div style={{ fontWeight: 600 }}>
-            {doc.website.replace("https://", "").slice(0, 40)}
-          </div>
-          <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>
-            Website openen ↗
-          </div>
-        </a>
-      ) : null}
+                    {doc.note ? (
+                      <div style={{ marginTop: 6, color: "#334155" }}>
+                        {doc.note}
+                      </div>
+                    ) : null}
 
-                         {doc.files && doc.files.length > 0 ? (
+                    {doc.website ? (
+                      <a
+                        href={
+                          doc.website.startsWith("http")
+                            ? doc.website
+                            : "https://" + doc.website
+                        }
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          display: "block",
+                          marginTop: 10,
+                          padding: 14,
+                          borderRadius: 12,
+                          background: "#f8fafc",
+                          textDecoration: "none",
+                          color: "#0f172a",
+                          border: "1px solid #e2e8f0",
+                          transition: "all 0.2s ease",
+                        }}
+                      >
+                        <div style={{ fontWeight: 600 }}>
+                          {doc.website.replace("https://", "").slice(0, 40)}
+                        </div>
+                        <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>
+                          Website openen ↗
+                        </div>
+                      </a>
+                    ) : null}
+
+                    {doc.files && doc.files.length > 0 ? (
                       <div
                         style={{
                           marginTop: 12,
@@ -1236,11 +1240,16 @@ right: 2,
                         }}
                       >
                         <div style={{ display: "grid", gap: 10 }}>
-                          {doc.files.map((file) => (
+                          {doc.files.map((file, i) => (
                             <FilePreview
                               key={file.id || file.path || file.name}
                               file={file}
-                              onOpen={setFullscreenImage}
+                              index={i}
+                              list={doc.files}
+                              onOpen={(index, list) => {
+                                setFullscreenList(list);
+                                setFullscreenIndex(index);
+                              }}
                               onRemove={() =>
                                 setDocuments((current) =>
                                   current.map((d) =>
@@ -1267,7 +1276,8 @@ right: 2,
               ))
             )}
           </div>
-        </div>  
+        </div>
+
         <div style={styles.section}>
           <h2 style={styles.sectionTitle}>Excursies van deze dag</h2>
 
@@ -1319,11 +1329,17 @@ right: 2,
                 }))
               }
             />
-            {excursionForm.files.map((file) => (
+
+            {excursionForm.files.map((file, i) => (
               <FilePreview
                 key={file.id}
                 file={file}
-                onOpen={setFullscreenImage}
+                index={i}
+                list={excursionForm.files}
+                onOpen={(index, list) => {
+                  setFullscreenList(list);
+                  setFullscreenIndex(index);
+                }}
                 onRemove={() =>
                   setExcursionForm((s) => ({
                     ...s,
@@ -1332,6 +1348,7 @@ right: 2,
                 }
               />
             ))}
+
             <button type="button" style={styles.buttonDark} onClick={addExcursion}>
               Excursie toevoegen
             </button>
@@ -1347,11 +1364,13 @@ right: 2,
                     <div style={{ fontWeight: 700, fontSize: 17 }}>
                       {excursion.title}
                     </div>
+
                     {excursion.time ? (
                       <div style={{ color: "#64748b", marginTop: 4 }}>
                         {excursion.time}
                       </div>
                     ) : null}
+
                     {excursion.note ? (
                       <div style={{ marginTop: 8 }}>{excursion.note}</div>
                     ) : null}
@@ -1368,11 +1387,16 @@ right: 2,
                       </div>
                     ) : null}
 
-                    {(excursion.files || []).map((file) => (
+                    {(excursion.files || []).map((file, i) => (
                       <FilePreview
                         key={file.id}
                         file={file}
-                        onOpen={setFullscreenImage}
+                        index={i}
+                        list={excursion.files || []}
+                        onOpen={(index, list) => {
+                          setFullscreenList(list);
+                          setFullscreenIndex(index);
+                        }}
                         onRemove={() =>
                           setDays((current) =>
                             current.map((day) =>
@@ -1477,11 +1501,17 @@ right: 2,
                 }))
               }
             />
-            {itemForm.files.map((file) => (
+
+            {itemForm.files.map((file, i) => (
               <FilePreview
                 key={file.id}
                 file={file}
-                onOpen={setFullscreenImage}
+                index={i}
+                list={itemForm.files}
+                onOpen={(index, list) => {
+                  setFullscreenList(list);
+                  setFullscreenIndex(index);
+                }}
                 onRemove={() =>
                   setItemForm((s) => ({
                     ...s,
@@ -1490,6 +1520,7 @@ right: 2,
                 }
               />
             ))}
+
             <button type="button" style={styles.buttonDark} onClick={addItem}>
               Item toevoegen
             </button>
@@ -1557,11 +1588,16 @@ right: 2,
                       </a>
                     ) : null}
 
-                    {(item.files || []).map((file) => (
+                    {(item.files || []).map((file, i) => (
                       <FilePreview
                         key={file.id}
                         file={file}
-                        onOpen={setFullscreenImage}
+                        index={i}
+                        list={item.files || []}
+                        onOpen={(index, list) => {
+                          setFullscreenList(list);
+                          setFullscreenIndex(index);
+                        }}
                         onRemove={() =>
                           setDays((current) =>
                             current.map((day) =>
@@ -1650,9 +1686,9 @@ right: 2,
         )}
       </div>
 
-      {fullscreenImage && (
+      {fullscreenIndex !== null && fullscreenList.length > 0 && (
         <div
-          onClick={() => setFullscreenImage(null)}
+          onClick={() => setFullscreenIndex(null)}
           style={{
             position: "fixed",
             top: 0,
@@ -1664,17 +1700,72 @@ right: 2,
             alignItems: "center",
             justifyContent: "center",
             zIndex: 9999,
-            cursor: "pointer",
           }}
         >
           <img
-            src={fullscreenImage}
+            src={fullscreenList[fullscreenIndex]?.previewUrl}
             alt="Fullscreen preview"
             style={{
               maxWidth: "95%",
               maxHeight: "95%",
             }}
           />
+
+          {fullscreenIndex > 0 && (
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                setFullscreenIndex((i) => i - 1);
+              }}
+              style={{
+                position: "absolute",
+                left: 20,
+                color: "#fff",
+                fontSize: 36,
+                cursor: "pointer",
+                userSelect: "none",
+              }}
+            >
+              ‹
+            </div>
+          )}
+
+          {fullscreenIndex < fullscreenList.length - 1 && (
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                setFullscreenIndex((i) => i + 1);
+              }}
+              style={{
+                position: "absolute",
+                right: 20,
+                color: "#fff",
+                fontSize: 36,
+                cursor: "pointer",
+                userSelect: "none",
+              }}
+            >
+              ›
+            </div>
+          )}
+
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              setFullscreenIndex(null);
+            }}
+            style={{
+              position: "absolute",
+              top: 20,
+              right: 20,
+              color: "#fff",
+              fontSize: 28,
+              cursor: "pointer",
+              userSelect: "none",
+            }}
+          >
+            ✕
+          </div>
         </div>
       )}
     </>
