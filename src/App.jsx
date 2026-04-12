@@ -1143,61 +1143,59 @@ export default function App() {
                 Nog geen reisdocumenten toegevoegd.
               </div>
             ) : (
-              documents.map((doc) => (
-                <div
-                  key={doc.id}
-                  style={{
-                    ...styles.itemCard,
-                    flexDirection: "column",
-                    gap: 12,
-                    padding: 18,
-                  }}
-                >
-                  <div
-                    style={{ display: "flex", flexDirection: "column", gap: 6 }}
-                  >
-                    <div style={{ fontWeight: 700, fontSize: 18 }}>
-                      📄 {doc.title}
-                    </div>
+            documents.map((doc) => (
+  <div
+    key={doc.id}
+    style={{
+      ...styles.itemCard,
+      flexDirection: "column",
+      gap: 14,
+      padding: 20,
+      borderRadius: 20,
+      background: "#ffffff",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.04)",
+    }}
+  >
+    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      <div style={{ fontWeight: 700, fontSize: 18 }}>
+        📄 {doc.title}
+      </div>
 
-                    {doc.note ? (
-                      <div style={{ marginTop: 8 }}>{doc.note}</div>
-                    ) : null}
+      {doc.note ? (
+        <div style={{ marginTop: 6, color: "#334155" }}>
+          {doc.note}
+        </div>
+      ) : null}
 
-                    {doc.website ? (
-                      <a
-                        href={
-                          doc.website.startsWith("http")
-                            ? doc.website
-                            : "https://" + doc.website
-                        }
-                        target="_blank"
-                        rel="noreferrer"
-                        style={{
-                          display: "block",
-                          marginTop: 10,
-                          padding: 12,
-                          borderRadius: 10,
-                          background: "#f4f6f8",
-                          textDecoration: "none",
-                          color: "#111",
-                          border: "1px solid #e2e8f0",
-                        }}
-                      >
-                        <div style={{ fontWeight: 600 }}>
-                          {doc.website.replace("https://", "").slice(0, 40)}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: 13,
-                            color: "#64748b",
-                            marginTop: 4,
-                          }}
-                        >
-                          Website openen ↗
-                        </div>
-                      </a>
-                    ) : null}
+      {doc.website ? (
+        <a
+          href={
+            doc.website.startsWith("http")
+              ? doc.website
+              : "https://" + doc.website
+          }
+          target="_blank"
+          rel="noreferrer"
+          style={{
+            display: "block",
+            marginTop: 10,
+            padding: 14,
+            borderRadius: 12,
+            background: "#f8fafc",
+            textDecoration: "none",
+            color: "#0f172a",
+            border: "1px solid #e2e8f0",
+            transition: "all 0.2s ease",
+          }}
+        >
+          <div style={{ fontWeight: 600 }}>
+            {doc.website.replace("https://", "").slice(0, 40)}
+          </div>
+          <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>
+            Website openen ↗
+          </div>
+        </a>
+      ) : null}
 
                     {doc.files && doc.files.length > 0 ? (
                       <div style={{ marginTop: 10 }}>
