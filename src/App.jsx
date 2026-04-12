@@ -1169,7 +1169,14 @@ onMouseLeave={(e) => {
     Foto’s toevoegen
   </button>
 
-  <div style={{ display: "grid", gap: 10, marginTop: 12 }}>
+  <div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
+    gap: 10,
+    marginTop: 12,
+  }}
+>
     {(selectedDay.photos || []).map((file) => (
       <FilePreview
         key={file.id}
