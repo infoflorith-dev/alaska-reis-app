@@ -1164,17 +1164,21 @@ export default function App() {
     )
   }
   style={{
-    position: "absolute",
-    top: 0,
-    right: 0,
-    background: "#ef4444",
-    color: "#fff",
-    border: "none",
-    borderRadius: 8,
-    padding: "4px 8px",
-    cursor: "pointer",
-    fontSize: 12,
-  }}
+  position: "absolute",
+  top: 10,
+  right: 10,
+  background: "rgba(239,68,68,0.9)",
+  color: "#fff",
+  border: "none",
+  borderRadius: "50%",
+  width: 28,
+  height: 28,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  cursor: "pointer",
+  fontSize: 14,
+}}
 >
   ✕
 </button> 
