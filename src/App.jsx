@@ -20,6 +20,7 @@ const initialTrip = [
       },
     ],
     excursions: [],
+    photos: [],
   },
   {
     id: 2,
@@ -39,6 +40,7 @@ const initialTrip = [
       },
     ],
     excursions: [],
+    photos: [],
   },
   {
     id: 3,
@@ -49,6 +51,7 @@ const initialTrip = [
     type: "cruise",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 4,
@@ -59,6 +62,7 @@ const initialTrip = [
     type: "cruise",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 5,
@@ -69,6 +73,7 @@ const initialTrip = [
     type: "cruise",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 6,
@@ -79,6 +84,7 @@ const initialTrip = [
     type: "cruise",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 7,
@@ -89,6 +95,7 @@ const initialTrip = [
     type: "cruise",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 8,
@@ -99,6 +106,7 @@ const initialTrip = [
     type: "cruise",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 9,
@@ -109,6 +117,7 @@ const initialTrip = [
     type: "cruise",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 10,
@@ -119,6 +128,7 @@ const initialTrip = [
     type: "cruise",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 11,
@@ -129,6 +139,7 @@ const initialTrip = [
     type: "cruise",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 12,
@@ -139,6 +150,7 @@ const initialTrip = [
     type: "cruise",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 13,
@@ -149,6 +161,7 @@ const initialTrip = [
     type: "roadtrip",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 14,
@@ -159,6 +172,7 @@ const initialTrip = [
     type: "stay",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 15,
@@ -169,6 +183,7 @@ const initialTrip = [
     type: "stay",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 16,
@@ -179,6 +194,7 @@ const initialTrip = [
     type: "roadtrip",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 17,
@@ -189,6 +205,7 @@ const initialTrip = [
     type: "roadtrip",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 18,
@@ -199,6 +216,7 @@ const initialTrip = [
     type: "stay",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 19,
@@ -209,6 +227,7 @@ const initialTrip = [
     type: "roadtrip",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 20,
@@ -219,6 +238,7 @@ const initialTrip = [
     type: "roadtrip",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 21,
@@ -229,6 +249,7 @@ const initialTrip = [
     type: "flight",
     items: [],
     excursions: [],
+    photos: [],
   },
   {
     id: 22,
@@ -239,6 +260,7 @@ const initialTrip = [
     type: "stay",
     items: [],
     excursions: [],
+    photos: [],
   },
 ];
 
