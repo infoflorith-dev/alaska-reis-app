@@ -488,7 +488,6 @@ async function uploadFile(file) {
     previewUrl,
   };
 }
-}
 
 function FilePreview({ file, index, list, onRemove, onOpen }) {
   return (
