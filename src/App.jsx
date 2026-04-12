@@ -1741,14 +1741,18 @@ export default function App() {
                 e.stopPropagation();
                 setFullscreenIndex((i) => i + 1);
               }}
-              style={{
-                position: "absolute",
-                right: 20,
-                color: "#fff",
-                fontSize: 36,
-                cursor: "pointer",
-                userSelect: "none",
-              }}
+            style={{
+  position: "absolute",
+  right: 20,
+  color: "#fff",
+  fontSize: 42,
+  cursor: "pointer",
+  userSelect: "none",
+  opacity: 0.7,
+  transition: "all 0.2s ease",
+}}
+onMouseEnter={(e) => (e.currentTarget.style.opacity = 1)}
+onMouseLeave={(e) => (e.currentTarget.style.opacity = 0.7)}
             >
               ›
             </div>
