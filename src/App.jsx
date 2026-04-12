@@ -565,6 +565,11 @@ export default function App() {
     website: "",
     files: [],
   });
+  const [photoForm, setPhotoForm] = useState({
+  title: "",
+  files: [],
+});
+const photoFileRef = useRef(null);
   const [excursionForm, setExcursionForm] = useState({
     title: "",
     time: "",
