@@ -1183,21 +1183,22 @@ onClick={async () => {
     ))}
   </div>
 ) : null}
-            </div>
-<button
-  type="button"
-  style={{
-    ...styles.button,
-    alignSelf: "flex-end",
-  }}
-  onClick={() =>
-    setDocuments((current) => current.filter((d) => d.id !== doc.id))
-  }
->
-  Verwijder
-</button>
-  )}
-</div>
+        </div>
+
+        <button
+          type="button"
+          style={{
+            ...styles.button,
+            alignSelf: "flex-end",
+          }}
+          onClick={() =>
+            setDocuments((current) => current.filter((d) => d.id !== doc.id))
+          }
+        >
+          Verwijder
+        </button>
+      </div>
+    ))
           <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
             <input
               style={styles.input}
