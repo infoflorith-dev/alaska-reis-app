@@ -1253,6 +1253,7 @@ export default function App() {
               ))
    )}
 </div>
+   </div>           
         <div style={styles.section}>
           <h2 style={styles.sectionTitle}>Excursies van deze dag</h2>
 
