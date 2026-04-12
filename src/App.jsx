@@ -474,10 +474,20 @@ async function uploadFile(file) {
     return null;
   }
 
+  const previewUrl =
+    file.type && file.type.startsWith("image/")
+      ? URL.createObjectURL(file)
+      : "";
+
   return {
+    id: `${safeName}-${Math.random()}`,
     name: file.name,
+    type: file.type || "",
+    size: file.size || 0,
     path: data.path,
+    previewUrl,
   };
+}
 }
 
 function FilePreview({ file, index, list, onRemove, onOpen }) {
