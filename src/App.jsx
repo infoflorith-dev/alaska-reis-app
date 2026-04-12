@@ -1143,8 +1143,8 @@ onMouseLeave={(e) => {
         setFullscreenList(photoForm.files);
         setFullscreenIndex(
           photoForm.files.findIndex((f) => f.id === file.id)
-        );
-      }}
+    );
+})}
   <button
   type="button"
   style={styles.buttonDark}
