@@ -1145,46 +1145,38 @@ onMouseLeave={(e) => {
           photoForm.files.findIndex((f) => f.id === file.id)
         );
       }}
-      onRemove={() =>
-        setPhotoForm((s) => ({
-          ...s,
-          files: s.files.filter((f) => f.id !== file.id),
-        }))
+    <button
+  type="button"
+  style={styles.buttonDark}
+  onClick={async () => {
+    if (photoForm.files.length === 0) return;
+
+    const uploadedPhotos = [];
+
+    for (const file of photoForm.files) {
+      const uploaded = await uploadFile(file.file || file);
+      if (uploaded) {
+        uploadedPhotos.push(uploaded);
       }
-    />
-  ))}
+    }
 
-  <button
-    type="button"
-    style={styles.buttonDark}
-    onClick={async () => {
-     if (photoForm.files.length === 0) return;
+    setDays((current) =>
+      current.map((day) =>
+        day.id !== selectedDayId
+          ? day
+          : {
+              ...day,
+              photos: [...(day.photos || []), ...uploadedPhotos],
+            }
+      )
+    );
 
-const uploadedPhotos = [];
-
-for (const file of photoForm.files) {
-  const uploaded = await uploadFile(file.file || file);
-  if (uploaded) {
-    uploadedPhotos.push(uploaded);
-  }
-}
-
-setDays((current) =>
-  current.map((day) =>
-    day.id !== selectedDayId
-      ? day
-      : {
-          ...day,
-          photos: [...(day.photos || []), ...uploadedPhotos],
-        }
-  )
-);
-
-setPhotoForm({ title: "", files: [] });
-if (photoFileRef.current) photoFileRef.current.value = "";
-  >
-    Foto’s toevoegen
-  </button>
+    setPhotoForm({ title: "", files: [] });
+    if (photoFileRef.current) photoFileRef.current.value = "";
+  }}
+>
+  Foto’s toevoegen
+</button>
 
   <div
   style={{
