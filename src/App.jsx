@@ -851,7 +851,7 @@ export default function App() {
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 transform: active ? "scale(1.02)" : "scale(1)",
-                transition: "transform 0.25s ease",
+               transition: "all 0.2s ease",
                 color: "#fff",
               }}
               onClick={() => {
