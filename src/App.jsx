@@ -989,7 +989,7 @@ onMouseLeave={(e) => {
     borderRadius: 18,
     overflow: "hidden",
     border: "1px solid #e2e8f0",
-    boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
+   boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
   }}
 >
   >
