@@ -857,10 +857,10 @@ export default function App() {
                transition: "all 0.2s ease",
                 color: "#fff",
               }}
-              onClick={() => {
-                setSelectedDayId(day.id);
-                if (isMobile) setMobileTab("details");
-              }}
+             onClick={() => {
+  setSelectedDayId(day.id);
+  if (isMobile) setMobileTab("details");
+}}
               onMouseEnter={(e) => {
   if (!active) e.currentTarget.style.transform = "scale(1.02)";
 }}
