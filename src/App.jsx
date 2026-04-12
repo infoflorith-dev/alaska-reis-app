@@ -983,13 +983,15 @@ onMouseLeave={(e) => {
         <div style={styles.section}>
   <h2 style={styles.sectionTitle}>📍 Locatie</h2>
 
-  <div
-    style={{
-      marginTop: 10,
-      borderRadius: 16,
-      overflow: "hidden",
-      border: "1px solid #e2e8f0",
-    }}
+<div
+  style={{
+    marginTop: 10,
+    borderRadius: 18,
+    overflow: "hidden",
+    border: "1px solid #e2e8f0",
+    boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
+  }}
+>
   >
     <iframe
       title="map"
