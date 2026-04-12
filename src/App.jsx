@@ -1163,7 +1163,7 @@ export default function App() {
       current.filter((d) => d.id !== doc.id)
     )
   }
-  style={{
+ style={{
   position: "absolute",
   top: 10,
   right: 10,
