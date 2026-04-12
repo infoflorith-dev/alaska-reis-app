@@ -1545,7 +1545,9 @@ onClick={async () => {
 
   return (
     <>
-                    <button
+              <div style={styles.shell}>
+            <div style={styles.mobileNav}>
+              <button
                 type="button"
                 style={mobileTab === "days" ? styles.buttonDark : styles.button}
                 onClick={() => setMobileTab("days")}
