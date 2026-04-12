@@ -1110,7 +1110,92 @@ onMouseLeave={(e) => {
             </button>
           )}
         </div>
+<div style={styles.section}>
+  <h2 style={styles.sectionTitle}>📸 Foto’s van deze dag</h2>
 
+  <input
+    ref={photoFileRef}
+    type="file"
+    multiple
+    accept="image/*"
+    onChange={(e) =>
+      setPhotoForm({
+        ...photoForm,
+        files: prepareFiles(e.target.files),
+      })
+    }
+  />
+
+  {photoForm.files.map((file) => (
+    <FilePreview
+      key={file.id}
+      file={file}
+      onOpen={(url) => {
+        setFullscreenList(photoForm.files);
+        setFullscreenIndex(
+          photoForm.files.findIndex((f) => f.id === file.id)
+        );
+      }}
+      onRemove={() =>
+        setPhotoForm((s) => ({
+          ...s,
+          files: s.files.filter((f) => f.id !== file.id),
+        }))
+      }
+    />
+  ))}
+
+  <button
+    type="button"
+    style={styles.buttonDark}
+    onClick={() => {
+      if (photoForm.files.length === 0) return;
+
+      setDays((current) =>
+        current.map((day) =>
+          day.id !== selectedDayId
+            ? day
+            : {
+                ...day,
+                photos: [...(day.photos || []), ...photoForm.files],
+              }
+        )
+      );
+
+      setPhotoForm({ title: "", files: [] });
+      if (photoFileRef.current) photoFileRef.current.value = "";
+    }}
+  >
+    Foto’s toevoegen
+  </button>
+
+  <div style={{ display: "grid", gap: 10, marginTop: 12 }}>
+    {(selectedDay.photos || []).map((file) => (
+      <FilePreview
+        key={file.id}
+        file={file}
+        onOpen={(url) => {
+          setFullscreenList(selectedDay.photos);
+          setFullscreenIndex(
+            selectedDay.photos.findIndex((f) => f.id === file.id)
+          );
+        }}
+        onRemove={() =>
+          setDays((current) =>
+            current.map((day) =>
+              day.id !== selectedDayId
+                ? day
+                : {
+                    ...day,
+                    photos: day.photos.filter((f) => f.id !== file.id),
+                  }
+            )
+          )
+        }
+      />
+    ))}
+  </div>
+</div>
         <div style={styles.section}>
           <h2 style={styles.sectionTitle}>📂 Reisdocumenten</h2>
 
@@ -1335,91 +1420,7 @@ onMouseLeave={(e) => {
 
         <div style={styles.section}>
           <div style={styles.section}>
-  <h2 style={styles.sectionTitle}>📸 Foto’s van deze dag</h2>
-
-  <input
-    ref={photoFileRef}
-    type="file"
-    multiple
-    accept="image/*"
-    onChange={(e) =>
-      setPhotoForm({
-        ...photoForm,
-        files: prepareFiles(e.target.files),
-      })
-    }
-  />
-
-  {photoForm.files.map((file) => (
-    <FilePreview
-      key={file.id}
-      file={file}
-      onOpen={(url) => {
-        setFullscreenList(photoForm.files);
-        setFullscreenIndex(
-          photoForm.files.findIndex((f) => f.id === file.id)
-        );
-      }}
-      onRemove={() =>
-        setPhotoForm((s) => ({
-          ...s,
-          files: s.files.filter((f) => f.id !== file.id),
-        }))
-      }
-    />
-  ))}
-
-  <button
-    type="button"
-    style={styles.buttonDark}
-    onClick={() => {
-      if (photoForm.files.length === 0) return;
-
-      setDays((current) =>
-        current.map((day) =>
-          day.id !== selectedDayId
-            ? day
-            : {
-                ...day,
-                photos: [...(day.photos || []), ...photoForm.files],
-              }
-        )
-      );
-
-      setPhotoForm({ title: "", files: [] });
-      if (photoFileRef.current) photoFileRef.current.value = "";
-    }}
-  >
-    Foto’s toevoegen
-  </button>
-
-  <div style={{ display: "grid", gap: 10, marginTop: 12 }}>
-    {(selectedDay.photos || []).map((file) => (
-      <FilePreview
-        key={file.id}
-        file={file}
-        onOpen={(url) => {
-          setFullscreenList(selectedDay.photos);
-          setFullscreenIndex(
-            selectedDay.photos.findIndex((f) => f.id === file.id)
-          );
-        }}
-        onRemove={() =>
-          setDays((current) =>
-            current.map((day) =>
-              day.id !== selectedDayId
-                ? day
-                : {
-                    ...day,
-                    photos: day.photos.filter((f) => f.id !== file.id),
-                  }
-            )
-          )
-        }
-      />
-    ))}
-  </div>
-</div>
+  
           <h2 style={styles.sectionTitle}>Excursies van deze dag</h2>
 
           <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
