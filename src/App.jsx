@@ -521,7 +521,8 @@ function FilePreview({ file, onRemove, onOpen }) {
 
 export default function App() {
   const [days, setDays] = useState(initialTrip);
-  const [fullscreenImage, setFullscreenImage] = useState(null);
+ const [fullscreenIndex, setFullscreenIndex] = useState(null);
+const [fullscreenList, setFullscreenList] = useState([]);
   const [selectedDayId, setSelectedDayId] = useState(initialTrip[0].id);
   const [mobileTab, setMobileTab] = useState("days");
   const [isMobile, setIsMobile] = useState(
