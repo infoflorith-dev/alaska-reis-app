@@ -1198,7 +1198,6 @@ onClick={async () => {
 </button>
   )}
 </div>
-</div>
           <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
             <input
               style={styles.input}
