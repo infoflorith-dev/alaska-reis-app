@@ -1419,8 +1419,7 @@ onMouseLeave={(e) => {
         </div>
 
         <div style={styles.section}>
-          <div style={styles.section}>
-  
+      
           <h2 style={styles.sectionTitle}>Excursies van deze dag</h2>
 
           <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
