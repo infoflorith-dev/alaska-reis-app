@@ -298,7 +298,7 @@ const styles = {
   dayCard: (active) => ({
     padding: 16,
     borderRadius: 18,
-    border: active ? "1px solid #0f172a" : "1px solid #dbe4ee",
+  border: active ? "2px solid #0f172a" : "1px solid #dbe4ee",
     background: active ? "#f8fafc" : "#f1f5f9",
     cursor: "pointer",
   }),
