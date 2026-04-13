@@ -520,7 +520,7 @@ function FilePreview({ file, index, list, onRemove, onOpen }) {
 
           {file.previewUrl ? (
             <img
-              src={file.previewUrl}
+              src={file.previewUrl || getFileUrl(file)}
               alt={file.name}
               onClick={() => onOpen(index, list)}
               style={{
@@ -1292,7 +1292,7 @@ loadTrip();
               >
                 {file.previewUrl ? (
                   <img
-                    src={file.previewUrl}
+                   src={file.previewUrl || getFileUrl(file)}
                     alt=""
                     style={{
                       width: "100%",
@@ -2015,7 +2015,10 @@ loadTrip();
           }}
         >
           <img
-            src={fullscreenList[fullscreenIndex]?.previewUrl}
+            src={
+  fullscreenList[fullscreenIndex]?.previewUrl ||
+  getFileUrl(fullscreenList[fullscreenIndex] || {})
+}
             alt="Fullscreen preview"
             style={{
               maxWidth: "95%",
