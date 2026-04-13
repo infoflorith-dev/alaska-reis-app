@@ -691,20 +691,22 @@ export default function App() {
           .eq("id", "main")
           .single();
 
-        if (data?.data) {
-          if (data.data.days) {
-            const enrichedDays = await enrichDaysWithUrls(data.data.days);
-            const enrichedDocuments = await enrichDocumentsWithUrls(
-              data.data.documents || []
-            );
+      if (data?.data) {
+  if (data.data.days) {
+    const enrichedDays = await enrichDaysWithUrls(data.data.days);
+    const enrichedDocuments = await enrichDocumentsWithUrls(
+      data.data.documents || []
+    );
 
-            setDays(enrichedDays);
-            setDocuments(enrichedDocuments);
-          } else {
-        const enrichedDays = await enrichDaysWithUrls(data.data.days);
-const enrichedDocuments = await enrichDocumentsWithUrls(
-  data.data.documents || []
-);
+    setDays(enrichedDays);
+    setDocuments(enrichedDocuments);
+  } else {
+    const enrichedDays = await enrichDaysWithUrls(data.data);
+    setDays(enrichedDays);
+  }
+
+  return;
+}
 
 setDays(enrichedDays);
 setDocuments(enrichedDocuments);
