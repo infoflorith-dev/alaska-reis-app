@@ -701,13 +701,13 @@ export default function App() {
             setDays(enrichedDays);
             setDocuments(enrichedDocuments);
           } else {
-            const enrichedDays = await enrichDaysWithUrls(data.data);
-            setDays(enrichedDays);
-          }
-          return;
-        }
+        const enrichedDays = await enrichDaysWithUrls(data.data.days);
+const enrichedDocuments = await enrichDocumentsWithUrls(
+  data.data.documents || []
+);
 
-        if (error && error.code !== "PGRST116") {
+setDays(enrichedDays);
+setDocuments(enrichedDocuments);
           console.error(error);
         }
       } catch (e) {
