@@ -707,13 +707,6 @@ export default function App() {
 
   return;
 }
-
-setDays(enrichedDays);
-setDocuments(enrichedDocuments);
-          console.error(error);
-        }
-      } catch (e) {
-        console.error(e);
       }
     }
 
