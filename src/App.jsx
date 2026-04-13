@@ -1094,55 +1094,47 @@ loadTrip();
               boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
             }}
           >
-            <iframe
-              title="map"
-              width="100%"
-              height="300"
-             style={{ border: 0, display: "block" }}
-              loading="lazy"
-              allowFullScreen
-              src={`https://www.google.com/maps?q=${encodeURIComponent(
-                selectedDay.location === "Golden"
-                  ? "Golden, British Columbia, Canada"
-                  : selectedDay.location === "Seattle"
-                  ? "Seattle, Washington, USA"
-                  : selectedDay.location === "Juneau"
-                  ? "Juneau, Alaska, USA"
-                  : selectedDay.location === "Skagway"
-                  ? "Skagway, Alaska, USA"
-                  : selectedDay.location === "Ketchikan"
-                  ? "Ketchikan, Alaska, USA"
-                  : selectedDay.location === "Wrangell"
-                  ? "Wrangell, Alaska, USA"
-                  : selectedDay.location === "Sitka"
-                  ? "Sitka, Alaska, USA"
-                  : selectedDay.location === "Victoria"
-                  ? "Victoria, British Columbia, Canada"
-                  : selectedDay.location === "Yellowstone"
-                  ? "Yellowstone National Park, USA"
-                  : selectedDay.location
-              )}&z=${
-                selectedDay.location === "Seattle"
-                  ? 11
-                  : selectedDay.location === "Victoria"
-                  ? 11
-                  : selectedDay.location === "Juneau"
-                  ? 12
-                  : selectedDay.location === "Skagway"
-                  ? 13
-                  : selectedDay.location === "Ketchikan"
-                  ? 12
-                  : selectedDay.location === "Wrangell"
-                  ? 13
-                  : selectedDay.location === "Sitka"
-                  ? 12
-                  : selectedDay.location === "Yellowstone"
-                  ? 9
-                  : selectedDay.location === "Golden"
-                  ? 11
-                  : 11
-              }&output=embed`}
-            />
+           <div style={{ paddingTop: 24, background: "#fff" }}>
+  <iframe
+    title="map"
+    width="100%"
+    height="276"
+    style={{ border: 0, display: "block" }}
+    loading="lazy"
+    allowFullScreen
+    src={`https://www.google.com/maps?q=${encodeURIComponent(
+      selectedDay.location === "Golden"
+        ? "Golden, British Columbia, Canada"
+        : selectedDay.location === "Seattle"
+        ? "Seattle, Washington, USA"
+        : selectedDay.location === "Juneau"
+        ? "Juneau, Alaska, USA"
+        : selectedDay.location === "Skagway"
+        ? "Skagway, Alaska, USA"
+        : selectedDay.location === "Ketchikan"
+        ? "Ketchikan, Alaska, USA"
+        : selectedDay.location === "Wrangell"
+        ? "Wrangell, Alaska, USA"
+        : selectedDay.location === "Sitka"
+        ? "Sitka, Alaska, USA"
+        : selectedDay.location === "Victoria"
+        ? "Victoria, British Columbia, Canada"
+        : selectedDay.location === "Yellowstone"
+        ? "Yellowstone National Park, USA"
+        : selectedDay.location
+    )}&z=${
+      selectedDay.location === "Seattle" ? 11 :
+      selectedDay.location === "Victoria" ? 11 :
+      selectedDay.location === "Juneau" ? 12 :
+      selectedDay.location === "Skagway" ? 13 :
+      selectedDay.location === "Ketchikan" ? 12 :
+      selectedDay.location === "Wrangell" ? 13 :
+      selectedDay.location === "Sitka" ? 12 :
+      selectedDay.location === "Yellowstone" ? 9 :
+      selectedDay.location === "Golden" ? 11 :
+      11
+    }&output=embed`}
+  />
           </div>
         </div>
 
