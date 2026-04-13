@@ -666,48 +666,66 @@ export default function App() {
       return result;
     }
 
-    async function loadTrip() {
+   async function loadTrip() {
+  try {
+    const saved = localStorage.getItem("alaska-trip");
+
+    if (saved) {
       try {
-        const saved = localStorage.getItem("alaska-trip");
+        const parsed = JSON.parse(saved);
 
-        if (saved) {
-          try {
-            const parsed = JSON.parse(saved);
+        if (parsed.days) {
+          const enrichedDays = await enrichDaysWithUrls(parsed.days);
+          const enrichedDocuments = await enrichDocumentsWithUrls(
+            parsed.documents || []
+          );
 
-            if (parsed.days) {
-              const enrichedDays = await enrichDaysWithUrls(parsed.days);
-              setDays(enrichedDays);
-
-             
-            }
-          } catch (e) {
-            console.error(e);
-          }
+          setDays(enrichedDays);
+          setDocuments(enrichedDocuments);
+          return;
+        } else {
+          const enrichedDays = await enrichDaysWithUrls(parsed);
+          setDays(enrichedDays);
+          return;
         }
+      } catch (e) {
+        console.error(e);
+      }
+    }
 
-        const { data, error } = await supabase
-          .from("travel_app_state")
-          .select("data")
-          .eq("id", "main")
-          .single();
-if (data?.data) {
-  if (data.data.days) {
-    const enrichedDays = await enrichDaysWithUrls(data.data.days);
-    const enrichedDocuments = await enrichDocumentsWithUrls(
-      data.data.documents || []
-    );
+    const { data, error } = await supabase
+      .from("travel_app_state")
+      .select("data")
+      .eq("id", "main")
+      .single();
 
-    setDays(enrichedDays);
-    setDocuments(enrichedDocuments);
-  } else {
-    const enrichedDays = await enrichDaysWithUrls(data.data);
-    setDays(enrichedDays);
+    if (data?.data) {
+      if (data.data.days) {
+        const enrichedDays = await enrichDaysWithUrls(data.data.days);
+        const enrichedDocuments = await enrichDocumentsWithUrls(
+          data.data.documents || []
+        );
+
+        setDays(enrichedDays);
+        setDocuments(enrichedDocuments);
+      } else {
+        const enrichedDays = await enrichDaysWithUrls(data.data);
+        setDays(enrichedDays);
+      }
+
+      return;
+    }
+
+    if (error && error.code !== "PGRST116") {
+      console.error(error);
+    }
+  } catch (e) {
+    console.error(e);
   }
-
-  return;
 }
-    loadTrip();
-  }, []);
+
+loadTrip();
+}, []);
 
   useEffect(() => {
     localStorage.setItem(
