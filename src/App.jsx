@@ -666,33 +666,8 @@ export default function App() {
       return result;
     }
 
-   async function loadTrip() {
+  async function loadTrip() {
   try {
-    const saved = localStorage.getItem("alaska-trip");
-
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-
-        if (parsed.days) {
-          const enrichedDays = await enrichDaysWithUrls(parsed.days);
-          const enrichedDocuments = await enrichDocumentsWithUrls(
-            parsed.documents || []
-          );
-
-          setDays(enrichedDays);
-          setDocuments(enrichedDocuments);
-          return;
-        } else {
-          const enrichedDays = await enrichDaysWithUrls(parsed);
-          setDays(enrichedDays);
-          return;
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
     const { data, error } = await supabase
       .from("travel_app_state")
       .select("data")
@@ -718,6 +693,29 @@ export default function App() {
 
     if (error && error.code !== "PGRST116") {
       console.error(error);
+    }
+
+    const saved = localStorage.getItem("alaska-trip");
+
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+
+        if (parsed.days) {
+          const enrichedDays = await enrichDaysWithUrls(parsed.days);
+          const enrichedDocuments = await enrichDocumentsWithUrls(
+            parsed.documents || []
+          );
+
+          setDays(enrichedDays);
+          setDocuments(enrichedDocuments);
+        } else {
+          const enrichedDays = await enrichDaysWithUrls(parsed);
+          setDays(enrichedDays);
+        }
+      } catch (e) {
+        console.error(e);
+      }
     }
   } catch (e) {
     console.error(e);
