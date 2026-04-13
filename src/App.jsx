@@ -1135,9 +1135,9 @@ loadTrip();
       11
     }&output=embed`}
   />
-          </div>
-        </div>
-
+ </div>
+</div>
+</div>
         <div style={styles.section}>
           <h2 style={styles.sectionTitle}>
             Dag {isEditingDay ? "bewerken" : "overzicht"}
