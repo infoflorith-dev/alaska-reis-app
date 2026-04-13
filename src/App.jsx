@@ -707,6 +707,9 @@ export default function App() {
 
   return;
 }
+} catch (e) {
+  console.error(e);
+}        
     loadTrip();
   }, []);
 
