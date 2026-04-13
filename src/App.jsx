@@ -489,11 +489,11 @@ async function uploadFile(file) {
   };
 }
 
-async function getFileUrl(file) {
-  const isLocalNewFile = !!file.file;
+function getFileUrl(file) {
+  const isNewLocalFile = !!file.file;
 
   if (
-    isLocalNewFile &&
+    isNewLocalFile &&
     file.previewUrl &&
     file.previewUrl.startsWith("blob:")
   ) {
@@ -501,16 +501,11 @@ async function getFileUrl(file) {
   }
 
   if (file.path) {
-    const { data, error } = await supabase.storage
+    const { data } = supabase.storage
       .from("evidence")
-      .createSignedUrl(file.path, 3600);
+      .getPublicUrl(file.path);
 
-    if (error) {
-      console.error("Signed URL fout:", error);
-      return "";
-    }
-
-    return data?.signedUrl || "";
+    return data?.publicUrl || "";
   }
 
   return "";
