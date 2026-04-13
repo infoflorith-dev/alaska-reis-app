@@ -490,7 +490,13 @@ async function uploadFile(file) {
 }
 
 async function getFileUrl(file) {
-  if (file.previewUrl && file.previewUrl.startsWith("blob:")) {
+  const isLocalNewFile = !!file.file;
+
+  if (
+    isLocalNewFile &&
+    file.previewUrl &&
+    file.previewUrl.startsWith("blob:")
+  ) {
     return file.previewUrl;
   }
 
