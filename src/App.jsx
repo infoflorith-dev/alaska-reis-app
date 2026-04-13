@@ -678,16 +678,7 @@ export default function App() {
               const enrichedDays = await enrichDaysWithUrls(parsed.days);
               setDays(enrichedDays);
 
-              if (parsed.documents && parsed.documents.length > 0) {
-                const enrichedDocuments = await enrichDocumentsWithUrls(
-                  parsed.documents
-                );
-                setDocuments(enrichedDocuments);
-                return;
-              }
-            } else {
-              const enrichedDays = await enrichDaysWithUrls(parsed);
-              setDays(enrichedDays);
+             
             }
           } catch (e) {
             console.error(e);
