@@ -320,12 +320,12 @@ const styles = {
   dayCard: (active) => ({
     padding: 16,
     borderRadius: 18,
-  border: active ? "2px solid #0f172a" : "1px solid #dbe4ee",
-  background: active ? "#ffffff" : "#f1f5f9",
+    border: active ? "2px solid #0f172a" : "1px solid #dbe4ee",
+    background: active ? "#ffffff" : "#f1f5f9",
     cursor: "pointer",
     boxShadow: active
-  ? "0 12px 30px rgba(15,23,42,0.25)"
-  : "0 2px 6px rgba(0,0,0,0.05)",
+      ? "0 12px 30px rgba(15,23,42,0.25)"
+      : "0 2px 6px rgba(0,0,0,0.05)",
   }),
   dayTop: {
     display: "flex",
@@ -489,6 +489,27 @@ async function uploadFile(file) {
   };
 }
 
+async function getFileUrl(file) {
+  if (file.previewUrl && file.previewUrl.startsWith("blob:")) {
+    return file.previewUrl;
+  }
+
+  if (file.path) {
+    const { data, error } = await supabase.storage
+      .from("evidence")
+      .createSignedUrl(file.path, 3600);
+
+    if (error) {
+      console.error("Signed URL fout:", error);
+      return "";
+    }
+
+    return data?.signedUrl || "";
+  }
+
+  return "";
+}
+
 function FilePreview({ file, index, list, onRemove, onOpen }) {
   return (
     <div style={styles.fileBox}>
@@ -575,10 +596,10 @@ export default function App() {
     files: [],
   });
   const [photoForm, setPhotoForm] = useState({
-  title: "",
-  files: [],
-});
-const photoFileRef = useRef(null);
+    title: "",
+    files: [],
+  });
+  const photoFileRef = useRef(null);
   const [excursionForm, setExcursionForm] = useState({
     title: "",
     time: "",
@@ -606,6 +627,44 @@ const photoFileRef = useRef(null);
   }, []);
 
   useEffect(() => {
+    async function enrichDaysWithUrls(daysToEnrich) {
+      const result = await Promise.all(
+        (daysToEnrich || []).map(async (day) => {
+          const photos = await Promise.all(
+            (day.photos || []).map(async (photo) => ({
+              ...photo,
+              previewUrl: await getFileUrl(photo),
+            }))
+          );
+
+          return {
+            ...day,
+            photos,
+          };
+        })
+      );
+
+      return result;
+    }
+
+    async function enrichDocumentsWithUrls(docsToEnrich) {
+      const result = await Promise.all(
+        (docsToEnrich || []).map(async (doc) => ({
+          ...doc,
+          files: await Promise.all(
+            (doc.files || []).map(async (file) => ({
+              ...file,
+              previewUrl: file.type?.startsWith("image/")
+                ? await getFileUrl(file)
+                : "",
+            }))
+          ),
+        }))
+      );
+
+      return result;
+    }
+
     async function loadTrip() {
       try {
         const saved = localStorage.getItem("alaska-trip");
@@ -615,16 +674,19 @@ const photoFileRef = useRef(null);
             const parsed = JSON.parse(saved);
 
             if (parsed.days) {
-              setDays(parsed.days);
+              const enrichedDays = await enrichDaysWithUrls(parsed.days);
+              setDays(enrichedDays);
 
-              if (!parsed.documents || parsed.documents.length === 0) {
-                // laat Supabase hieronder ook nog checken
-              } else {
-                setDocuments(parsed.documents);
+              if (parsed.documents && parsed.documents.length > 0) {
+                const enrichedDocuments = await enrichDocumentsWithUrls(
+                  parsed.documents
+                );
+                setDocuments(enrichedDocuments);
                 return;
               }
             } else {
-              setDays(parsed);
+              const enrichedDays = await enrichDaysWithUrls(parsed);
+              setDays(enrichedDays);
             }
           } catch (e) {
             console.error(e);
@@ -639,10 +701,16 @@ const photoFileRef = useRef(null);
 
         if (data?.data) {
           if (data.data.days) {
-            setDays(data.data.days);
-            setDocuments(data.data.documents || []);
+            const enrichedDays = await enrichDaysWithUrls(data.data.days);
+            const enrichedDocuments = await enrichDocumentsWithUrls(
+              data.data.documents || []
+            );
+
+            setDays(enrichedDays);
+            setDocuments(enrichedDocuments);
           } else {
-            setDays(data.data);
+            const enrichedDays = await enrichDaysWithUrls(data.data);
+            setDays(enrichedDays);
           }
           return;
         }
@@ -890,19 +958,19 @@ const photoFileRef = useRef(null);
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 transform: active ? "scale(1.02)" : "scale(1)",
-               transition: "all 0.2s ease",
+                transition: "all 0.2s ease",
                 color: "#fff",
               }}
-             onClick={() => {
-  setSelectedDayId(day.id);
-  if (isMobile) setMobileTab("details");
-}}
+              onClick={() => {
+                setSelectedDayId(day.id);
+                if (isMobile) setMobileTab("details");
+              }}
               onMouseEnter={(e) => {
-  if (!active) e.currentTarget.style.transform = "scale(1.02)";
-}}
-onMouseLeave={(e) => {
-  if (!active) e.currentTarget.style.transform = "scale(1)";
-}}
+                if (!active) e.currentTarget.style.transform = "scale(1.02)";
+              }}
+              onMouseLeave={(e) => {
+                if (!active) e.currentTarget.style.transform = "scale(1)";
+              }}
             >
               <div
                 style={{
@@ -1010,67 +1078,75 @@ onMouseLeave={(e) => {
             {selectedDay.date} · {selectedDay.location}
           </div>
 
-          <div style={{ marginTop: 12 }}>
-                             </div>        
+          <div style={{ marginTop: 12 }}></div>
         </div>
       </div>
 
       <div style={styles.mainBody}>
         <div style={styles.section}>
-  <h2 style={styles.sectionTitle}>📍 Locatie</h2>
+          <h2 style={styles.sectionTitle}>📍 Locatie</h2>
 
-<div
-  style={{
-    marginTop: 0,
-    borderRadius: 18,
-    overflow: "hidden",
-    border: "1px solid #e2e8f0",
-   boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
-  }}
->
-  >
-    <iframe
-      title="map"
-      width="100%"
-      height="300"
-      style={{ border: 0, display: "block", marginTop: "-34px" }}
-      loading="lazy"
-      allowFullScreen
-      src={`https://www.google.com/maps?q=${encodeURIComponent(
-        selectedDay.location === "Golden"
-          ? "Golden, British Columbia, Canada"
-          : selectedDay.location === "Seattle"
-          ? "Seattle, Washington, USA"
-          : selectedDay.location === "Juneau"
-          ? "Juneau, Alaska, USA"
-          : selectedDay.location === "Skagway"
-          ? "Skagway, Alaska, USA"
-          : selectedDay.location === "Ketchikan"
-          ? "Ketchikan, Alaska, USA"
-          : selectedDay.location === "Wrangell"
-          ? "Wrangell, Alaska, USA"
-          : selectedDay.location === "Sitka"
-          ? "Sitka, Alaska, USA"
-          : selectedDay.location === "Victoria"
-          ? "Victoria, British Columbia, Canada"
-          : selectedDay.location === "Yellowstone"
-          ? "Yellowstone National Park, USA"
-          : selectedDay.location
-     )}&z=${
-  selectedDay.location === "Seattle" ? 11 :
-  selectedDay.location === "Victoria" ? 11 :
-  selectedDay.location === "Juneau" ? 12 :
-  selectedDay.location === "Skagway" ? 13 :
-  selectedDay.location === "Ketchikan" ? 12 :
-  selectedDay.location === "Wrangell" ? 13 :
-  selectedDay.location === "Sitka" ? 12 :
-  selectedDay.location === "Yellowstone" ? 9 :
-  selectedDay.location === "Golden" ? 11 :
-  11
-}&output=embed`}
-    />
-  </div>
-</div>
+          <div
+            style={{
+              marginTop: 0,
+              borderRadius: 18,
+              overflow: "hidden",
+              border: "1px solid #e2e8f0",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+            }}
+          >
+            <iframe
+              title="map"
+              width="100%"
+              height="300"
+              style={{ border: 0, display: "block", marginTop: "-34px" }}
+              loading="lazy"
+              allowFullScreen
+              src={`https://www.google.com/maps?q=${encodeURIComponent(
+                selectedDay.location === "Golden"
+                  ? "Golden, British Columbia, Canada"
+                  : selectedDay.location === "Seattle"
+                  ? "Seattle, Washington, USA"
+                  : selectedDay.location === "Juneau"
+                  ? "Juneau, Alaska, USA"
+                  : selectedDay.location === "Skagway"
+                  ? "Skagway, Alaska, USA"
+                  : selectedDay.location === "Ketchikan"
+                  ? "Ketchikan, Alaska, USA"
+                  : selectedDay.location === "Wrangell"
+                  ? "Wrangell, Alaska, USA"
+                  : selectedDay.location === "Sitka"
+                  ? "Sitka, Alaska, USA"
+                  : selectedDay.location === "Victoria"
+                  ? "Victoria, British Columbia, Canada"
+                  : selectedDay.location === "Yellowstone"
+                  ? "Yellowstone National Park, USA"
+                  : selectedDay.location
+              )}&z=${
+                selectedDay.location === "Seattle"
+                  ? 11
+                  : selectedDay.location === "Victoria"
+                  ? 11
+                  : selectedDay.location === "Juneau"
+                  ? 12
+                  : selectedDay.location === "Skagway"
+                  ? 13
+                  : selectedDay.location === "Ketchikan"
+                  ? 12
+                  : selectedDay.location === "Wrangell"
+                  ? 13
+                  : selectedDay.location === "Sitka"
+                  ? 12
+                  : selectedDay.location === "Yellowstone"
+                  ? 9
+                  : selectedDay.location === "Golden"
+                  ? 11
+                  : 11
+              }&output=embed`}
+            />
+          </div>
+        </div>
+
         <div style={styles.section}>
           <h2 style={styles.sectionTitle}>
             Dag {isEditingDay ? "bewerken" : "overzicht"}
@@ -1119,149 +1195,169 @@ onMouseLeave={(e) => {
             </button>
           )}
         </div>
-<div style={styles.section}>
-  <h2 style={styles.sectionTitle}>📸 Foto’s van deze dag</h2>
 
-  <input
-    ref={photoFileRef}
-    type="file"
-    multiple
-    accept="image/*"
-    onChange={(e) =>
-      setPhotoForm({
-        ...photoForm,
-        files: prepareFiles(e.target.files),
-      })
-    }
-  />
+        <div style={styles.section}>
+          <h2 style={styles.sectionTitle}>📸 Foto’s van deze dag</h2>
 
-  {photoForm.files.map((file) => (
-    <FilePreview
-      key={file.id}
-      file={file}
-    onOpen={(url) => {
-  setFullscreenList(photoForm.files);
-  setFullscreenIndex(
-    photoForm.files.findIndex((f) => f.id === file.id)
-  );
-}}
-onRemove={() =>
-  setPhotoForm((s) => ({
-    ...s,
-    files: s.files.filter((f) => f.id !== file.id),
-  }))
-}
-/>
-))}
-  <button
-  type="button"
-  style={styles.buttonDark}
-  onClick={async () => {
-    if (photoForm.files.length === 0) return;
-
-    const uploadedPhotos = [];
-
-    for (const file of photoForm.files) {
-      const uploaded = await uploadFile(file.file || file);
-      if (uploaded) {
-        uploadedPhotos.push(uploaded);
-      }
-    }
-
-    setDays((current) =>
-      current.map((day) =>
-        day.id !== selectedDayId
-          ? day
-          : {
-              ...day,
-              photos: [...(day.photos || []), ...uploadedPhotos],
+          <input
+            ref={photoFileRef}
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={(e) =>
+              setPhotoForm({
+                ...photoForm,
+                files: prepareFiles(e.target.files),
+              })
             }
-      )
-    );
+          />
 
-    setPhotoForm({ title: "", files: [] });
-    if (photoFileRef.current) {
-      photoFileRef.current.value = "";
-    }
-  }}
->
-  Foto’s toevoegen
-</button>
+          {photoForm.files.map((file, i) => (
+            <FilePreview
+              key={file.id}
+              file={file}
+              index={i}
+              list={photoForm.files}
+              onOpen={(index, list) => {
+                setFullscreenList(list);
+                setFullscreenIndex(index);
+              }}
+              onRemove={() =>
+                setPhotoForm((s) => ({
+                  ...s,
+                  files: s.files.filter((f) => f.id !== file.id),
+                }))
+              }
+            />
+          ))}
 
-  <div
-  style={{
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
-    gap: 10,
-    marginTop: 12,
-  }}
->
-    {(selectedDay.photos || []).map((file, i) => (
-  <div
-    key={file.id}
-    onClick={() => {
-      setFullscreenList(selectedDay.photos);
-      setFullscreenIndex(i);
-    }}
-    style={{
-      aspectRatio: "1 / 1",
-      borderRadius: 16,
-      overflow: "hidden",
-      cursor: "pointer",
-      position: "relative",
-      background: "#e2e8f0",
-      boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-    }}
-  >
-    <img
-      src={file.previewUrl}
-      alt=""
-      style={{
-        width: "100%",
-        height: "100%",
-        objectFit: "cover",
-        display: "block",
-      }}
-    />
+          <button
+            type="button"
+            style={styles.buttonDark}
+            onClick={async () => {
+              if (photoForm.files.length === 0) return;
 
-    <button
-      type="button"
-      onClick={(e) => {
-        e.stopPropagation();
-        setDays((current) =>
-          current.map((day) =>
-            day.id !== selectedDayId
-              ? day
-              : {
-                  ...day,
-                  photos: day.photos.filter((f) => f.id !== file.id),
+              const uploadedPhotos = [];
+
+              for (const file of photoForm.files) {
+                const uploaded = await uploadFile(file.file || file);
+                if (uploaded) {
+                  uploadedPhotos.push(uploaded);
                 }
-          )
-        );
-      }}
-      style={{
-        position: "absolute",
-        top: 8,
-        right: 8,
-        background: "rgba(15,23,42,0.75)",
-        color: "#fff",
-        border: "none",
-        borderRadius: "50%",
-        width: 28,
-        height: 28,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        cursor: "pointer",
-        fontSize: 14,
-      }}
-    >
-      ✕
-    </button>
-  </div>
-))}
-  </div>
-</div>
+              }
+
+              setDays((current) =>
+                current.map((day) =>
+                  day.id !== selectedDayId
+                    ? day
+                    : {
+                        ...day,
+                        photos: [...(day.photos || []), ...uploadedPhotos],
+                      }
+                )
+              );
+
+              setPhotoForm({ title: "", files: [] });
+              if (photoFileRef.current) {
+                photoFileRef.current.value = "";
+              }
+            }}
+          >
+            Foto’s toevoegen
+          </button>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+              gap: 10,
+              marginTop: 12,
+            }}
+          >
+            {(selectedDay.photos || []).map((file, i) => (
+              <div
+                key={file.id}
+                onClick={() => {
+                  setFullscreenList(selectedDay.photos);
+                  setFullscreenIndex(i);
+                }}
+                style={{
+                  aspectRatio: "1 / 1",
+                  borderRadius: 16,
+                  overflow: "hidden",
+                  cursor: "pointer",
+                  position: "relative",
+                  background: "#e2e8f0",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                }}
+              >
+                {file.previewUrl ? (
+                  <img
+                    src={file.previewUrl}
+                    alt=""
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      display: "block",
+                    }}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#64748b",
+                      fontSize: 13,
+                      background: "#f1f5f9",
+                    }}
+                  >
+                    Foto laden...
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDays((current) =>
+                      current.map((day) =>
+                        day.id !== selectedDayId
+                          ? day
+                          : {
+                              ...day,
+                              photos: day.photos.filter((f) => f.id !== file.id),
+                            }
+                      )
+                    );
+                  }}
+                  style={{
+                    position: "absolute",
+                    top: 8,
+                    right: 8,
+                    background: "rgba(15,23,42,0.75)",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "50%",
+                    width: 28,
+                    height: 28,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    fontSize: 14,
+                  }}
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div style={styles.section}>
           <h2 style={styles.sectionTitle}>📂 Reisdocumenten</h2>
 
@@ -1429,7 +1525,13 @@ onRemove={() =>
                         <div style={{ fontWeight: 600 }}>
                           {doc.website.replace("https://", "").slice(0, 40)}
                         </div>
-                        <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>
+                        <div
+                          style={{
+                            fontSize: 13,
+                            color: "#64748b",
+                            marginTop: 4,
+                          }}
+                        >
                           Website openen ↗
                         </div>
                       </a>
@@ -1485,7 +1587,6 @@ onRemove={() =>
         </div>
 
         <div style={styles.section}>
-      
           <h2 style={styles.sectionTitle}>Excursies van deze dag</h2>
 
           <div style={{ display: "grid", gap: 10, marginBottom: 16 }}>
@@ -1896,11 +1997,11 @@ onRemove={() =>
       {fullscreenIndex !== null && fullscreenList.length > 0 && (
         <div
           onClick={(e) => {
-  if (e.target === e.currentTarget) {
-    setFullscreenIndex(null);
-    setFullscreenList([]);
-  }
-}}
+            if (e.target === e.currentTarget) {
+              setFullscreenIndex(null);
+              setFullscreenList([]);
+            }
+          }}
           style={{
             position: "fixed",
             top: 0,
@@ -1929,18 +2030,18 @@ onRemove={() =>
                 e.stopPropagation();
                 setFullscreenIndex((i) => i - 1);
               }}
-          style={{
-  position: "absolute",
-  left: 20,
-  color: "#fff",
-  fontSize: 42,
-  cursor: "pointer",
-  userSelect: "none",
-  opacity: 0.7,
-  transition: "all 0.2s ease",
-}}
-onMouseEnter={(e) => (e.currentTarget.style.opacity = 1)}
-onMouseLeave={(e) => (e.currentTarget.style.opacity = 0.7)}
+              style={{
+                position: "absolute",
+                left: 20,
+                color: "#fff",
+                fontSize: 42,
+                cursor: "pointer",
+                userSelect: "none",
+                opacity: 0.7,
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = 1)}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = 0.7)}
             >
               ‹
             </div>
@@ -1952,18 +2053,18 @@ onMouseLeave={(e) => (e.currentTarget.style.opacity = 0.7)}
                 e.stopPropagation();
                 setFullscreenIndex((i) => i + 1);
               }}
-            style={{
-  position: "absolute",
-  right: 20,
-  color: "#fff",
-  fontSize: 42,
-  cursor: "pointer",
-  userSelect: "none",
-  opacity: 0.7,
-  transition: "all 0.2s ease",
-}}
-onMouseEnter={(e) => (e.currentTarget.style.opacity = 1)}
-onMouseLeave={(e) => (e.currentTarget.style.opacity = 0.7)}
+              style={{
+                position: "absolute",
+                right: 20,
+                color: "#fff",
+                fontSize: 42,
+                cursor: "pointer",
+                userSelect: "none",
+                opacity: 0.7,
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = 1)}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = 0.7)}
             >
               ›
             </div>
@@ -1973,6 +2074,7 @@ onMouseLeave={(e) => (e.currentTarget.style.opacity = 0.7)}
             onClick={(e) => {
               e.stopPropagation();
               setFullscreenIndex(null);
+              setFullscreenList([]);
             }}
             style={{
               position: "absolute",
