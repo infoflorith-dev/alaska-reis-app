@@ -1098,7 +1098,7 @@ loadTrip();
               title="map"
               width="100%"
               height="300"
-              style={{ border: 0, display: "block", marginTop: "-34px" }}
+             style={{ border: 0, display: "block" }}
               loading="lazy"
               allowFullScreen
               src={`https://www.google.com/maps?q=${encodeURIComponent(
