@@ -690,8 +690,7 @@ export default function App() {
           .select("data")
           .eq("id", "main")
           .single();
-
-      if (data?.data) {
+if (data?.data) {
   if (data.data.days) {
     const enrichedDays = await enrichDaysWithUrls(data.data.days);
     const enrichedDocuments = await enrichDocumentsWithUrls(
@@ -707,9 +706,6 @@ export default function App() {
 
   return;
 }
-} catch (e) {
-  console.error(e);
-}        
     loadTrip();
   }, []);
 
