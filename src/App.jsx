@@ -927,7 +927,7 @@ loadTrip();
     color: "#2563eb",
   }}
 >
-  ✈️ {countdown}
+✈️ TEST COUNTDOWN
 </div>
         <div style={styles.headerButtons}>
           <button
