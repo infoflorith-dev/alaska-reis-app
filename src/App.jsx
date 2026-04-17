@@ -581,6 +581,7 @@ export default function App() {
     typeof window !== "undefined" ? window.innerWidth < 900 : false
   );
   const [saveStatus, setSaveStatus] = useState("Opgeslagen");
+  const [countdown, setCountdown] = useState("");
   const [itemForm, setItemForm] = useState({
     kind: "ticket",
     title: "",
@@ -626,7 +627,32 @@ export default function App() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+useEffect(() => {
+  function updateCountdown() {
+    const vertrek = new Date("2026-09-05T12:00:00");
+    const nu = new Date();
 
+    const verschil = vertrek - nu;
+
+    if (verschil <= 0) {
+      setCountdown("We zijn vertrokken ✈️");
+      return;
+    }
+
+    const dagen = Math.floor(verschil / (1000 * 60 * 60 * 24));
+    const uren = Math.floor((verschil / (1000 * 60 * 60)) % 24);
+    const minuten = Math.floor((verschil / (1000 * 60)) % 60);
+
+    setCountdown(
+      `Nog ${dagen} dagen, ${uren} uur en ${minuten} minuten tot vertrek`
+    );
+  }
+
+  updateCountdown();
+  const interval = setInterval(updateCountdown, 60000);
+
+  return () => clearInterval(interval);
+}, []);
   useEffect(() => {
     async function enrichDaysWithUrls(daysToEnrich) {
       const result = await Promise.all(
@@ -893,7 +919,16 @@ loadTrip();
     <div style={styles.card}>
       <div style={styles.sidebarHeader}>
         <h1 style={styles.title}>Alaska Reis App</h1>
-
+<div
+  style={{
+    marginTop: 10,
+    fontSize: 14,
+    fontWeight: 600,
+    color: "#2563eb",
+  }}
+>
+  ✈️ {countdown}
+</div>
         <div style={styles.headerButtons}>
           <button
             type="button"
