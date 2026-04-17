@@ -581,7 +581,7 @@ export default function App() {
     typeof window !== "undefined" ? window.innerWidth < 900 : false
   );
   const [saveStatus, setSaveStatus] = useState("Opgeslagen");
-  const [countdown, setCountdown] = useState("");
+  const [countdown, setCountdown] = useState("Countdown laden...");
   const [itemForm, setItemForm] = useState({
     kind: "ticket",
     title: "",
@@ -629,7 +629,7 @@ export default function App() {
   }, []);
 useEffect(() => {
   function updateCountdown() {
-    const vertrek = new Date("2026-09-05T12:00:00");
+    const vertrek = new Date(2026, 8, 5, 12, 0, 0);
     const nu = new Date();
 
     const verschil = vertrek - nu;
@@ -927,7 +927,7 @@ loadTrip();
     color: "#2563eb",
   }}
 >
-✈️ TEST COUNTDOWN
+✈️ {countdown}
 </div>
         <div style={styles.headerButtons}>
           <button
